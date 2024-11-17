@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/inter/3.19.3/inter.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --apple-dark: #0a0a0a;
+      --apple-light: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --accent-gradient: linear-gradient(135deg, #FF453A 0%, #BF5AF2 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--apple-dark);
+      color: var(--apple-light);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 3rem;
+    }
+
+    .skills-section {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .skills-category {
+      margin-bottom: 2rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    .skills-category:nth-child(2) { animation-delay: 0.1s; }
+    .skills-category:nth-child(3) { animation-delay: 0.2s; }
+
+    .category-header {
+      padding: 1.5rem 2rem;
+      display: grid;
+      grid-template-columns: 1fr auto auto auto;
+      align-items: center;
+      gap: 2rem;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .category-header:hover {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .category-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .category-stats {
+      font-size: 1rem;
+      opacity: 0.7;
+      text-align: center;
+    }
+
+    .toggle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn i {
+      transition: transform 0.3s ease;
+    }
+
+    .skills-list {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .skill-card {
+      background: rgba(255, 255, 255, 0.02);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .skill-name {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-usage {
+      font-size: 0.9rem;
+      opacity: 0.6;
+    }
+
+    /* Expanded State */
+    .skills-category.expanded .skills-list {
+      max-height: 1000px;
+    }
+
+    .skills-category.expanded .toggle-btn i {
+      transform: rotate(45deg);
+    }
+
+    .skills-category.expanded .skill-card {
+      transform: translateY(0);
+      opacity: 1;
+      transition-delay: 0.2s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Import refined typography */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap');
+
+:root {
+    /* Enhanced Core Colors */
+    --apple-dark: #0a0a0f;  /* Richer black for depth */
+    --apple-light: #f8f9fc;  /* Warmer white for readability */
+    --apple-gray: #94969d;   /* Neutral gray for better contrast */
+
+    /* Enhanced Glass Effects */
+    --glass-bg: rgba(255, 255, 255, 0.035);
+    --glass-hover: rgba(255, 255, 255, 0.055);
+    --glass-border: rgba(255, 255, 255, 0.07);
+
+    /* Gradient System */
+    --accent-gradient: linear-gradient(135deg,
+        #FF453A 0%,      /* Vibrant Red - Energy */
+        #FF2D55 25%,     /* Pink Red - Passion */
+        #BF5AF2 100%     /* Purple - Innovation */
+    );
+
+    /* Category-Specific Gradients */
+    --web-gradient: linear-gradient(135deg,
+        #FF453A 0%,      /* Red - Dynamic */
+        #FF2D55 100%     /* Pink - Modern */
+    );
+    --cloud-gradient: linear-gradient(135deg,
+        #32ADE6 0%,      /* Blue - Trust */
+        #2D55FF 100%     /* Royal Blue - Stability */
+    );
+    --design-gradient: linear-gradient(135deg,
+        #FF375F 0%,      /* Pink - Creative */
+        #FF8C42 100%     /* Orange - Artistic */
+    );
+
+    /* Enhanced Shadow System */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.07);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.15);
+
+    /* Typography Scale */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-base: 1rem;     /* 16px */
+    --font-size-lg: 1.125rem;   /* 18px */
+    --font-size-xl: 1.25rem;    /* 20px */
+    --font-size-2xl: 1.5rem;    /* 24px */
+    --font-size-3xl: 2rem;      /* 32px */
+    --font-size-4xl: 2.5rem;    /* 40px */
+}
+
+/* Base Typography Enhancements */
+body {
+    font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
+}
+
+/* New Section Header */
+.section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    opacity: 0;
+    animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.section-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--apple-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Enhanced Category Design */
+.skills-category {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skills-category:hover {
+    background: var(--glass-hover);
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+/* Enhanced Category Header */
+.category-header {
+    padding: 2rem;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0.03),
+        rgba(255, 255, 255, 0.05)
+    );
+    border-bottom: 1px solid var(--glass-border);
+}
+
+.category-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+}
+
+.web-development .category-title { background: var(--web-gradient); }
+.cloud-architecture .category-title { background: var(--cloud-gradient); }
+.design-systems .category-title { background: var(--design-gradient); }
+
+.category-stats {
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--apple-gray);
+}
+
+/* Enhanced Toggle Button */
+.toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    color: var(--apple-light);
+    font-size: var(--font-size-sm);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+    background: var(--glass-hover);
+    transform: translateY(-2px);
+}
+
+/* Enhanced Skill Cards */
+.skill-card {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--accent-gradient);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+}
+
+.skill-card:hover {
+    background: rgba(255, 255, 255, 0.04);
+    transform: translateY(-4px);
+}
+
+.skill-card:hover::before {
+    transform: scaleX(1);
+}
+
+.skill-name {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-bottom: 0.75rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.skill-usage {
+    font-size: var(--font-size-sm);
+    color: var(--apple-gray);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+}
+
+/* Expanded State Enhancements */
+.skills-category.expanded {
+    background: var(--glass-hover);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Add to HTML */
+.new-html-section {
+    color: var(--apple-gray);
+    font-family: 'Satoshi', sans-serif;
+}
+  </style>
+</head>
+<body>
+    <div class="section-header">
+        <h1 class="section-title">Expertise & Skills</h1>
+        <p class="section-subtitle">A comprehensive overview of my technical capabilities and professional experience across different domains.</p>
+    </div>
+
+  <section class="skills-section">
+    <div class="skills-category">
+      <div class="category-header" onclick="toggleCategory(this.parentElement)">
+        <h2 class="category-title">Web Development</h2>
+        <div class="category-stats">12 Skills</div>
+        <div class="category-stats">5+ Years</div>
+        <div class="toggle-btn">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="skills-list">
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-name">React.js</div>
+            <div class="skill-usage">Used in 15+ Projects</div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-name">TypeScript</div>
+            <div class="skill-usage">Used in 10+ Projects</div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-name">Node.js</div>
+            <div class="skill-usage">Used in 20+ Projects</div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-name">Next.js</div>
+            <div class="skill-usage">Used in 8+ Projects</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills-category">
+      <div class="category-header" onclick="toggleCategory(this.parentElement)">
+        <h2 class="category-title">Cloud Architecture</h2>
+        <div class="category-stats">8 Skills</div>
+        <div class="category-stats">3+ Years</div>
+        <div class="toggle-btn">
+          <i class="fas fa-plus"></i>
+        </div>
+      </div>
+      <div class="skills-list">
+        <div class="skills-grid">
+          <div class="skill-card">
+            <div class="skill-name">AWS</div>
+            <div class="skill-usage">Used in 12+ Projects</div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-name">Docker</div>
+            <div class="skill-usage">Used in 15+ Projects</div>
+          </div>
+          <div class="skill-card">
+            <div class="skill-name">Kubernetes</div>
+            <div class="skill-usage">Used in 8+ Projects</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    function toggleCategory(element) {
+      element.classList.toggle('expanded');
+
+      // Animate skill cards in sequence
+      if (element.classList.contains('expanded')) {
+        const cards = element.querySelectorAll('.skill-card');
+        cards.forEach((card, index) => {
+          setTimeout(() => {
+            card.style.transform = 'translateY(0)';
+            card.style.opacity = '1';
+          }, index * 100);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

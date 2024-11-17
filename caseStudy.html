@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/inter/3.19.3/inter.css" rel="stylesheet">
+  <style>
+    :root {
+      --apple-dark: #0a0a0a;
+      --apple-light: #ffffff;
+      --glass-bg: rgba(255, 255, 255, 0.03);
+      --glass-border: rgba(255, 255, 255, 0.06);
+      --accent-gradient: linear-gradient(135deg, #FF453A 0%, #BF5AF2 100%);
+      --secondary-gradient: linear-gradient(135deg, #BF5AF2 0%, #FF453A 100%);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--apple-dark);
+      color: var(--apple-light);
+      min-height: 100vh;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      padding: 3rem;
+      overflow-x: hidden;
+    }
+
+    .case-study {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 3rem;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 3rem;
+      height: min-content;
+    }
+
+    .sidebar-section {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      backdrop-filter: blur(20px);
+      transform: translateX(-50px);
+      opacity: 0;
+      animation: slideIn 0.8s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+    }
+
+    .sidebar-section:nth-child(2) { animation-delay: 0.1s; }
+    .sidebar-section:nth-child(3) { animation-delay: 0.2s; }
+    .sidebar-section:nth-child(4) { animation-delay: 0.3s; }
+
+    .logo-container {
+      width: 100%;
+      aspect-ratio: 1;
+      background: var(--accent-gradient);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover {
+      transform: scale(1.02);
+    }
+
+    .motto {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .description {
+      font-size: 1rem;
+      line-height: 1.6;
+      opacity: 0.8;
+    }
+
+    .goals-list {
+      list-style: none;
+    }
+
+    .goals-list li {
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+      position: relative;
+    }
+
+    .goals-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #FF453A;
+    }
+
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--accent-gradient);
+    }
+
+    .milestone {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .milestone::before {
+      content: '';
+      position: absolute;
+      left: -2.4rem;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+    }
+
+    .main-content {
+      transform: translateY(50px);
+      opacity: 0;
+      animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1) 0.4s forwards;
+    }
+
+    .content-section {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .content-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .section-content {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      opacity: 0.9;
+    }
+
+    .detail-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.5rem;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 30px;
+      color: var(--apple-light);
+      text-decoration: none;
+      font-weight: 500;
+      margin-top: 2rem;
+      transition: all 0.3s ease;
+    }
+
+    .detail-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-50px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Import refined typography */
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap');
+
+:root {
+    /* Enhanced Core Colors */
+    --apple-dark: #0a0a0f;
+    --apple-light: #f8f9fc;
+    --apple-gray: #94969d;
+
+    /* Enhanced Glass Effects */
+    --glass-bg: rgba(255, 255, 255, 0.035);
+    --glass-hover: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.075);
+
+    /* Enhanced Gradient System */
+    --accent-gradient: linear-gradient(135deg,
+        #FF453A 0%,      /* Passion Red */
+        #FF2D55 50%,     /* Energy Pink */
+        #BF5AF2 100%     /* Innovation Purple */
+    );
+
+    --secondary-gradient: linear-gradient(135deg,
+        #BF5AF2 0%,      /* Creative Purple */
+        #FF375F 50%,     /* Dynamic Pink */
+        #FF453A 100%     /* Impact Red */
+    );
+
+    --glass-gradient: linear-gradient(
+        160deg,
+        rgba(255, 255, 255, 0.05) 0%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+
+    /* Enhanced Shadows */
+    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 8px 32px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.2);
+
+    /* Typography Scale - Using Golden Ratio (1.618) */
+    --font-size-xs: 0.75rem;     /* 12px */
+    --font-size-sm: 0.875rem;    /* 14px */
+    --font-size-base: 1rem;      /* 16px */
+    --font-size-lg: 1.125rem;    /* 18px */
+    --font-size-xl: 1.375rem;    /* 22px */
+    --font-size-2xl: 1.75rem;    /* 28px */
+    --font-size-3xl: 2.25rem;    /* 36px */
+    --font-size-4xl: 3rem;       /* 48px */
+}
+
+/* Base Typography */
+body {
+    font-family: 'Satoshi', 'Inter', system-ui, sans-serif;
+    font-feature-settings: 'ss01' 1, 'ss03' 1, 'cv01' 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    letter-spacing: -0.01em;
+    background-color: var(--apple-dark);
+    color: var(--apple-light);
+    line-height: 1.6;
+}
+
+/* Enhanced Sidebar */
+.sidebar-section {
+    background: var(--glass-gradient);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sidebar-section:hover {
+    background: var(--glass-hover);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* Enhanced Logo Container */
+.logo-container {
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.logo-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transform: rotate(25deg);
+    transition: 0.7s;
+}
+
+.logo-container:hover::after {
+    left: 100%;
+}
+
+/* Enhanced Typography */
+.motto {
+    font-size: var(--font-size-xl);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    margin-bottom: 1.25rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.description {
+    font-size: var(--font-size-base);
+    line-height: 1.7;
+    color: var(--apple-gray);
+    font-weight: 400;
+}
+
+/* Enhanced Goals List */
+.goals-list li {
+    font-size: var(--font-size-base);
+    margin-bottom: 1.25rem;
+    padding-left: 2rem;
+    position: relative;
+    line-height: 1.6;
+}
+
+.goals-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+    font-size: var(--font-size-lg);
+    transform: translateY(-2px);
+}
+
+/* Enhanced Timeline */
+.timeline {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(
+        to bottom,
+        transparent,
+        var(--apple-light),
+        transparent
+    );
+    opacity: 0.2;
+}
+
+.milestone {
+    position: relative;
+    font-size: var(--font-size-base);
+    font-weight: 500;
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease;
+}
+
+.milestone::before {
+    content: '';
+    position: absolute;
+    left: -2.5rem;
+    top: 0.5rem;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent-gradient);
+    box-shadow: 0 0 20px rgba(255, 69, 58, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.milestone:hover {
+    transform: translateX(4px);
+}
+
+.milestone:hover::before {
+    transform: scale(1.2);
+}
+
+/* Enhanced Content Sections */
+.content-section {
+    background: var(--glass-gradient);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.content-section:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-lg);
+    background: var(--glass-hover);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.section-content {
+    font-size: var(--font-size-lg);
+    line-height: 1.8;
+    color: var(--apple-gray);
+    font-weight: 400;
+}
+
+/* Enhanced Button */
+.detail-btn {
+    background: var(--glass-gradient);
+    border: 1px solid var(--glass-border);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 1rem 2rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-sm);
+}
+
+.detail-btn:hover {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    transform: translateX(8px);
+    box-shadow: var(--shadow-md);
+}
+
+.detail-btn span {
+    transition: transform 0.3s ease;
+}
+
+.detail-btn:hover span {
+    transform: translateX(4px);
+}
+
+/* New Section Header */
+.case-study-header {
+    margin-bottom: 4rem;
+    text-align: center;
+}
+
+.case-study-title {
+    font-size: var(--font-size-4xl);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+.case-study-subtitle {
+    font-size: var(--font-size-xl);
+    color: var(--apple-gray);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Selection Style */
+::selection {
+    background: rgba(255, 69, 58, 0.2);
+    color: var(--apple-light);
+}
+/* Enhanced Animation Variables */
+:root {
+    /* Existing variables remain... */
+
+    /* Animation Physics */
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-spring-1: cubic-bezier(0.23, 1, 0.32, 1.2);
+    --ease-spring-2: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Animation Timing */
+    --duration-xs: 200ms;
+    --duration-sm: 400ms;
+    --duration-md: 600ms;
+    --duration-lg: 800ms;
+
+    /* Interaction States */
+    --hover-lift: -8px;
+    --hover-scale: 1.02;
+    --hover-rotate: 2deg;
+    --active-scale: 0.98;
+}
+
+/* Enhanced Section Animations */
+.content-section {
+    transition:
+        transform var(--duration-md) var(--ease-spring-1),
+        opacity var(--duration-md) var(--ease-out-expo),
+        box-shadow var(--duration-sm) var(--ease-out-expo);
+    will-change: transform, opacity;
+    transform: translateY(30px);
+    opacity: 0;
+}
+
+.content-section.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.content-section--active {
+    transform: scale(var(--hover-scale)) translateY(var(--hover-lift));
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.2),
+        0 0 30px rgba(255, 69, 58, 0.1);
+}
+
+/* Reading Progress Indicator */
+.reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+}
+
+.reading-progress::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: var(--progress, 0%);
+    background: var(--accent-gradient);
+    transition: width 100ms linear;
+}
+
+/* Enhanced Timeline */
+.timeline-connection {
+    position: absolute;
+    left: -24px;
+    width: 2px;
+    height: 0;
+    background: var(--accent-gradient);
+    transition: height var(--duration-md) var(--ease-spring-1);
+}
+
+.timeline-connection--active {
+    height: 100%;
+}
+
+.milestone {
+    opacity: 0.5;
+    transform: translateX(-20px);
+    transition:
+        opacity var(--duration-sm) var(--ease-out-expo),
+        transform var(--duration-sm) var(--ease-spring-1);
+}
+
+.milestone--active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Enhanced Sidebar Interactions */
+.sidebar-section {
+    transition:
+        transform var(--duration-sm) var(--ease-spring-2),
+        background-color var(--duration-sm) var(--ease-out-expo);
+}
+
+.sidebar-section.active {
+    background: var(--glass-hover);
+    transform: scale(1.02);
+}
+
+/* Magnetic Button Effect */
+.detail-btn {
+    position: relative;
+    transition:
+        transform var(--duration-xs) var(--ease-spring-2),
+        background var(--duration-sm) var(--ease-out-expo);
+}
+
+.detail-btn::before {
+    content: '';
+    position: absolute;
+    inset: -20px;
+    z-index: -1;
+}
+
+/* Enhanced Logo Container */
+.logo-container {
+    position: relative;
+    transition: transform var(--duration-sm) var(--ease-spring-1);
+}
+
+.logo-container::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(255, 255, 255, 0.1),
+        transparent 50%
+    );
+    opacity: 0;
+    transition: opacity var(--duration-sm) var(--ease-out-expo);
+}
+
+.logo-container:hover::after {
+    opacity: 1;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}
+  </style>
+</head>
+<body>
+  <div class="case-study">
+    <div class="sidebar">
+      <div class="sidebar-section">
+        <div class="logo-container">Logo</div>
+        <div class="motto">Motto/Slogan</div>
+        <p class="description">Brief project description and context</p>
+      </div>
+
+      <div class="sidebar-section">
+        <h2 class="section-title">Goals</h2>
+        <ul class="goals-list">
+          <li>Primary objective achievement</li>
+          <li>Secondary goal completion</li>
+          <li>Tertiary milestone reached</li>
+        </ul>
+      </div>
+
+      <div class="sidebar-section">
+        <h2 class="section-title">Timeline & Milestones</h2>
+        <div class="timeline">
+          <div class="milestone">Project Initiation</div>
+          <div class="milestone">Research Phase</div>
+          <div class="milestone">Development</div>
+          <div class="milestone">Launch</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <div class="content-section">
+        <h1 class="section-title">Overview</h1>
+        <p class="section-content">Comprehensive project overview and quick description.</p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Problem Statement</h2>
+        <p class="section-content">Detailed explanation of the challenges and issues addressed.</p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Solution Statement</h2>
+        <p class="section-content">Proposed solution and its key features.</p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Solution Details</h2>
+        <p class="section-content">In-depth analysis of the implementation and results.</p>
+      </div>
+
+      <div class="content-section">
+        <h2 class="section-title">Procedure & Plan</h2>
+        <p class="section-content">Step-by-step breakdown of the execution strategy.</p>
+        <a href="#" class="detail-btn">
+          View Details
+          <span>→</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+class CaseStudyInteractions {
+    constructor() {
+        this.initializeVariables();
+        this.setupObservers();
+        this.initializeEventListeners();
+        this.setupProgressIndicator();
+    }
+
+    initializeVariables() {
+        this.sidebarSections = document.querySelectorAll('.sidebar-section');
+        this.contentSections = document.querySelectorAll('.content-section');
+        this.timeline = document.querySelector('.timeline');
+        this.milestones = document.querySelectorAll('.milestone');
+        this.logo = document.querySelector('.logo-container');
+        this.progressBar = this.createProgressBar();
+
+        // State tracking
+        this.lastScrollPosition = window.scrollY;
+        this.isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        this.activeSection = null;
+    }
+
+    createProgressBar() {
+        const bar = document.createElement('div');
+        bar.className = 'scroll-progress';
+        document.body.appendChild(bar);
+        return bar;
+    }
+
+    setupObservers() {
+        // Intersection Observer for sections
+        this.sectionObserver = new IntersectionObserver(
+            (entries) => this.handleSectionIntersection(entries),
+            { threshold: [0.2, 0.5, 0.8] }
+        );
+
+        // Observer for timeline items
+        this.timelineObserver = new IntersectionObserver(
+            (entries) => this.handleTimelineIntersection(entries),
+            { threshold: 0.5 }
+        );
+
+        // Initialize observers
+        this.contentSections.forEach(section => this.sectionObserver.observe(section));
+        this.milestones.forEach(milestone => this.timelineObserver.observe(milestone));
+    }
+
+    handleSectionIntersection(entries) {
+        entries.forEach(entry => {
+            if (!this.isReducedMotion) {
+                this.animateSection(entry.target, entry.isIntersecting, entry.intersectionRatio);
+            }
+
+            if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                this.activeSection = entry.target;
+                this.updateSidebar();
+            }
+        });
+    }
+
+    animateSection(section, isVisible, ratio) {
+        if (isVisible) {
+            const translateY = Math.max(0, (1 - ratio) * 50);
+            const scale = 0.95 + (ratio * 0.05);
+            const opacity = ratio;
+
+            section.style.transform = `translateY(${translateY}px) scale(${scale})`;
+            section.style.opacity = opacity;
+        }
+    }
+
+    handleTimelineIntersection(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('milestone--active');
+                this.animateTimelineConnection(entry.target);
+            }
+        });
+    }
+
+    animateTimelineConnection(milestone) {
+        const connection = document.createElement('div');
+        connection.className = 'timeline-connection';
+        milestone.appendChild(connection);
+
+        requestAnimationFrame(() => connection.classList.add('timeline-connection--active'));
+    }
+
+    initializeEventListeners() {
+        // Parallax effect for logo
+        document.addEventListener('mousemove', (e) => {
+            if (this.isReducedMotion) return;
+
+            const { clientX, clientY } = e;
+            const centerX = window.innerWidth / 2;
+            const centerY = window.innerHeight / 2;
+            const moveX = (clientX - centerX) / 50;
+            const moveY = (clientY - centerY) / 50;
+
+            this.logo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+
+        // Scroll handling
+        window.addEventListener('scroll', () => this.handleScroll(), { passive: true });
+
+        // Sidebar hover effects
+        this.sidebarSections.forEach(section => {
+            section.addEventListener('mouseenter', () => this.handleSectionHover(section, true));
+            section.addEventListener('mouseleave', () => this.handleSectionHover(section, false));
+        });
+
+        // Content section interactions
+        this.contentSections.forEach(section => {
+            this.setupContentInteractions(section);
+        });
+    }
+
+    setupContentInteractions(section) {
+        let timeout;
+
+        section.addEventListener('mouseenter', () => {
+            clearTimeout(timeout);
+            section.classList.add('content-section--active');
+
+            // Magnetic effect for buttons
+            const button = section.querySelector('.detail-btn');
+            if (button) {
+                this.setupMagneticEffect(button);
+            }
+        });
+
+        section.addEventListener('mouseleave', () => {
+            timeout = setTimeout(() => {
+                section.classList.remove('content-section--active');
+            }, 300);
+        });
+    }
+
+    setupMagneticEffect(element) {
+        element.addEventListener('mousemove', (e) => {
+            if (this.isReducedMotion) return;
+
+            const rect = element.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const distance = this.getDistance(e.clientX, e.clientY, centerX, centerY);
+
+            if (distance < 100) {
+                const magnetStrength = (100 - distance) / 100;
+                const moveX = (e.clientX - centerX) * magnetStrength * 0.5;
+                const moveY = (e.clientY - centerY) * magnetStrength * 0.5;
+
+                element.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            } else {
+                element.style.transform = '';
+            }
+        });
+    }
+
+    getDistance(x1, y1, x2, y2) {
+        return Math.hypot(x2 - x1, y2 - y1);
+    }
+
+    handleScroll() {
+        const currentScroll = window.scrollY;
+        const scrollDirection = currentScroll > this.lastScrollPosition ? 'down' : 'up';
+
+        this.updateProgressBar(currentScroll);
+        this.parallaxBackground(currentScroll);
+        this.animateSidebarOnScroll(scrollDirection);
+
+        this.lastScrollPosition = currentScroll;
+    }
+
+    setupProgressIndicator() {
+        const progress = document.createElement('div');
+        progress.className = 'reading-progress';
+        document.body.appendChild(progress);
+
+        window.addEventListener('scroll', () => {
+            const percent = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            progress.style.setProperty('--progress', `${percent}%`);
+        }, { passive: true });
+    }
+
+    updateSidebar() {
+        const sidebarItems = document.querySelectorAll('.sidebar-section');
+        sidebarItems.forEach(item => item.classList.remove('active'));
+
+        if (this.activeSection) {
+            const index = Array.from(this.contentSections).indexOf(this.activeSection);
+            if (index >= 0 && sidebarItems[index]) {
+                sidebarItems[index].classList.add('active');
+            }
+        }
+    }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+    new CaseStudyInteractions();
+});
+</script>
+</html>

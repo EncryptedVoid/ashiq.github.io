@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+
+:root {
+    /* Core Colors */
+    --apple-dark: #0a0a0c;
+    --apple-light: #f8f8fa;
+    --apple-gray: #8e8e93;
+
+    /* Enhanced Gradient System */
+    --accent-gradient-primary: linear-gradient(135deg, #007AFF 0%, #5856D6 100%);
+    --accent-gradient-hover: linear-gradient(135deg, #0090FF 0%, #6A67E3 100%);
+    --accent-gradient-active: linear-gradient(135deg, #006EE6 0%, #4A47C2 100%);
+
+    /* Surface Gradients */
+    --surface-gradient-primary: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.12) 0%,
+        rgba(255, 255, 255, 0.06) 100%
+    );
+    --surface-gradient-secondary: linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(255, 255, 255, 0.08) 100%
+    );
+
+    /* Glassmorphism */
+    --glass-bg-primary: rgba(255, 255, 255, 0.08);
+    --glass-bg-secondary: rgba(255, 255, 255, 0.06);
+    --glass-border-primary: rgba(255, 255, 255, 0.12);
+    --glass-border-secondary: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+
+    /* Status Colors */
+    --status-available: #34C759;
+    --status-unavailable: #FF3B30;
+    --status-glow-available: rgba(52, 199, 89, 0.35);
+    --status-glow-unavailable: rgba(255, 59, 48, 0.35);
+
+    /* Enhanced Animation System */
+    --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --transition-energetic: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --transition-natural: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Animation Durations */
+    --duration-instant: 100ms;
+    --duration-fast: 200ms;
+    --duration-base: 300ms;
+    --duration-relaxed: 500ms;
+    --duration-entrance: 800ms;
+
+    /* Transform Values */
+    --hover-translate-y: -8px;
+    --hover-scale: 1.03;
+    --active-scale: 0.97;
+    --hover-rotation: 3deg;
+
+    /* Stagger Timing */
+    --stagger-base: 100ms;
+    --stagger-items: 50ms;
+
+    /* Typography Scale */
+    --font-scale-ratio: 1.25;
+    --font-size-xs: 0.8rem;
+    --font-size-sm: calc(var(--font-size-xs) * var(--font-scale-ratio));
+    --font-size-base: calc(var(--font-size-sm) * var(--font-scale-ratio));
+    --font-size-lg: calc(var(--font-size-base) * var(--font-scale-ratio));
+    --font-size-xl: calc(var(--font-size-lg) * var(--font-scale-ratio));
+    --font-size-2xl: calc(var(--font-size-xl) * var(--font-scale-ratio));
+    --font-size-3xl: calc(var(--font-size-2xl) * var(--font-scale-ratio));
+
+    /* Interaction Feedback */
+    --press-scale: 0.97;
+    --press-translate: 2px;
+    --hover-lift: -6px;
+    --hover-glow: 0 10px 25px rgba(0, 122, 255, 0.2);
+    --click-glow: 0 5px 15px rgba(0, 122, 255, 0.4);
+
+    /* Micro-interaction Timing */
+    --micro-duration: 150ms;
+    --hover-duration: 300ms;
+    --press-duration: 100ms;
+
+    /* Enhanced Spring Physics */
+    --spring-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --spring-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-return: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', sans-serif;
+    font-feature-settings: "liga" 1, "kern" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background-color: var(--apple-dark);
+    color: var(--apple-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: hidden;
+}
+
+/* Enhanced Animations */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes slideInFloat {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 0 0 var(--status-glow-available);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 0 0 20px 5px var(--status-glow-available);
+        transform: scale(1.1);
+    }
+    100% {
+        box-shadow: 0 0 0 0 var(--status-glow-available);
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmerEffect {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Container Styles */
+.hero-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: clamp(1.5rem, 5vw, 3rem);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    perspective: 1000px;
+}
+
+.hero-container > * {
+    opacity: 0;
+    animation: fadeInScale var(--duration-entrance) var(--transition-natural) forwards;
+}
+
+/* Section Styles */
+.info-section, .workload-section {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--glass-bg-primary);
+    border: 1px solid var(--glass-border-primary);
+    border-radius: 24px;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    will-change: transform;
+    contain: layout style;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+    transition:
+        transform var(--hover-duration) var(--spring-soft),
+        box-shadow var(--hover-duration) var(--transition-smooth),
+        border-color var(--hover-duration) var(--transition-smooth),
+        background-color var(--hover-duration) var(--transition-smooth);
+
+    /* Add subtle gradient shine effect */
+    background-image:
+        linear-gradient(
+            120deg,
+            transparent 0%,
+            transparent 40%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 60%,
+            transparent 100%
+        );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+}
+
+/* Section Animations */
+.info-section {
+    animation-delay: calc(var(--stagger-base));
+    transform-origin: left center;
+}
+
+.headshot-section {
+    animation-delay: calc(var(--stagger-base) * 2);
+    transform-origin: center;
+    aspect-ratio: 1;
+    border-radius: 24px;
+    background: var(--accent-gradient-primary);
+}
+
+.workload-section {
+    animation-delay: calc(var(--stagger-base) * 3);
+    transform-origin: bottom center;
+    grid-column: 1 / -1;
+}
+
+/* Hover Effects */
+/* Add these new interaction variables to :root */
+:root {
+    /* ... existing variables ... */
+
+    /* Interaction Feedback */
+    --press-scale: 0.97;
+    --press-translate: 2px;
+    --hover-lift: -6px;
+    --hover-glow: 0 10px 25px rgba(0, 122, 255, 0.2);
+    --click-glow: 0 5px 15px rgba(0, 122, 255, 0.4);
+
+    /* Micro-interaction Timing */
+    --micro-duration: 150ms;
+    --hover-duration: 300ms;
+    --press-duration: 100ms;
+
+    /* Enhanced Spring Physics */
+    --spring-bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    --spring-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
+    --spring-return: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Enhanced Section Interactions */
+.info-section, .workload-section {
+    position: relative;
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--glass-bg-primary);
+    border: 1px solid var(--glass-border-primary);
+    border-radius: 24px;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    will-change: transform;
+    contain: layout style;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+    transition:
+        transform var(--hover-duration) var(--spring-soft),
+        box-shadow var(--hover-duration) var(--transition-smooth),
+        border-color var(--hover-duration) var(--transition-smooth),
+        background-color var(--hover-duration) var(--transition-smooth);
+
+    /* Add subtle gradient shine effect */
+    background-image:
+        linear-gradient(
+            120deg,
+            transparent 0%,
+            transparent 40%,
+            rgba(255, 255, 255, 0.1) 50%,
+            transparent 60%,
+            transparent 100%
+        );
+    background-size: 200% 100%;
+    background-position: 100% 0;
+}
+
+.info-section:hover, .workload-section:hover {
+    transform:
+        translateY(var(--hover-lift))
+        scale(var(--hover-scale));
+    box-shadow: var(--hover-glow);
+    background-position: -100% 0;
+    transition:
+        transform var(--hover-duration) var(--spring-bounce),
+        box-shadow var(--hover-duration) var(--transition-smooth),
+        background-position 1.5s var(--transition-smooth);
+}
+
+.info-section:active, .workload-section:active {
+    transform:
+        translateY(var(--press-translate))
+        scale(var(--press-scale));
+    box-shadow: var(--click-glow);
+    transition: all var(--press-duration) var(--spring-return);
+}
+
+/* Enhanced Paragraph Interactions */
+.info-section p {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInFloat var(--duration-entrance) var(--transition-natural) forwards;
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--apple-gray);
+    margin-bottom: 1.5rem;
+    transition: transform var(--duration-base) var(--transition-smooth),
+                color var(--duration-base) var(--transition-smooth);
+    position: relative;
+    padding-left: 0;
+    transition:
+        transform var(--micro-duration) var(--spring-soft),
+        padding-left var(--micro-duration) var(--spring-soft),
+        color var(--micro-duration) var(--transition-smooth);
+}
+
+.info-section p:hover {
+    transform: translateX(8px);
+    padding-left: 8px;
+    color: var(--apple-light);
+}
+
+.info-section p::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--accent-gradient-primary);
+    transform: translateY(-50%);
+    opacity: 0;
+    transition:
+        width var(--micro-duration) var(--spring-soft),
+        opacity var(--micro-duration) var(--transition-smooth);
+}
+
+.info-section p:hover::before {
+    width: 4px;
+    opacity: 1;
+}
+
+/* Enhanced Headshot Interactions */
+.headshot-section {
+    animation-delay: calc(var(--stagger-base) * 2);
+    transform-origin: center;
+    aspect-ratio: 1;
+    border-radius: 24px;
+    background: var(--accent-gradient-primary);
+    transition:
+        transform var(--hover-duration) var(--spring-soft),
+        box-shadow var(--hover-duration) var(--transition-smooth),
+        background-image var(--hover-duration) var(--transition-smooth);
+    overflow: hidden;
+}
+
+.headshot-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        45deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        transparent 100%
+    );
+    opacity: 0;
+    transform: translateX(-100%) rotate(45deg);
+    transition: transform 0.6s var(--transition-smooth);
+}
+
+.headshot-section:hover {
+    transform:
+        scale(var(--hover-scale))
+        rotate(var(--hover-rotation))
+        translateZ(20px);
+    background-image: var(--accent-gradient-hover);
+    box-shadow:
+        0 20px 40px rgba(0, 0, 0, 0.3),
+        0 0 30px rgba(0, 122, 255, 0.2);
+}
+
+.headshot-section:hover::after {
+    transform: translateX(100%) rotate(45deg);
+    opacity: 1;
+}
+
+/* Enhanced Status Indicator Interactions */
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulseGlow 2s var(--transition-natural) infinite;
+    will-change: transform, box-shadow;
+    transition: transform var(--micro-duration) var(--spring-bounce);
+}
+
+.status-indicator::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: inherit;
+    opacity: 0;
+    transform: scale(0.8);
+    transition:
+        opacity var(--micro-duration) var(--transition-smooth),
+        transform var(--micro-duration) var(--spring-bounce);
+}
+
+.status-indicator:hover {
+    transform: scale(1.2);
+}
+
+.status-indicator:hover::before {
+    opacity: 0.3;
+    transform: scale(1.5);
+}
+
+
+/* Enhanced Text Selection Styling */
+::selection {
+    background: rgba(0, 122, 255, 0.3);
+    color: var(--apple-light);
+}
+
+/* Add Focus States for Accessibility */
+.info-section:focus-visible,
+.workload-section:focus-visible {
+    outline: none;
+    box-shadow:
+        0 0 0 2px var(--apple-light),
+        0 0 0 4px rgba(0, 122, 255, 0.5);
+}
+
+/* Add Loading State Animations */
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+.loading {
+    background: linear-gradient(
+        90deg,
+        var(--glass-bg-primary) 0%,
+        var(--glass-bg-secondary) 50%,
+        var(--glass-bg-primary) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+}
+
+/* Enhanced Mobile Interactions */
+@media (hover: hover) and (pointer: fine) {
+    .info-section:hover p {
+        transform: translateX(4px);
+    }
+}
+
+@media (max-width: 768px) {
+    .info-section, .workload-section {
+        /* Optimize touch interactions */
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .info-section:active, .workload-section:active {
+        transform: scale(0.98) translateY(2px);
+    }
+}
+
+/* Active States */
+.info-section:active, .workload-section:active {
+    transform:
+        translateY(var(--press-translate))
+        scale(var(--press-scale));
+    box-shadow: var(--click-glow);
+    transition: all var(--press-duration) var(--spring-return);
+}
+
+/* Typography */
+h1 {
+    font-size: var(--font-size-3xl);
+    font-weight: 700;
+    margin-bottom: clamp(1.5rem, 4vw, 2rem);
+    background: var(--accent-gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.2;
+}
+
+.info-section p {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: slideInFloat var(--duration-entrance) var(--transition-natural) forwards;
+    font-size: var(--font-size-lg);
+    line-height: 1.6;
+    color: var(--apple-gray);
+    margin-bottom: 1.5rem;
+    transition: transform var(--duration-base) var(--transition-smooth),
+                color var(--duration-base) var(--transition-smooth);
+
+    position: relative;
+    padding-left: 0;
+    transition:
+        transform var(--micro-duration) var(--spring-soft),
+        padding-left var(--micro-duration) var(--spring-soft),
+        color var(--micro-duration) var(--transition-smooth);
+}
+
+/* Paragraph Animation Delays */
+.info-section p:nth-child(1) { --n: 1; animation-delay: calc(var(--stagger-items) * 1); }
+.info-section p:nth-child(2) { --n: 2; animation-delay: calc(var(--stagger-items) * 2); }
+.info-section p:nth-child(3) { --n: 3; animation-delay: calc(var(--stagger-items) * 3); }
+
+/* Status Styles */
+.availability-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: var(--font-size-sm);
+}
+
+.status-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    animation: pulseGlow 2s var(--transition-natural) infinite;
+    will-change: transform, box-shadow;
+}
+
+.status-indicator.available {
+    background-color: var(--status-available);
+}
+
+.status-indicator.unavailable {
+    background-color: var(--status-unavailable);
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .hero-container > *, .info-section p {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    :root {
+        --hover-translate-y: -4px;
+        --hover-scale: 1.02;
+        --hover-rotation: 1deg;
+    }
+
+    .hero-container {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        gap: 1.5rem;
+    }
+
+    .info-section, .workload-section, .headshot-section {
+        transition-duration: var(--duration-fast);
+    }
+
+    h1 {
+        font-size: var(--font-size-2xl);
+    }
+
+    .info-section p {
+        font-size: var(--font-size-base);
+    }
+}
+
+/* Small Screen Optimizations */
+@media (max-width: 360px) {
+    .hero-container {
+        padding: 1rem;
+        gap: 1rem;
+    }
+
+    h1 {
+        font-size: var(--font-size-xl);
+    }
+}
+
+.workload-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    .workload-category {
+      position: relative;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .category-header {
+      padding: 1.5rem;
+      background: var(--glass-bg);
+      border-bottom: 1px solid var(--glass-border);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .category-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      font-size: 1.25rem;
+      background: var(--accent-gradient);
+    }
+
+    .category-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--apple-light);
+    }
+
+    .workload-items {
+      padding: 1.5rem;
+    }
+
+    .workload-item {
+      position: relative;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .workload-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.5rem;
+    }
+
+    .item-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--apple-light);
+    }
+
+    .item-status {
+      padding: 0.25rem 0.75rem;
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      font-size: 0.875rem;
+      color: var(--apple-gray);
+    }
+
+    .item-status.active {
+      background: rgba(48, 209, 88, 0.2);
+      color: #30d158;
+    }
+
+    .item-status.upcoming {
+      background: rgba(255, 159, 10, 0.2);
+      color: #ff9f0a;
+    }
+
+    .item-details {
+      font-size: 0.875rem;
+      color: var(--apple-gray);
+      margin-bottom: 0.75rem;
+    }
+
+    .progress-bar {
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--accent-gradient);
+      transform-origin: left;
+      transform: scaleX(0);
+      animation: progressFill 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    /* Hover Effects */
+    .workload-category:hover {
+      transform: translateY(-4px);
+    }
+
+    .workload-item:hover {
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    @keyframes progressFill {
+      to { transform: scaleX(1); }
+    }
+</style>
+</head>
+<body>
+<div class="hero-container">
+    <div class="info-section">
+    <h1>Overview</h1>
+    <p>Name</p>
+    <p>Mission Statement</p>
+    <p>Goals</p>
+    <div class="availability-wrapper">
+        <span>Location & Availability</span>
+        <!-- Change class to "unavailable" to show unavailable status -->
+        <div class="status-indicator available"></div>
+        <span class="status-text available">Open to Opportunities</span>
+    </div>
+    </div>
+    <div class="headshot-section"></div>
+    <div class="workload-section">
+        <h1>Currently working on...</h1>
+        <div class="workload-grid">
+          <!-- Professional Experience -->
+          <div class="workload-category">
+            <div class="category-header">
+              <div class="category-icon">
+                <i class="fas fa-briefcase"></i>
+              </div>
+              <div class="category-title">Professional</div>
+            </div>
+            <div class="workload-items">
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Software Engineer Intern @ Apple</div>
+                  <div class="item-status active">Active</div>
+                </div>
+                <div class="item-details">Working on iOS accessibility features</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 75%"></div>
+                </div>
+              </div>
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Research Assistant</div>
+                  <div class="item-status upcoming">Starting Soon</div>
+                </div>
+                <div class="item-details">ML Research Project</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic Projects -->
+          <div class="workload-category">
+            <div class="category-header">
+              <div class="category-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+              <div class="category-title">Academic</div>
+            </div>
+            <div class="workload-items">
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Advanced ML Course</div>
+                  <div class="item-status active">In Progress</div>
+                </div>
+                <div class="item-details">CS 4780 - Current GPA: 3.9</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 60%"></div>
+                </div>
+              </div>
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Senior Thesis</div>
+                  <div class="item-status active">Research Phase</div>
+                </div>
+                <div class="item-details">AI in Healthcare Applications</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 40%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Organizations & Clubs -->
+          <div class="workload-category">
+            <div class="category-header">
+              <div class="category-icon">
+                <i class="fas fa-users"></i>
+              </div>
+              <div class="category-title">Organizations</div>
+            </div>
+            <div class="workload-items">
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">AI/ML Club</div>
+                  <div class="item-status active">Project Lead</div>
+                </div>
+                <div class="item-details">Leading computer vision project</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 80%"></div>
+                </div>
+              </div>
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Hackathon Team</div>
+                  <div class="item-status upcoming">Next Month</div>
+                </div>
+                <div class="item-details">Preparing for TreeHacks 2024</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Personal Projects -->
+          <div class="workload-category">
+            <div class="category-header">
+              <div class="category-icon">
+                <i class="fas fa-code"></i>
+              </div>
+              <div class="category-title">Side Projects</div>
+            </div>
+            <div class="workload-items">
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">iOS Health App</div>
+                  <div class="item-status active">Development</div>
+                </div>
+                <div class="item-details">SwiftUI + HealthKit Integration</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 65%"></div>
+                </div>
+              </div>
+              <div class="workload-item">
+                <div class="item-header">
+                  <div class="item-title">Design System</div>
+                  <div class="item-status active">Open Source</div>
+                </div>
+                <div class="item-details">React component library</div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 90%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+</div>
+</body>
+</html>
