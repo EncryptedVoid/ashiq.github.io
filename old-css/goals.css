@@ -1,0 +1,465 @@
+/* Font Imports & Base Setup */
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,400&display=swap");
+
+:root {
+  /* Font Weights */
+  --font-thin: 100;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-black: 900;
+
+  /* Letter Spacing by Usage */
+  --tracking-heading: -0.04em;
+  --tracking-title: -0.02em;
+  --tracking-body: -0.01em;
+  --tracking-caption: 0.02em;
+  --tracking-button: 0.03em;
+
+  /* Core System Colors */
+  --apple-dark: #0a0a0f; /* Deeper black for better depth */
+  --apple-light: #f8f9fc; /* Warmer white for reduced eye strain */
+  --apple-gray: #94969d; /* Refined gray for better contrast */
+
+  /* Enhanced Glass Effects */
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-hover: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.09);
+
+  /* Psychologically Optimized Gradients */
+  --accent-gradient: linear-gradient(
+    135deg,
+    #00b4d8 0%,
+    #4361ee 50%,
+    #7209b7 100%
+  );
+
+  --learning-gradient: linear-gradient(
+    135deg,
+    #2ecc71 0%,
+    /* Growth & Progress */ #00b4d8 100% /* Knowledge & Depth */
+  );
+
+  --cert-gradient: linear-gradient(
+    135deg,
+    #f7b731 0%,
+    /* Achievement & Recognition */ #fa8231 100% /* Confidence & Energy */
+  );
+
+  --project-gradient: linear-gradient(
+    135deg,
+    #7950f2 0%,
+    /* Creativity & Innovation */ #be4bdb 100% /* Vision & Inspiration */
+  );
+
+  --career-gradient: linear-gradient(
+    135deg,
+    #e84393 0%,
+    /* Ambition & Drive */ #ff4757 100% /* Power & Determination */
+  );
+
+  /* Advanced Typography Scale - Based on Golden Ratio (1.618) */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.375rem; /* 22px */
+  --font-size-2xl: 1.75rem; /* 28px */
+  --font-size-3xl: 2.25rem; /* 36px */
+  --font-size-4xl: 3rem; /* 48px */
+  --font-size-5xl: 4rem; /* 64px */
+
+  /* Enhanced Line Heights */
+  --line-height-none: 1;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.375;
+  --line-height-normal: 1.618; /* Golden Ratio */
+  --line-height-relaxed: 1.75;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.04em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.02em;
+  --tracking-wider: 0.04em;
+  /* Animation Timing */
+  --speed-fast: 200ms;
+  --speed-base: 400ms;
+  --speed-slow: 600ms;
+  --speed-slower: 800ms;
+
+  /* Spring Physics */
+  --bounce-in: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --bounce-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --smooth-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Enhanced Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 16px 32px rgba(0, 0, 0, 0.16);
+  --shadow-glow: 0 0 32px rgba(255, 255, 255, 0.1);
+}
+
+/* Base Styles
+body {
+  background-color: var(--apple-dark);
+  color: var(--apple-light);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "ss01", "ss03", "cv01", "cv03";
+  padding: 3rem;
+} */
+
+/* Enhanced Header Typography */
+.header-title {
+  font-size: var(--font-size-5xl);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--line-height-tight);
+  margin-bottom: 1.5rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 300%;
+  animation: gradientFlow 8s ease infinite;
+  font-feature-settings: "ss01", "cv01", "cv03";
+}
+
+.header-subtitle {
+  font-size: var(--font-size-xl);
+  color: var(--apple-gray);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: var(--line-height-normal);
+  letter-spacing: var(--tracking-normal);
+  font-weight: 400;
+}
+
+/* Goal Card Typography */
+.goal-title {
+  font-size: var(--font-size-2xl);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--line-height-snug);
+}
+
+.timeline-date {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  color: var(--apple-gray);
+  margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-normal);
+  color: var(--apple-light);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+}
+
+/* Enhanced Card Styles */
+.goal-card {
+  position: relative;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 2.5rem;
+  opacity: 0;
+  transform: translateY(40px);
+  animation: cardReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* Goal Icons Enhancement */
+.goal-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  font-size: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Timeline Enhancement */
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--apple-gray);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+}
+
+/* Progress Bar Enhancement */
+.progress-bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Typography */
+@media (max-width: 1024px) {
+  .header-title {
+    font-size: var(--font-size-4xl);
+  }
+
+  .header-subtitle {
+    font-size: var(--font-size-lg);
+  }
+
+  .goal-title {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .header-subtitle {
+    font-size: var(--font-size-base);
+  }
+
+  .timeline-content {
+    font-size: var(--font-size-base);
+  }
+
+  .goal-card {
+    padding: 1.5rem;
+  }
+}
+
+/* Layout Enhancements */
+.goals-section {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.goals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+/* Enhanced Card Animations */
+@keyframes cardFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes progressFill {
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--progress);
+  }
+}
+
+@keyframes iconPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Enhanced Goal Cards */
+.goal-card {
+  --gradient: var(--accent-gradient);
+  position: relative;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: all var(--speed-base) var(--bounce-out);
+  cursor: pointer;
+
+  /* Add gradient border */
+  background: linear-gradient(var(--apple-dark), var(--apple-dark)) padding-box,
+    var(--gradient) border-box;
+  border: 2px solid transparent;
+}
+
+.goal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--gradient);
+  opacity: 0;
+  transition: opacity var(--speed-base);
+  border-radius: inherit;
+  z-index: -1;
+}
+
+.goal-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+}
+
+.goal-card:hover::before {
+  opacity: 0.1;
+}
+
+/* Card Type-Specific Styling */
+.goal-card.learning {
+  --gradient: var(--learning-gradient);
+}
+.goal-card.certifications {
+  --gradient: var(--cert-gradient);
+}
+.goal-card.projects {
+  --gradient: var(--project-gradient);
+}
+.goal-card.career {
+  --gradient: var(--career-gradient);
+}
+
+/* Enhanced Goal Icons */
+.goal-icon {
+  background: var(--gradient);
+  transform-origin: center;
+  animation: iconPulse 2s var(--bounce-out) infinite;
+  box-shadow: var(--shadow-md);
+}
+
+.goal-card:hover .goal-icon {
+  animation: iconPulse 1s var(--bounce-in) infinite;
+}
+
+/* Enhanced Timeline Items */
+.timeline {
+  position: relative;
+  margin: 2rem 0;
+}
+
+.timeline-item {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.7;
+  transform: translateX(-10px);
+  transition: all var(--speed-base) var(--smooth-out);
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--gradient);
+  border-radius: 50%;
+  transition: all var(--speed-base) var(--bounce-out);
+}
+
+.timeline-item.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-item.active::before {
+  transform: scale(1.5);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+}
+
+/* Enhanced Progress Bars */
+.progress-bar {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  height: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--gradient);
+  transform-origin: left;
+  animation: progressFill 1.5s var(--bounce-out) forwards;
+}
+
+/* Header Animations */
+.header-title {
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideDown 1s var(--bounce-out) forwards;
+}
+
+.header-subtitle {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 1s var(--bounce-out) 0.2s forwards;
+}
+
+@keyframes slideDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Improved Mobile Responsiveness */
+@media (max-width: 768px) {
+  .goals-grid {
+    gap: 1rem;
+  }
+
+  .goal-card {
+    padding: 1.5rem;
+  }
+
+  .goal-card:hover {
+    transform: translateY(-6px) scale(1.01);
+  }
+}
