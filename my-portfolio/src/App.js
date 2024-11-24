@@ -1,7 +1,8 @@
 // src/App.js
 import React from 'react';
-import Hero from './components/sections/Hero/Hero';  // Updated path
-import Skills from './components/sections/Skills';   // This will use index.jsx
+import Hero from './components/sections/Hero';
+import Skills from './components/sections/Skills';
+import Experience from './components/sections/Experience';
 
 // Placeholder component for other sections
 const PlaceholderSection = ({ title }) => (
@@ -13,18 +14,17 @@ const PlaceholderSection = ({ title }) => (
   </div>
 );
 
-const App = () => {
+function App() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black">
       <main className="flex flex-col w-full items-center">
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-          {/* Implemented Sections */}
           <Hero />
           <Skills />
+          <Experience />
 
           {/* Placeholder Sections */}
           <div className="space-y-8 py-8">
-            <PlaceholderSection title="Experience" />
             <PlaceholderSection title="Projects" />
             <PlaceholderSection title="Contact" />
           </div>

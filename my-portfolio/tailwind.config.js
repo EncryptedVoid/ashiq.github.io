@@ -17,8 +17,17 @@ module.exports = {
         'gradient-x': 'gradient-x 15s ease infinite',
         'gradient-y': 'gradient-y 15s ease infinite',
         'gradient-xy': 'gradient-xy 15s ease infinite',
+        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       },
       keyframes: {
+        pulse: {
+          '0%, 100%': {
+            opacity: 1
+          },
+          '50%': {
+            opacity: .5
+          }
+        },
         'gradient-y': {
           '0%, 100%': {
             'background-size': '400% 400%',
