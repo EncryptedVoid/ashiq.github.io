@@ -1,64 +1,64 @@
 // src/components/common/GlassCard/index.jsx
 import React from 'react';
-import { motion } from 'framer-motion';
-import { variants } from './variants';
 
 const GlassCard = ({
   children,
   className = '',
-  variant = 'default',
   hover = true,
-  animation = true,
-  delay = 0,
-  ...props
+  gradient = false,
+  onClick,
+  as = 'div'
 }) => {
-  const variantStyles = variants[variant];
+  const Element = as;
 
   const baseClasses = `
-    relative overflow-hidden
-    backdrop-blur-xl
+    relative
+    overflow-hidden
+    bg-white/[0.03]
+    border border-white/[0.08]
+    backdrop-blur-2xl
+    rounded-3xl
     p-6
-    rounded-2xl
-    ${variantStyles.base}
   `;
 
   const hoverClasses = hover ? `
-    ${variantStyles.hover}
+    transition-all
+    duration-500
+    ease-out
+    hover:bg-white/[0.06]
+    hover:border-white/[0.12]
     hover:-translate-y-1
-    hover:shadow-lg
-    hover:shadow-purple-500/10
-    transition-all duration-500 ease-out
+    hover:shadow-xl
+    hover:shadow-blue-500/10
   ` : '';
 
-  const component = animation ? motion.div : 'div';
-  const animationProps = animation ? {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    transition: {
-      duration: variantStyles.animation.duration,
-      ease: variantStyles.animation.ease,
-      delay
-    }
-  } : {};
+  const interactionClasses = onClick ? 'cursor-pointer active:scale-[0.98]' : '';
 
-  return React.createElement(
-    component,
-    {
-      className: `${baseClasses} ${hoverClasses} ${className}`.trim(),
-      ...animationProps,
-      ...props
-    },
-    <>
-      <div className="
-        absolute inset-0
-        bg-gradient-to-br from-white/[0.12] to-white/[0.06]
-        opacity-0 group-hover:opacity-100
-        transition-opacity duration-500
-      "/>
+  return (
+    <Element
+      className={`
+        ${baseClasses}
+        ${hoverClasses}
+        ${interactionClasses}
+        ${className}
+      `}
+      onClick={onClick}
+    >
+      {/* Gradient overlay */}
+      {gradient && (
+        <div className={`
+          absolute inset-0
+          bg-gradient-to-br from-white/[0.12] to-white/[0.06]
+          opacity-0 transition-opacity duration-500
+          group-hover:opacity-100
+        `} />
+      )}
+
+      {/* Content wrapper */}
       <div className="relative z-10">
         {children}
       </div>
-    </>
+    </Element>
   );
 };
 
