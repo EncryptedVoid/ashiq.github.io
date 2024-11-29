@@ -84,10 +84,34 @@ export const experienceData = [
       ],
       testimonials: [
         {
+          name: 'Sarah Chen',
+          position: 'Engineering Manager',
+          image: '/testimonials/sarah.jpg',
+          text: 'Outstanding leadership in driving our core infrastructure modernization. Their technical expertise and ability to mentor team members has been invaluable.'
+        },
+        {
           name: 'Michael Johnson',
           position: 'Tech Lead',
           image: '/testimonials/michael.jpg',
-          text: 'Exceptional problem-solving skills and attention to detail.'
+          text: 'Exceptional problem-solving skills and attention to detail. They consistently delivered high-quality solutions while maintaining excellent documentation standards.'
+        },
+        {
+          name: 'Emily Rodriguez',
+          position: 'Senior Developer',
+          image: '/testimonials/emily.jpg',
+          text: 'A true team player with remarkable technical skills. Their contributions to our testing framework revolutionized our development process.'
+        },
+        {
+          name: 'David Kim',
+          position: 'Product Manager',
+          image: '/testimonials/david.jpg',
+          text: 'Demonstrated excellent communication skills and technical leadership. Always went above and beyond to ensure project success.'
+        },
+        {
+          name: 'Lisa Wang',
+          position: 'DevOps Lead',
+          image: '/testimonials/lisa.jpg',
+          text: 'Implemented innovative solutions that significantly improved our deployment pipeline. A pleasure to work with and highly knowledgeable.'
         }
       ],
       links: {

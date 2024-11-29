@@ -1,104 +1,88 @@
-import './project.css';
+// src/components/sections/Projects/index.jsx
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { projectsData } from './projectsData';
+import ProjectCard from './components/ProjectCard';
+import ProjectModal from './components/ProjectModal';
 
-function Projects() {
-// Projects data array to avoid repetition
-const projects = [
-    {
-    id: 1,
-    status: "In Progress",
-    title: "iOS 17 Gestures",
-    skills: ["SwiftUI", "Gesture Design", "HCI"],
-    description: "Leading the design and implementation of system-wide gesture interactions for iOS 17, focusing on natural and intuitive user experiences with improved accessibility features.",
-    progress: 50,
-    image: "" // Add image URL here
-    },
-    {
-        id: 1,
-        status: "In Progress",
-        title: "iOS 17 Gestures",
-        skills: ["SwiftUI", "Gesture Design", "HCI"],
-        description: "Leading the design and implementation of system-wide gesture interactions for iOS 17, focusing on natural and intuitive user experiences with improved accessibility features.",
-        progress: 50,
-        image: "" // Add image URL here
-    },
-    {
-        id: 1,
-        status: "In Progress",
-        title: "iOS 17 Gestures",
-        skills: ["SwiftUI", "Gesture Design", "HCI"],
-        description: "Leading the design and implementation of system-wide gesture interactions for iOS 17, focusing on natural and intuitive user experiences with improved accessibility features.",
-        progress: 50,
-        image: "" // Add image URL here
-    },
-    {
-        id: 1,
-        status: "In Progress",
-        title: "iOS 17 Gestures",
-        skills: ["SwiftUI", "Gesture Design", "HCI"],
-        description: "Leading the design and implementation of system-wide gesture interactions for iOS 17, focusing on natural and intuitive user experiences with improved accessibility features.",
-        progress: 50,
-        image: "" // Add image URL here
-    },
-    {
-        id: 1,
-        status: "In Progress",
-        title: "iOS 17 Gestures",
-        skills: ["SwiftUI", "Gesture Design", "HCI"],
-        description: "Leading the design and implementation of system-wide gesture interactions for iOS 17, focusing on natural and intuitive user experiences with improved accessibility features.",
-        progress: 50,
-        image: "" // Add image URL here
-    },
-    // Add more projects here with different data
-];
+const Projects = () => {
+const [selectedProject, setSelectedProject] = useState(null);
+const [filter, setFilter] = useState('all');
 
-// ProjectCard component to avoid repetition
-const ProjectCard = ({ project }) => (
-    <div className="project-card">
-    <div className="project-status">{project.status}</div>
-    <div className="project-image" style={{ backgroundImage: `url(${project.image})` }}></div>
-    <div className="project-content">
-        <h2 className="project-title">{project.title}</h2>
-        <div className="project-skills">
-        {project.skills.map((skill, index) => (
-            <span key={index} className="skill-tag">{skill}</span>
-        ))}
-        </div>
-        <p className="project-description">{project.description}</p>
-        <div className="progress-container">
-        <div className="progress-label">
-            <span>Development Progress</span>
-            <span>{project.progress}%</span>
-        </div>
-        <div className="progress-bar">
-            <div
-            className="progress"
-            style={{ width: `${project.progress}%` }}
-            ></div>
-        </div>
-        </div>
-    </div>
-    </div>
+const filterTypes = ['all', 'Professional', 'Open Source', 'Personal'];
+
+const filteredProjects = projectsData.filter(project =>
+    filter === 'all' || project.type === filter
 );
 
 return (
-    <div className="App">
-    <section className="projects-section">
-        <div className="section-header">
-        <h1 className="header-title">Featured Projects</h1>
-        <p className="header-subtitle">
-            A curated selection of innovative projects showcasing my expertise
-            in human interface design and interaction development.
+    <div className="py-20">
+    {/* Header */}
+    <motion.div
+        className="text-center max-w-3xl mx-auto mb-16 space-y-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+    >
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
+        Featured Projects
+        </h1>
+        <p className="text-lg text-white/60">
+        A showcase of my technical projects, ranging from professional work to open-source contributions
         </p>
-        </div>
+    </motion.div>
 
-        <div className="projects-grid">
-        {projects.map(project => (
-            <ProjectCard key={project.id} project={project} />
+    {/* Filters */}
+    <div className="flex justify-center gap-4 mb-12">
+        {filterTypes.map((type, index) => (
+        <motion.button
+            key={type}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            onClick={() => setFilter(type)}
+            className={`
+            px-4 py-2 rounded-lg
+            transition-all duration-300
+            ${filter === type
+                ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
+                : 'bg-white/5 text-white/60 border-white/10'
+            }
+            border
+            hover:bg-white/10
+            hover:border-white/20
+            `}
+        >
+            {type}
+        </motion.button>
         ))}
-        </div>
-    </section>
+    </div>
+
+    {/* Projects Grid */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+        {filteredProjects.map((project, index) => (
+        <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+        >
+            <ProjectCard
+            project={project}
+            onClick={() => setSelectedProject(project)}
+            />
+        </motion.div>
+        ))}
+    </div>
+
+    {/* Project Modal */}
+    <ProjectModal
+        project={selectedProject}
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+    />
     </div>
 );
-}
+};
 
 export default Projects;

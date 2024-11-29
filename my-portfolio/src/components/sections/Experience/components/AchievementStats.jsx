@@ -1,50 +1,71 @@
 // src/components/sections/Experience/components/AchievementStats.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import GlassCard from '../../../common/GlassCard';
 
-const AchievementCard = ({ achievement, totalAchievements }) => {
-const [showDetails, setShowDetails] = useState(false);
+const AchievementCard = ({ achievement }) => {
+const [isHovered, setIsHovered] = useState(false);
+const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-// Dynamic padding based on number of achievements
-const gridCols = totalAchievements <= 3 ? 3 : totalAchievements <= 4 ? 2 : 3;
-const padding = totalAchievements <= 3 ? 'p-4' : 'p-3';
+useEffect(() => {
+    const handleMouseMove = (e) => {
+    if (isHovered) {
+        setMousePosition({ x: e.clientX, y: e.clientY });
+    }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+}, [isHovered]);
 
 return (
-    <div className="relative group" onMouseEnter={() => setShowDetails(true)} onMouseLeave={() => setShowDetails(false)}>
+    <div
+    className="relative"
+    onMouseEnter={() => setIsHovered(true)}
+    onMouseLeave={() => setIsHovered(false)}
+    >
     {/* Main Achievement Card */}
     <GlassCard className="h-full">
-        <div className={`${padding} text-center`}>
-        <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-1">
+        <div className="flex items-center gap-3 p-3">
+        <motion.div
+            className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
+            animate={{
+            scale: isHovered ? 1.1 : 1,
+            translateY: isHovered ? -2 : 0
+            }}
+            transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 10
+            }}
+        >
             {achievement.stat}
-        </div>
-        <div className="text-xs text-white/60 line-clamp-2">
+        </motion.div>
+        <div className="text-sm text-white/60">
             {achievement.label}
         </div>
         </div>
     </GlassCard>
 
-    {/* Hovering Details Card */}
+    {/* Cursor-following Details Card */}
     <AnimatePresence>
-        {showDetails && (
+        {isHovered && (
         <motion.div
-            initial={{ opacity: 0, y: 10, zIndex: 50 }}
-            animate={{ opacity: 1, y: 0, zIndex: 50 }}
-            exit={{ opacity: 0, y: 10, zIndex: 50 }}
-            className="fixed transform -translate-x-1/2 z-50"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            className="fixed z-50 pointer-events-none"
             style={{
-            left: '50%',
-            top: 'calc(100% + 10px)',
-            width: '250px'
+            left: mousePosition.x + 5, // Moved closer to cursor
+            top: mousePosition.y + 5,  // Moved closer to cursor
+            width: '280px'
             }}
         >
-            <GlassCard className="p-3">
-            <div className="text-sm text-white/80">
+            <div className="bg-gray-900/95 backdrop-blur-md rounded-xl border border-white/20 p-4">
+            <div className="text-sm leading-relaxed text-white">
                 {achievement.description}
             </div>
-            {/* Arrow pointing up */}
-            <div className="absolute -top-1.5 left-1/2 transform -translate-x-1/2 rotate-45 w-3 h-3 bg-white/[0.03] border-l border-t border-white/[0.08]" />
-            </GlassCard>
+            </div>
         </motion.div>
         )}
     </AnimatePresence>
@@ -53,19 +74,16 @@ return (
 };
 
 const AchievementStats = ({ achievements }) => {
-const gridCols = achievements.length <= 3 ? 3 : achievements.length <= 4 ? 2 : 3;
-
 return (
     <div className="py-4">
     <h4 className="text-sm font-semibold text-white/60 uppercase mb-3">
         Key Achievements
     </h4>
-    <div className={`grid grid-cols-${gridCols} gap-3`}>
+    <div className="flex flex-wrap gap-3">
         {achievements.map((achievement, index) => (
         <AchievementCard
             key={index}
             achievement={achievement}
-            totalAchievements={achievements.length}
         />
         ))}
     </div>

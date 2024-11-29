@@ -1,30 +1,18 @@
 // src/components/sections/Hero/Hero.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import GlassCard from '../../common/GlassCard';  // Updated import path
-import {
-  Briefcase,
-  GraduationCap,
-  Users,
-  Code,
-  ArrowRight,
-  ExternalLink
-} from 'lucide-react';
+import { Briefcase, GraduationCap, Users, Code, ArrowRight } from 'lucide-react';
 import ParticleField from './components/ParticleField';
 import { TypewriterText } from './components/TypewriterText';
-import { useMousePosition } from '../../../hooks/useMousePosition';  // Updated import path
+import { useMousePosition } from '../../../hooks/useMousePosition';
 
 const Hero = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
   const mousePosition = useMousePosition();
 
   // Parallax effect for background elements
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-
-  useEffect(() => {
-    setIsLoaded(true);
-  }, []);
 
   // Update parallax effect based on mouse position
   useEffect(() => {

@@ -1,10 +1,9 @@
 // src/components/sections/Skills/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Plus, Minus, Search } from 'lucide-react';
 import GlassCard from '../../common/GlassCard';
-import SkillCard from './components/SkillCard';
 import SkillCategory from './components/SkillCategory';
+import { Search } from 'lucide-react';
 
 // Skill data
 const skillsData = [
