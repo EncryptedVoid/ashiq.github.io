@@ -122,9 +122,9 @@ export const experienceData = [
     // Add more experiences...
   ];
 
-// Summary statistics
-export const experienceStats = {
-    yearsOfExperience: '5+',
-    projectsDelivered: '50+',
-    teamMembersLed: '20+'
-};
+// // Summary statistics
+// export const experienceStats = {
+//     yearsOfExperience: '5+',
+//     projectsDelivered: '50+',
+//     teamMembersLed: '20+'
+// };

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ExperienceCard from './components/ExperienceCard';
-import { experienceData } from './experienceData';
+import { experienceData } from '../../../data/experienceData';
 import CaseStudyModal from './components/CaseStudyModal';
 
 const Experience = () => {
