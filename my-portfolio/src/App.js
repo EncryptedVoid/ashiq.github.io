@@ -9,6 +9,7 @@ import Projects from './components/sections/Projects';
 import Contact from './components/sections/Contact';
 import Goals from './components/sections/Goals';
 import Socials from './components/sections/DigitalPresence';
+import Education from './components/sections/Education/index.jsx'
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Testimonials />
           <Skills />
           <Experience />
+          <Education />
           <Certifications />
           <Projects />
           <Contact />
