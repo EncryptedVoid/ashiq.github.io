@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TestimonialCard from './components/TestimonialCard';
-import { testimonials } from '../../../data/testimonialsData';
+import { testimonials } from './testimonialsData'; // Add this import
 
 const Testimonials = () => {
 const [currentIndex, setCurrentIndex] = useState(0);

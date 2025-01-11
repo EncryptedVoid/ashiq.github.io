@@ -1,176 +1,131 @@
-// src/components/sections/Hero/Hero.jsx
-import React, { useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
-import GlassCard from '../../common/GlassCard';
-import ParticleField from './components/ParticleField';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
 import { TypewriterText } from './components/TypewriterText';
-import { useMousePosition } from '../../../hooks/useMousePosition';
-import { heroData } from '../../../data/heroData';
+import ParticleField from './components/ParticleField';
 
-const Hero = () => {
-  const {
-    intro,
-    status,
-    profileImage,
-    quickStats,
-    animations
-  } = heroData;
-
-  const mousePosition = useMousePosition();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  useEffect(() => {
-    if (mousePosition) {
-      const { x: mouseX, y: mouseY } = mousePosition;
-      x.set(mouseX / -20);
-      y.set(mouseY / -20);
-    }
-  }, [mousePosition, x, y]);
-
-  const xSpring = useSpring(x, animations.springConfig);
-  const ySpring = useSpring(y, animations.springConfig);
+const MobileHero = ({ heroData }) => {
+  const { intro, status, profileImage, quickStats } = heroData;
 
   return (
-    <div className="relative min-h-[90vh] flex items-center">
+    <div className="relative min-h-screen bg-black">
       <ParticleField />
 
-      <div className="relative w-full">
-        <div className="grid md:grid-cols-3 gap-8">
-          {/* Info Section */}
-          <motion.div
-            className="md:col-span-2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <GlassCard className="h-full p-8 md:p-10 relative overflow-hidden group">
-              <div className="space-y-8 relative z-10">
-                {/* Dynamic Title */}
-                <div className="space-y-4">
-                  <motion.div
-                    className="text-sm text-blue-400 font-mono"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: animations.textDelays.terminalText }}
-                  >
-                    <TypewriterText text={intro.terminalText} />
-                  </motion.div>
+      {/* Profile Header Section */}
+      <div className="relative z-10">
+        {/* Status Bar */}
+        <motion.div
+          className="flex items-center justify-between p-4 border-b border-white/10"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+            <span className="text-green-400 text-sm">{status.availability}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-white/60" />
+            <span className="text-white/60 text-sm">{status.location}</span>
+          </div>
+        </motion.div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold space-y-2">
-                    {Object.entries(intro.title).map(([key, line], index) => (
-                      <motion.span
-                        key={key}
-                        className="block bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: animations.textDelays[`titleLine${index + 1}`] }}
-                      >
-                        {line}
-                      </motion.span>
-                    ))}
-                  </h1>
-                </div>
-
-                {/* Description */}
-                <motion.div
-                  className="space-y-4 text-lg text-white/80"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: animations.textDelays.description }}
-                >
-                  {intro.description.map((paragraph, index) => (
-                    <p key={index}>{paragraph}</p>
-                  ))}
-                </motion.div>
-
-                {/* Status */}
-                <motion.div
-                  className="flex items-center gap-4 flex-wrap"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: animations.textDelays.status }}
-                >
-                  <div className="flex items-center gap-3 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
-                    <span className="text-white/60">{status.location}</span>
-                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                    <span className="text-green-400">{status.availability}</span>
-                  </div>
-
-                  <a
-                    href={status.resumeLink}
-                    className="group flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20
-                            border border-blue-500/20 hover:border-blue-500/30 rounded-full
-                            transition-all duration-300 text-blue-400"
-                  >
-                    View Resume
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                  </a>
-                </motion.div>
-              </div>
-            </GlassCard>
-          </motion.div>
-
-          {/* Profile Image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
-            className="relative aspect-square"
-            style={{ perspective: '1000px' }}
-          >
+        {/* Profile Info */}
+        <div className="p-6">
+          <div className="flex items-start gap-6">
+            {/* Profile Image */}
             <motion.div
-              className="w-full h-full"
-              style={{
-                rotateX: useTransform(ySpring, [-100, 100], [10, -10]),
-                rotateY: useTransform(xSpring, [-100, 100], [-10, 10]),
-              }}
+              className="relative w-24 h-24"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
             >
-              <GlassCard className="h-full overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-500/20
-                              opacity-0 group-hover:opacity-75 transition-opacity duration-700"/>
-                <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-transparent"/>
+              <div className="w-full h-full rounded-full overflow-hidden border-2 border-blue-500/30">
                 <img
                   src={profileImage.src}
                   alt={profileImage.alt}
-                  className="w-full h-full object-cover opacity-80 group-hover:scale-105
-                          transition-transform duration-700"
+                  className="w-full h-full object-cover"
                 />
-              </GlassCard>
+              </div>
             </motion.div>
+
+            {/* Quick Stats */}
+            <div className="flex-1">
+              <div className="grid grid-cols-3 gap-2 text-center">
+                {quickStats.slice(0, 3).map((stat, index) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="space-y-1"
+                  >
+                    <div className="text-xl font-bold text-white">{stat.value}</div>
+                    <div className="text-xs text-white/60">{stat.label}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bio Section */}
+          <motion.div
+            className="mt-6 space-y-2"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+          >
+            <div className="text-sm text-blue-400 font-mono">
+              <TypewriterText text={intro.terminalText} />
+            </div>
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
+              {Object.values(intro.title).join(' ')}
+            </h1>
+            <p className="text-sm text-white/80 leading-relaxed">
+              {intro.description[0]}
+            </p>
+          </motion.div>
+
+          {/* Action Buttons */}
+          <motion.div
+            className="mt-6 flex gap-3"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <a
+              href={status.resumeLink}
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-blue-500/10
+                       rounded-xl border border-blue-500/20 text-blue-400 text-sm font-medium"
+            >
+              View Resume
+              <ArrowRight className="w-4 h-4" />
+            </a>
+            <button
+              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-white/5
+                       rounded-xl border border-white/10 text-white/80 text-sm font-medium"
+            >
+              <Mail className="w-4 h-4" />
+              Contact Me
+            </button>
           </motion.div>
         </div>
 
-        {/* Quick Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-          {quickStats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.4 + (index * 0.1),
-                ease: [0.16, 1, 0.3, 1]
-              }}
-            >
-              <GlassCard className="text-center p-4 md:p-6 group">
-                <stat.icon className="w-6 h-6 mx-auto mb-3 text-white/60
-                                  group-hover:text-blue-400 transition-colors duration-300"/>
-                <div className="text-2xl md:text-3xl font-bold mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-white/60">
-                  {stat.label}
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))}
-        </div>
+        {/* Timeline */}
+        <motion.div
+          className="mt-6 p-4 border-t border-white/10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5 }}
+        >
+          <div className="flex items-center gap-2 text-white/60 text-sm">
+            <Calendar className="w-4 h-4" />
+            <span>Recent Activity</span>
+          </div>
+        </motion.div>
       </div>
     </div>
   );
 };
 
-export default Hero;
+export default MobileHero;
