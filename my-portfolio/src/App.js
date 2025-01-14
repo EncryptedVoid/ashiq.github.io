@@ -1,8 +1,20 @@
-// src/App.js
+/**
+ * Portfolio.js
+ * Main portfolio application component that handles responsive rendering of sections
+ * for both desktop and mobile views.
+ *
+ * Architecture:
+ * - Uses a responsive design approach with separate mobile/desktop components
+ * - Implements component mapping for cleaner conditional rendering
+ * - Utilizes Tailwind CSS for styling
+ */
+
 import React from 'react';
+// Custom hook to detect mobile viewport
 import useIsMobile from './hooks/useIsMobile';
 
-// Desktop Components
+// Desktop component imports
+// Each section is modularized into its own component for better maintainability
 import Hero from './components/sections/Hero/Hero';
 import Testimonials from './components/sections/Testimonials';
 import Skills from './components/sections/Skills';
@@ -14,7 +26,8 @@ import Goals from './components/sections/Goals';
 import Socials from './components/sections/DigitalPresence';
 import Education from './components/sections/Education';
 
-// Mobile Components
+// Mobile-specific component imports
+// Separate mobile components allow for optimized mobile-first experiences
 import MobileHero from './mobileComponents/sections/Hero/Hero';
 import MobileTestimonials from './mobileComponents/sections/Testimonials';
 import MobileSkills from './mobileComponents/sections/Skills';
@@ -27,9 +40,16 @@ import MobileSocials from './mobileComponents/sections/DigitalPresence';
 import MobileEducation from './mobileComponents/sections/Education';
 
 function Portfolio() {
+  // Hook to determine if current viewport is mobile
   const isMobile = useIsMobile();
 
-  // Component mapping for cleaner conditional rendering
+  /**
+   * Component mapping object that pairs desktop and mobile versions of each section
+   * This approach:
+   * 1. Reduces conditional rendering complexity
+   * 2. Makes it easier to add/remove sections
+   * 3. Centralizes component organization
+   */
   const components = {
     Hero: { Desktop: Hero, Mobile: MobileHero },
     Testimonials: { Desktop: Testimonials, Mobile: MobileTestimonials },
@@ -43,16 +63,31 @@ function Portfolio() {
     Socials: { Desktop: Socials, Mobile: MobileSocials },
   };
 
-  // Dynamic component renderer
+  /**
+   * Helper function to render the appropriate component version (mobile/desktop)
+   * @param {string} name - The component name from the components mapping
+   * @returns {React.Component} - The rendered component with a unique key
+   */
   const renderComponent = (name) => {
+    // Select mobile or desktop version based on viewport
     const Component = isMobile ? components[name].Mobile : components[name].Desktop;
     return <Component key={name} />;
   };
 
   return (
+    // Main container with gradient background
     <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black text-white">
       <main className="flex flex-col w-full items-center">
+        {/*
+          Responsive container with conditional padding
+          - Desktop: max width with horizontal padding
+          - Mobile: full width without padding
+        */}
         <div className={`w-full ${!isMobile ? 'max-w-7xl px-4 sm:px-6 lg:px-8' : 'px-0'}`}>
+          {/*
+            Render all sections in order
+            Using Object.keys() to maintain consistent section ordering
+          */}
           {Object.keys(components).map(renderComponent)}
         </div>
       </main>
