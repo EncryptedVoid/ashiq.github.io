@@ -6,7 +6,7 @@ import GlassCard from '../../common/GlassCard';
 import ParticleField from './components/ParticleField';
 import { TypewriterText } from './components/TypewriterText';
 import { useMousePosition } from '../../../hooks/useMousePosition';
-import { heroData } from '../../../data/heroData';
+import { heroData } from '../../../../public/data/heroData';
 
 const Hero = () => {
   const {

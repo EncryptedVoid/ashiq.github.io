@@ -5,7 +5,7 @@ import { Building2, Calendar, MapPin, ExternalLink, ChevronDown, Award, Users, B
 import AchievementStats from './components/AchievementStats';
 import Testimonials from './components/Testimonials';
 import CaseStudyModal from './components/CaseStudyModal';
-import { experienceData } from '../../../data/experienceData';  // Update the path based on your file structure
+import { experienceData } from '../../../../public/data/experienceData';  // Update the path based on your file structure
 
 const getSkillEmoji = (skill) => {
   const emojiMap = {

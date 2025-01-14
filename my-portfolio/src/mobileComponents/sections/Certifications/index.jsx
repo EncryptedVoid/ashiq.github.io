@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Medal, ChevronRight, ExternalLink, Calendar } from 'lucide-react';
-import { certifications, certStyles } from '../../../data/certificationsData';
+import { certifications, certStyles } from '../../../../public/data/certificationsData';
 
 const CertificationCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];

@@ -2,7 +2,7 @@
 import React from 'react';
 import GoalCard from './components/GoalCard';
 import SectionHeader from './components/SectionHeader';
-import { goalsData } from '../../../data/goalsData';
+import { goalsData } from '../../../../public/data/goalsData';
 
 const Goals = () => {
   return (

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import CertCard from './components/CertCard';
 import CertModal from './components/CertModal';
-import { certifications } from '../../../data/certificationsData';
+import { certifications } from '../../../../public/data/certificationsData';
 
 const Certifications = () => {
   const [selectedCert, setSelectedCert] = useState(null);

@@ -1,7 +1,7 @@
 // src/components/Education/index.jsx
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { educationData } from '../../../data/educationData';
+import { educationData } from '../../../../public/data/educationData';
 
 // Header subcomponent
 const EducationHeader = ({ university }) => (

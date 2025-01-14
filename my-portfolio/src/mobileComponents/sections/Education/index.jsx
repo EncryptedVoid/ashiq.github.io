@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Bookmark, Share2, MessageCircle } from 'lucide-react';
-import { educationData } from '../../../data/educationData';
+import { educationData } from '../../../../public/data/educationData';
 
 const MobileEducation = () => {
   const [activeTab, setActiveTab] = useState('courses');

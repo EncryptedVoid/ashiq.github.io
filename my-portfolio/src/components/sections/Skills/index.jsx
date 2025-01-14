@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import GlassCard from '../../common/GlassCard';
 import SkillCategory from './components/SkillCategory';
 import { Search, X, Clock, Code, GitBranch, Users, Activity, Folder, Tag } from 'lucide-react';
-import { skillsData } from '../../../data/SkillsData';
+import { skillsData } from '../../../../public/data/SkillsData';
 
 const Skills = () => {
   const [expandedId, setExpandedId] = useState(null);

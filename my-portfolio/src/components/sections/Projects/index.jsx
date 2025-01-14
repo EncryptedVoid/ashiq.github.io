@@ -1,7 +1,7 @@
 // src/components/sections/Projects/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { projectsData } from '../../../data/projectsData';
+import { projectsData } from '../../../../public/data/projectsData';
 import ProjectCard from './components/ProjectCard';
 import ProjectModal from './components/ProjectModal';
 
