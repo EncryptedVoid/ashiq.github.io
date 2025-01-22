@@ -1,5 +1,5 @@
-// src/components/sections/Experience/experienceData.js
-export const experienceData = [
+// src/components/sections/Experience/ExperienceData.js
+export const ExperienceData = [
     {
       id: 'senior-systems',
       title: 'Senior Systems Engineer',

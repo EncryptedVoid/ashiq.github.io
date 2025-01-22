@@ -1,4 +1,4 @@
-// src/components/sections/Socials/data/socialsData.js
+// src/components/sections/Socials/data/SocialsData.js
 import { Github, Code, Brain, Linkedin, Youtube, Instagram } from 'lucide-react';
 
 export const socialPlatforms = [

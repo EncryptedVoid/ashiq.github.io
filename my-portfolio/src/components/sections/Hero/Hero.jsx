@@ -6,7 +6,7 @@ import GlassCard from '../../common/GlassCard';
 import ParticleField from './components/ParticleField';
 import { TypewriterText } from './components/TypewriterText';
 import { useMousePosition } from '../../../hooks/useMousePosition';
-import { heroData } from '../../../../public/data/heroData';
+import { HeroData } from '../../../data/HeroData';
 
 const Hero = () => {
   const {
@@ -15,7 +15,7 @@ const Hero = () => {
     profileImage,
     quickStats,
     animations
-  } = heroData;
+  } = HeroData;
 
   const mousePosition = useMousePosition();
   const x = useMotionValue(0);

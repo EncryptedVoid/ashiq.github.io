@@ -1,6 +1,6 @@
-// src/components/sections/Projects/projectsData.js
+// src/components/sections/Projects/ProjectsData.js
 
-export const projectsData = [
+export const ProjectsData = [
     {
     id: 'project-1',
     title: 'AI-Powered Testing Framework',
@@ -99,4 +99,4 @@ export const projectsData = [
     }
 ];
 
-export default projectsData;
+export default ProjectsData;

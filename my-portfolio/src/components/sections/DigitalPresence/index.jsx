@@ -1,7 +1,7 @@
 // src/components/sections/Socials/index.jsx
 import React from 'react';
 import SocialCard from './components/SocialCard';
-import { socialPlatforms } from '../../../../public/data/socialsData';
+import { socialPlatforms } from '../../../data/SocialsData';
 
 const Socials = () => {
   return (

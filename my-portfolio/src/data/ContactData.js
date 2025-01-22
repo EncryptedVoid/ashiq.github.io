@@ -1,4 +1,4 @@
-// src/data/contactData.js
+// src/data/ContactData.js
 import { Mail, Github, Linkedin, Calendar, Twitter, Youtube, ExternalLink } from 'lucide-react';
 
 export const contactConfig = {

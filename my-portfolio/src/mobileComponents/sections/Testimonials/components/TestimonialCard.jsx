@@ -2,7 +2,7 @@
 import React, { useState, useRef } from 'react';
 import { Quote, Star, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { testimonials } from '../../../../../public/data/testimonialsData'; // Add this import
+import { testimonials } from '../../../../data/TestimonialsData'; // Add this import
 
 
 const MobileTestimonialCard = ({ testimonial, isExpanded, onToggle }) => (

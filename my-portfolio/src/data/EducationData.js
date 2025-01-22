@@ -1,6 +1,6 @@
-// src/data/educationData.js
+// src/data/EducationData.js
 
-export const educationData = {
+export const EducationData = {
     university: {
       name: "Stanford University",
       logo: "/path/to/stanford-logo.png",

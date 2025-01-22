@@ -3,7 +3,7 @@ import {
   Copy, Check, ExternalLink, ArrowRight,
   Sparkles, Globe, Mail, Phone
 } from 'lucide-react';
-import { contactConfig, contactSources, quickLinks } from '../../../../public/data/contactData';
+import { contactConfig, contactSources, quickLinks } from '../../../data/ContactData';
 
 const ContactButton = ({ link, index }) => (
   <a

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronUp, Bookmark, Share2, MessageCircle } from 'lucide-react';
-import { educationData } from '../../../../public/data/educationData';
+import { EducationData } from '../../../data/EducationData';
 
 const MobileEducation = () => {
   const [activeTab, setActiveTab] = useState('courses');
-  const { university, courses, achievements, researchWork } = educationData;
+  const { university, courses, achievements, researchWork } = EducationData;
 
   const ProfileHeader = () => (
     <div className="px-4 py-6 border-b border-white/10">

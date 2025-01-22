@@ -4,6 +4,8 @@ import {
   ExternalLink, Github, Clock, Activity, X,
   ChevronLeft, ChevronRight, Heart, Share2, MessageCircle
 } from 'lucide-react';
+import { ProjectsData } from '../../../data/ProjectsData';
+
 
 const MobileProjectCard = ({ project, onOpenDetails }) => {
   const statusColors = {
@@ -196,12 +198,12 @@ const MobileProjectModal = ({ project, isOpen, onClose }) => {
   );
 };
 
-const MobileProjects = ({ projectsData }) => {
+const MobileProjects = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filterTypes = ['all', 'Professional', 'Open Source', 'Personal'];
-  const filteredProjects = projectsData.filter(project =>
+  const filteredProjects = ProjectsData.filter(project =>
     activeFilter === 'all' || project.type === activeFilter
   );
 

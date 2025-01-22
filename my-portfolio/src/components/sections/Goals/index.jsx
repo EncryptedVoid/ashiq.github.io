@@ -2,7 +2,7 @@
 import React from 'react';
 import GoalCard from './components/GoalCard';
 import SectionHeader from './components/SectionHeader';
-import { goalsData } from '../../../../public/data/goalsData';
+import { GoalsData } from '../../../data/GoalsData';
 
 const Goals = () => {
   return (
@@ -16,7 +16,7 @@ const Goals = () => {
         grid grid-cols-1 md:grid-cols-2
         gap-6 max-w-7xl mx-auto
       ">
-        {goalsData.map(goal => (
+        {GoalsData.map(goal => (
           <GoalCard key={goal.id} goal={goal} />
         ))}
       </div>

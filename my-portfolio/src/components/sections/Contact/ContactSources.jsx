@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import ContactCard from './components/ContactCard';
 import QuickLinks from './components/QuickLinks';
-import { contactConfig, contactSources, quickLinks } from '../../../../public/data/contactData';
+import { contactConfig, contactSources, quickLinks } from '../../../data/ContactData';
 
 const ContactSources = () => {
   const [copiedId, setCopiedId] = useState(null);

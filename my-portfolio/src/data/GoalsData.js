@@ -1,4 +1,4 @@
-export const goalsData = [
+export const GoalsData = [
     {
         id: 1,
         type: "learning",
@@ -25,7 +25,7 @@ export const goalsData = [
     },
     {
         id: 2,
-        type: "certifications",
+        type: "Certifications",
         title: "Upcoming Certifications",
         icon: "fas fa-certificate",
         progress: 25,

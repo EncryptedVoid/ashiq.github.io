@@ -4,6 +4,8 @@ import {
   Search, X, Clock, Code, GitBranch,
   ChevronDown, ChevronUp, Tag, Activity
 } from 'lucide-react';
+import { skillsData } from '../../../data/SkillsData';
+
 
 const MobileSkillCard = ({ skill }) => (
   <motion.div
@@ -119,7 +121,7 @@ const MobileSkillCategory = ({ category, isExpanded, onToggle }) => (
   </div>
 );
 
-const MobileSkills = ({ skillsData }) => {
+const MobileSkills = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 

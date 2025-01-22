@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, Medal, ChevronRight, ExternalLink, Calendar } from 'lucide-react';
-import { certifications, certStyles } from '../../../../public/data/certificationsData';
+import { Certifications, certStyles } from '../../../data/CertificationsData';
 
 const CertificationCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];
@@ -161,13 +161,13 @@ const MobileCertifications = () => {
             Professional Certifications
           </h1>
           <p className="text-lg text-white/60">
-            Industry recognized certifications and achievements
+            Industry recognized Certifications and achievements
           </p>
         </div>
 
         {/* Certifications grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {certifications.map((cert) => (
+          {Certifications.map((cert) => (
             <CertificationCard
               key={cert.id}
               cert={cert}

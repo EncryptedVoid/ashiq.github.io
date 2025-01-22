@@ -3,9 +3,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
 import { TypewriterText } from './components/TypewriterText';
 import ParticleField from './components/ParticleField';
+import { HeroData } from '../../../data/HeroData'
 
-const MobileHero = ({ heroData }) => {
-  const { intro, status, profileImage, quickStats } = heroData;
+
+const MobileHero = () => {
+  const { intro, status, profileImage, quickStats } = HeroData;
 
   return (
     <div className="relative min-h-screen bg-black">

@@ -1,7 +1,7 @@
-// src/data/heroData.js
+// src/data/HeroData.js
 import { Briefcase, GraduationCap, Users, Code } from 'lucide-react';
 
-export const heroData = {
+export const HeroData = {
 intro: {
     terminalText: "WHOAMI",
     title: {
@@ -61,4 +61,4 @@ animations: {
 }
 };
 
-export default heroData;
+export default HeroData;

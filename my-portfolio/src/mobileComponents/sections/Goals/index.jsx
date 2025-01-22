@@ -244,7 +244,7 @@ const MobileCaseStudyModal = ({ experience, isOpen, onClose }) => {
   );
 };
 
-const MobileExperience = ({ experienceData }) => {
+const MobileExperience = ({ ExperienceData }) => {
   const [expandedId, setExpandedId] = useState(null);
   const [selectedExperience, setSelectedExperience] = useState(null);
 
@@ -262,7 +262,7 @@ const MobileExperience = ({ experienceData }) => {
 
       {/* Experience Cards */}
       <div className="px-4 space-y-3">
-        {experienceData.map((experience) => (
+        {ExperienceData.map((experience) => (
           <MobileExperienceCard
             key={experience.id}
             experience={experience}

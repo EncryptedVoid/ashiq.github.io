@@ -1,5 +1,5 @@
-// src/components/sections/Certifications/certificationsData.js
-export const certifications = [
+// src/components/sections/Certifications/CertificationsData.js
+export const Certifications = [
     {
       id: 1,
       type: 'aws',
@@ -46,3 +46,4 @@ export const certifications = [
       iconBg: 'bg-[#0078d4]'
     }
   };
+

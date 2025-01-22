@@ -1,4 +1,4 @@
-// src/components/sections/Testimonials/data/testimonialsData.js
+// src/components/sections/Testimonials/data/TestimonialsData.js
 export const testimonials = [
     {
       id: 1,

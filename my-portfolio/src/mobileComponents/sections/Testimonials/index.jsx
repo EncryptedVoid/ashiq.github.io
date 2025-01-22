@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import TestimonialCard from './components/TestimonialCard';
-import { testimonials } from './testimonialsData'; // Add this import
-// New commit
+import { testimonials } from '../../../data/TestimonialsData'; // Add this import
 
-const Testimonials = () => {
+
+const MobileTestimonials = () => {
 const [currentIndex, setCurrentIndex] = useState(0);
 
 const handleNext = () => {
@@ -73,4 +73,4 @@ return (
 );
 };
 
-export default Testimonials;
+export default MobileTestimonials;

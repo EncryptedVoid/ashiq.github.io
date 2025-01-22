@@ -5,7 +5,7 @@ import { Building2, Calendar, MapPin, ExternalLink, ChevronDown, Award, Users, B
 import AchievementStats from './components/AchievementStats';
 import Testimonials from './components/Testimonials';
 import CaseStudyModal from './components/CaseStudyModal';
-import { experienceData } from '../../../../public/data/experienceData';  // Update the path based on your file structure
+import { ExperienceData } from '../../../data/ExperienceData';  // Update the path based on your file structure
 
 const getSkillEmoji = (skill) => {
   const emojiMap = {
@@ -273,7 +273,7 @@ const Experience = () => {
 
         {/* Experience Cards */}
         <div className="space-y-6">
-          {experienceData.map((experience, index) => (
+          {ExperienceData.map((experience, index) => (
             <ExperienceCard
               key={experience.id}
               experience={experience}
