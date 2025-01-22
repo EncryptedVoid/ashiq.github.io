@@ -2,7 +2,7 @@
 import React from 'react';
 import ContactSources from './ContactSources';
 
-const Contact = () => {
+const MobileContact = () => {
   return (
     <section className="
       w-full
@@ -23,4 +23,4 @@ const Contact = () => {
   );
 };
 
-export default Contact;
+export default MobileContact;

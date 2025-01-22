@@ -236,7 +236,7 @@ const ExperienceCard = ({ experience, isActive, onClick, onCaseStudyClick, index
   );
 };
 
-const Experience = () => {
+const MobileExperience = () => {
   const [activeId, setActiveId] = React.useState(null);
   const [caseStudyData, setCaseStudyData] = React.useState(null);
 
@@ -296,4 +296,4 @@ const Experience = () => {
   );
 };
 
-export default Experience;
+export default MobileExperience;

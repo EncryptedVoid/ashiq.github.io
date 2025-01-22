@@ -86,7 +86,7 @@ const ContactCard = ({ contact, isCopied, onAction }) => {
   );
 };
 
-const ContactSources = () => {
+const MobileContactSources = () => {
   const [copiedId, setCopiedId] = useState(null);
   const [showOptional, setShowOptional] = useState(false);
 
@@ -177,4 +177,4 @@ const ContactSources = () => {
   );
 };
 
-export default ContactSources;
+export default MobileContactSources;
