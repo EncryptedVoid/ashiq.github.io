@@ -31,7 +31,7 @@ import Education from './components/sections/Education';
 import MobileHero from './mobileComponents/sections/Hero/Hero';
 import MobileTestimonials from './mobileComponents/sections/Testimonials';
 import MobileSkills from './mobileComponents/sections/Skills';
-import MobileExperience from './mobileComponents/sections/Experience/Experience';
+import MobileExperience from './mobileComponents/sections/Experience/MobileExperience';
 import MobileCertifications from './mobileComponents/sections/Certifications';
 import MobileProjects from './mobileComponents/sections/Projects';
 import MobileContact from './mobileComponents/sections/Contact';
