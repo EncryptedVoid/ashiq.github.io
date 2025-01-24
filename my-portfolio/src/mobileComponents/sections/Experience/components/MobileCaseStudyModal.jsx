@@ -1,192 +1,128 @@
-// MobileCaseStudyModal.jsx
+import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { X, Calendar, MapPin, Award, ChevronDown } from 'lucide-react';
+
 const MobileCaseStudyModal = ({ isOpen, onClose, experience }) => {
-    if (!isOpen || !experience) return null;
+  const [activeTab, setActiveTab] = React.useState('overview');
 
-    return (
-      <AnimatePresence>
+  if (!isOpen || !experience) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        key="modal"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="fixed inset-0 z-50 bg-black/95"
+      >
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg"
+          initial={{ y: '100%' }}
+          animate={{ y: 0 }}
+          exit={{ y: '100%' }}
+          transition={{ type: 'spring', damping: 30 }}
+          className="absolute inset-x-0 bottom-0 bg-gray-900 rounded-t-3xl max-h-[90vh] overflow-hidden flex flex-col"
+          style={{ touchAction: 'none' }}
         >
-          {/* Mobile-Optimized Modal Content */}
-          <div className="
-            relative
-            min-h-screen
-            flex flex-col
-          ">
-            {/* Header */}
-            <div className="
-              sticky top-0
-              bg-gray-900/80
-              backdrop-blur-lg
-              border-b border-white/10
-              z-10
-            ">
-              <div className="
-                flex items-start justify-between
-                p-4
-                sm:p-6
-              ">
-                <div>
-                  <h1 className="text-xl font-bold text-white mb-1">
-                    {experience.title}
-                  </h1>
-                  <div className="text-sm text-white/60">
-                    {experience.company}
-                  </div>
-                </div>
-                <button
-                  onClick={onClose}
-                  className="
-                    p-2
-                    -m-2
-                    text-white/60
-                    active:scale-90
-                    transition-transform
-                  "
-                >
-                  <X className="w-6 h-6" />
-                </button>
-              </div>
+          {/* Drag Handle */}
+          <div className="sticky top-0 flex justify-center py-3 bg-gray-900 border-b border-white/10">
+            <div className="w-12 h-1 rounded-full bg-white/20" />
+          </div>
 
-              {/* Timeline Tabs */}
-              <div className="
-                flex gap-4
-                overflow-x-auto
-                scrollbar-none
-                px-4
-                pb-4
-              ">
-                {['Overview', 'Timeline', 'Achievements'].map((tab, index) => (
-                  <button
-                    key={tab}
-                    className={`
-                      flex-shrink-0
-                      px-4 py-2
-                      rounded-full
-                      text-sm
-                      transition-colors
-                      ${index === 0 ?
-                        'bg-blue-500/20 text-blue-400 border-blue-500/30' :
-                        'bg-white/5 text-white/60 border-white/10'
-                      }
-                      border
-                    `}
-                  >
-                    {tab}
-                  </button>
-                ))}
-              </div>
+          {/* Header */}
+          <div className="flex items-start justify-between p-4 bg-gray-900">
+            <div>
+              <h1 className="text-xl font-bold text-white">{experience.title}</h1>
+              <div className="mt-1 text-sm text-white/60">{experience.company}</div>
             </div>
+            <button onClick={onClose} className="p-2">
+              <X className="w-6 h-6 text-white/60" />
+            </button>
+          </div>
 
-            {/* Scrollable Content */}
-            <div className="flex-1 overflow-auto p-4">
-              <div className="space-y-6 max-w-lg mx-auto">
-                {/* Description */}
-                <div className="
-                  bg-white/5
-                  border border-white/10
-                  rounded-xl
-                  p-4
-                ">
-                  <p className="text-white/80 leading-relaxed">
-                    {experience.description}
-                  </p>
+          {/* Content */}
+          <div className="flex-1 overflow-y-auto">
+            <div className="p-4 space-y-6">
+              {/* Description */}
+              <div className="space-y-2">
+                <div className="text-sm text-white/80 leading-relaxed">
+                  {experience.description}
                 </div>
+              </div>
 
-                {/* Technologies */}
-                <div className="space-y-3">
-                  <h2 className="text-sm font-semibold text-white/60 uppercase">
-                    Technologies Used
-                  </h2>
-                  <div className="flex flex-wrap gap-2">
-                    {experience.technologies?.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="
-                          px-3 py-1
-                          bg-white/5
-                          border border-white/10
-                          rounded-full
-                          text-sm text-white/60
-                        "
-                      >
-                        {tech}
-                      </span>
-                    ))}
+              {/* Timeline */}
+              <div className="space-y-3">
+                <h2 className="text-sm font-semibold text-white/60 uppercase">Timeline</h2>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Calendar className="w-5 h-5 text-white/40" />
+                    <span className="text-white/80">
+                      {experience.startDate} - {experience.endDate || 'Present'}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <MapPin className="w-5 h-5 text-white/40" />
+                    <span className="text-white/80">{experience.location}</span>
                   </div>
                 </div>
+              </div>
 
-                {/* Achievements Grid */}
+              {/* Technologies */}
+              <div className="space-y-3">
+                <h2 className="text-sm font-semibold text-white/60 uppercase">Technologies</h2>
+                <div className="flex flex-wrap gap-2">
+                  {experience.technologies?.map((tech, index) => (
+                    <span
+                      key={index}
+                      className="px-3 py-1 text-sm bg-white/5 border border-white/10 rounded-full text-white/60"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Achievements */}
+              <div className="space-y-3">
+                <h2 className="text-sm font-semibold text-white/60 uppercase">Key Achievements</h2>
                 <div className="space-y-3">
-                  <h2 className="text-sm font-semibold text-white/60 uppercase">
-                    Key Achievements
-                  </h2>
-                  <div className="grid gap-3">
-                    {experience.achievements?.map((achievement, index) => (
-                      <div
-                        key={index}
-                        className="
-                          p-4
-                          bg-white/5
-                          border border-white/10
-                          rounded-xl
-                        "
-                      >
-                        <div className="text-2xl font-bold text-blue-400 mb-2">
-                          {achievement.stat}
-                        </div>
-                        <div className="text-white mb-1">
-                          {achievement.label}
-                        </div>
-                        <div className="text-sm text-white/60">
-                          {achievement.description}
-                        </div>
+                  {experience.achievements?.map((achievement, index) => (
+                    <div
+                      key={index}
+                      className="p-4 bg-white/5 border border-white/10 rounded-xl"
+                    >
+                      <div className="text-2xl font-bold text-blue-400 mb-2">
+                        {achievement.stat}
                       </div>
-                    ))}
-                  </div>
+                      <div className="text-white mb-1">{achievement.label}</div>
+                      <div className="text-sm text-white/60">
+                        {achievement.description}
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
-
-            {/* Bottom Action Bar */}
-            <div className="
-              sticky bottom-0
-              bg-gray-900/80
-              backdrop-blur-lg
-              border-t border-white/10
-              p-4
-              flex gap-3
-            ">
-              {experience.links?.company && (
-                <a
-                  href={experience.links.company}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="
-                    flex-1
-                    flex items-center justify-center gap-2
-                    py-3
-                    bg-white/5
-                    border border-white/10
-                    rounded-xl
-                    text-white/60
-                    active:scale-98
-                    transition-transform
-                  "
-                >
-                  <span>Visit Company</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
-              )}
             </div>
           </div>
+
+          {/* Bottom Action Bar */}
+          {experience.links?.company && (
+            <div className="sticky bottom-0 p-4 bg-gray-900 border-t border-white/10">
+              <a
+                href={experience.links.company}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-2 w-full py-3 bg-blue-500/20 border border-blue-500/30 rounded-xl text-white"
+              >
+                <span>Visit Company Website</span>
+                <Award className="w-4 h-4" />
+              </a>
+            </div>
+          )}
         </motion.div>
-      </AnimatePresence>
-    );
-  };
+      </motion.div>
+    </AnimatePresence>
+  );
+};
 
-
-  export default MobileCaseStudyModal;
+export default MobileCaseStudyModal;

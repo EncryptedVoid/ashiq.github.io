@@ -114,7 +114,7 @@ const MobileHero = () => {
         </div>
 
         {/* Timeline */}
-        <motion.div
+        {/* <motion.div
           className="mt-6 p-4 border-t border-white/10"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -124,7 +124,7 @@ const MobileHero = () => {
             <Calendar className="w-4 h-4" />
             <span>Recent Activity</span>
           </div>
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

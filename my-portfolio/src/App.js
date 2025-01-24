@@ -75,19 +75,9 @@ function Portfolio() {
   };
 
   return (
-    // Main container with gradient background
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black text-white">
-      <main className="flex flex-col w-full items-center">
-        {/*
-          Responsive container with conditional padding
-          - Desktop: max width with horizontal padding
-          - Mobile: full width without padding
-        */}
-        <div className={`w-full ${!isMobile ? 'max-w-7xl px-4 sm:px-6 lg:px-8' : 'px-0'}`}>
-          {/*
-            Render all sections in order
-            Using Object.keys() to maintain consistent section ordering
-          */}
+    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-gray-900 to-black text-white">
+      <main className="flex flex-col w-full items-center relative">
+        <div className={`w-full relative ${!isMobile ? 'max-w-7xl px-4 sm:px-6 lg:px-8' : 'px-0'}`}>
           {Object.keys(components).map(renderComponent)}
         </div>
       </main>
