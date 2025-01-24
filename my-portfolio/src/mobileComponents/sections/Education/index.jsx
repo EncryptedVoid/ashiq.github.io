@@ -1,119 +1,112 @@
 import React, { useState } from 'react';
-import { ChevronDown, ChevronUp, Bookmark, Share2, MessageCircle } from 'lucide-react';
-import { EducationData } from '../../../data/EducationData';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronRight } from 'lucide-react';
+import { EducationData } from '../../../data/EducationData.js';
 
 const MobileEducation = () => {
-  const [activeTab, setActiveTab] = useState('courses');
   const { university, courses, achievements, researchWork } = EducationData;
+  const [activeTab, setActiveTab] = useState('overview');
 
-  const ProfileHeader = () => (
-    <div className="px-4 py-6 border-b border-white/10">
-      <div className="flex items-center gap-4">
-        <div className="w-20 h-20 rounded-full overflow-hidden border-2 border-white/20">
+  const Header = () => (
+    <div className="sticky top-0 z-50 bg-white/5 backdrop-blur-xl border-b border-white/10">
+      <h1 className="text-lg font-bold text-white px-4 py-3">Education</h1>
+    </div>
+  );
+
+  const TabBar = () => (
+    <div className="flex gap-2 px-4 py-3 overflow-x-auto hide-scrollbar bg-white/5 backdrop-blur-xl">
+      {['Overview', 'Courses', 'Achievements', 'Research'].map((tab) => (
+        <button
+          key={tab}
+          onClick={() => setActiveTab(tab.toLowerCase())}
+          className={`
+            px-4 py-2 rounded-full text-sm font-medium
+            whitespace-nowrap transition-all
+            ${activeTab === tab.toLowerCase()
+              ? 'bg-white/20 text-white'
+              : 'text-white/60 hover:text-white/80'}
+          `}
+        >
+          {tab}
+        </button>
+      ))}
+    </div>
+  );
+
+  const OverviewSection = () => (
+    <div className="p-4 bg-white/5 backdrop-blur-xl rounded-xl m-4">
+      <div className="flex items-center gap-4 mb-6">
+        <div className="w-20 h-20 rounded-xl overflow-hidden border border-white/20">
           <img
             src={university.logo}
             alt={university.name}
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="flex-1">
-          <h1 className="text-xl font-bold text-white/90">{university.name}</h1>
-          <p className="text-sm text-white/60">{university.degree}</p>
-          <p className="text-xs text-white/40 mt-1">
+        <div>
+          <h2 className="text-xl font-bold text-white">{university.name}</h2>
+          <p className="text-sm text-white/80 mt-1">{university.degree}</p>
+          <p className="text-sm text-white/60 mt-1">
             {university.duration.start} - {university.duration.end}
           </p>
         </div>
       </div>
-
-      <p className="mt-4 text-sm text-white/70 leading-relaxed">
+      <p className="text-base text-white/80 leading-relaxed">
         {university.programDescription}
       </p>
+    </div>
+  );
 
-      <div className="flex justify-between mt-6 pb-2">
-        <div className="text-center">
-          <div className="text-lg font-bold text-white/90">{courses.length}</div>
-          <div className="text-xs text-white/60">Courses</div>
+  const HorizontalScroller = ({ items, renderItem }) => (
+    <div className="px-4 relative">
+      <div className="overflow-x-auto hide-scrollbar">
+        <div className="flex gap-4 pt-2">
+          {items.map((item, index) => (
+            <div key={index} className="w-80 flex-shrink-0">
+              {renderItem(item)}
+            </div>
+          ))}
         </div>
-        <div className="text-center">
-          <div className="text-lg font-bold text-white/90">{achievements.length}</div>
-          <div className="text-xs text-white/60">Achievements</div>
-        </div>
-        <div className="text-center">
-          <div className="text-lg font-bold text-white/90">{researchWork.publications}</div>
-          <div className="text-xs text-white/60">Publications</div>
-        </div>
+      </div>
+      <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
+        <span className="text-sm text-white/60 animate-pulse">Swipe for more details</span>
       </div>
     </div>
   );
 
-  const TabBar = () => (
-    <div className="flex border-b border-white/10">
-      <button
-        onClick={() => setActiveTab('courses')}
-        className={`flex-1 py-3 text-sm font-medium ${
-          activeTab === 'courses'
-            ? 'text-white/90 border-b-2 border-white/90'
-            : 'text-white/40'
-        }`}
-      >
-        Courses
-      </button>
-      <button
-        onClick={() => setActiveTab('achievements')}
-        className={`flex-1 py-3 text-sm font-medium ${
-          activeTab === 'achievements'
-            ? 'text-white/90 border-b-2 border-white/90'
-            : 'text-white/40'
-        }`}
-      >
-        Achievements
-      </button>
-      <button
-        onClick={() => setActiveTab('research')}
-        className={`flex-1 py-3 text-sm font-medium ${
-          activeTab === 'research'
-            ? 'text-white/90 border-b-2 border-white/90'
-            : 'text-white/40'
-        }`}
-      >
-        Research
-      </button>
-    </div>
-  );
-
   const CourseCard = ({ course }) => (
-    <div className="border-b border-white/10 pb-6 mb-6">
-      <div className="relative aspect-video rounded-lg overflow-hidden mb-4">
+    <div className="bg-white/10 backdrop-blur-xl rounded-xl overflow-hidden h-full border border-white/10">
+      <div className="aspect-video relative">
         <img
           src={course.image}
           alt={course.name}
           className="w-full h-full object-cover"
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+        <div className="absolute bottom-0 p-4">
+          <h3 className="text-lg font-bold text-white mb-1">{course.name}</h3>
+          <p className="text-sm text-white/90">Prof. {course.professor}</p>
+        </div>
       </div>
 
-      <div className="px-4">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-lg font-semibold text-white/90">{course.name}</h3>
-          <span className="text-sm text-white/60">{course.grade}</span>
+      <div className="p-4">
+        <div className="flex justify-end mb-3">
+          <div className="px-3 py-1 bg-green-500/20 backdrop-blur-sm rounded-full">
+            <span className="text-sm font-medium text-green-400">{course.grade}</span>
+          </div>
         </div>
 
-        <div className="flex gap-2 mb-4">
-          <MessageCircle className="w-5 h-5 text-white/60" />
-          <Share2 className="w-5 h-5 text-white/60" />
-          <div className="flex-1"></div>
-          <Bookmark className="w-5 h-5 text-white/60" />
-        </div>
+        <p className="text-sm text-white/80 line-clamp-2 mb-3">
+          {course.description}
+        </p>
 
-        <p className="text-sm text-white/70 mb-2">{course.description}</p>
-        <p className="text-xs text-white/40">Prof. {course.professor}</p>
-
-        <div className="flex flex-wrap gap-2 mt-3">
+        <div className="flex flex-wrap gap-2">
           {course.skills.map((skill, index) => (
             <span
               key={index}
-              className="text-xs text-blue-400 hover:text-blue-300"
+              className="px-2 py-1 text-xs bg-white/10 backdrop-blur-sm rounded-full text-white/80"
             >
-              #{skill.toLowerCase().replace(/\s+/g, '')}
+              {skill}
             </span>
           ))}
         </div>
@@ -122,58 +115,72 @@ const MobileEducation = () => {
   );
 
   const AchievementCard = ({ achievement }) => (
-    <div className="bg-white/[0.03] rounded-lg p-4 mb-4">
-      <div className="flex justify-between items-start mb-2">
-        <h3 className="text-base font-semibold text-white/90">
-          {achievement.title}
-        </h3>
-        <span className="text-xs text-purple-400 bg-purple-400/10 px-2 py-1 rounded-full">
+    <div className="bg-white/10 backdrop-blur-xl rounded-xl p-4 h-full border border-white/10">
+      <div className="flex justify-between items-start mb-3">
+        <h3 className="text-lg font-bold text-white">{achievement.title}</h3>
+        <span className="px-2 py-1 text-xs bg-purple-500/20 backdrop-blur-sm rounded-full text-purple-300">
           {achievement.year}
         </span>
       </div>
-      <p className="text-sm text-white/70">{achievement.description}</p>
+      <p className="text-base text-white/80">{achievement.description}</p>
     </div>
   );
 
   const ResearchSection = () => (
     <div className="p-4">
-      <div className="bg-white/[0.03] rounded-lg p-4">
-        <h3 className="text-lg font-bold text-white/90 mb-3">
-          {researchWork.title}
-        </h3>
-        <p className="text-sm text-white/70 mb-4">{researchWork.description}</p>
-        <div className="flex justify-between text-xs text-white/60">
-          <span>Advisor: {researchWork.advisor}</span>
-          <span>Citations: {researchWork.citations}</span>
+      <div className="bg-white/10 backdrop-blur-xl rounded-xl p-6 border border-white/10">
+        <h3 className="text-xl font-bold text-white mb-4">{researchWork.title}</h3>
+        <p className="text-base text-white/80 mb-6">{researchWork.description}</p>
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3">
+            <p className="text-sm text-white/60 mb-1">Advisor</p>
+            <p className="text-base text-white">{researchWork.advisor}</p>
+          </div>
+          <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3">
+            <p className="text-sm text-white/60 mb-1">Impact</p>
+            <p className="text-base text-white">
+              {researchWork.publications} pub · {researchWork.citations} citations
+            </p>
+          </div>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-black">
-      <ProfileHeader />
+    <div className="bg-gradient-to-b from-gray-900 to-black">
+      <Header />
       <TabBar />
 
-      <div className="pt-4">
+      <AnimatePresence mode="wait">
+        {activeTab === 'overview' && <OverviewSection />}
+
         {activeTab === 'courses' && (
-          <div className="px-4">
-            {courses.map((course) => (
-              <CourseCard key={course.id} course={course} />
-            ))}
-          </div>
+          <HorizontalScroller
+            items={courses}
+            renderItem={(course) => <CourseCard course={course} />}
+          />
         )}
 
         {activeTab === 'achievements' && (
-          <div className="px-4">
-            {achievements.map((achievement) => (
-              <AchievementCard key={achievement.id} achievement={achievement} />
-            ))}
-          </div>
+          <HorizontalScroller
+            items={achievements}
+            renderItem={(achievement) => <AchievementCard achievement={achievement} />}
+          />
         )}
 
         {activeTab === 'research' && <ResearchSection />}
-      </div>
+      </AnimatePresence>
+
+      <style jsx>{`
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
     </div>
   );
 };
