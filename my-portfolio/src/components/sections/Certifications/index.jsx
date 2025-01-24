@@ -30,10 +30,10 @@ const CertificationsSection = () => {
           bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
           bg-clip-text text-transparent
         ">
-          CertificationsSection
+          Certifications
         </h1>
         <p className="text-lg text-gray-400">
-          Professional CertificationsSection and achievements in cloud technologies
+          Professional Certifications and achievements in cloud technologies
         </p>
         {/* Decorative Line */}
         <div className="
