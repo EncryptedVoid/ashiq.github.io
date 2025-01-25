@@ -1,180 +1,90 @@
-import React, { useState } from 'react';
-import {
-  Copy, Check, ExternalLink, ArrowRight,
-  Sparkles, Globe, Mail, Phone
-} from 'lucide-react';
-import { contactConfig, contactSources, quickLinks } from '../../../data/ContactData';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Mail, Calendar } from 'lucide-react';
+import { socialPlatforms } from '../../../data/SocialsData';
 
-const ContactButton = ({ link, index }) => (
-  <a
-    href={link.url}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group flex items-center gap-2 px-4 py-2 bg-white/5
-      rounded-xl border border-white/10 transition-all duration-500
-      hover:border-white/20 hover:bg-white/10 hover:scale-105"
-    style={{ animationDelay: `${index * 100}ms` }}
-  >
-    <link.icon className="w-4 h-4 text-white/60 transition-all duration-500
-      group-hover:text-white group-hover:rotate-12" />
-    <span className="text-sm text-white/60 group-hover:text-white transition-colors duration-500">
-      {link.label}
-    </span>
-  </a>
-);
-
-const ContactCard = ({ contact, isCopied, onAction }) => {
-  const Icon = contact.icon;
-  const ActionIcon = contact.action === 'copy' ? (isCopied ? Check : Copy) : ExternalLink;
+const MobileSocial = () => {
+  // Take first 4 platforms for the grid
+  const primaryPlatforms = socialPlatforms.slice(0, 4);
 
   return (
-    <div
-      onClick={() => onAction(contact)}
-      className="group relative overflow-hidden bg-gradient-to-br from-white/5 to-white/[0.02]
-        rounded-3xl border border-white/10 p-6 cursor-pointer transition-all duration-500
-        hover:border-white/20 hover:shadow-xl hover:shadow-purple-500/10"
-    >
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 via-pink-500/10 to-blue-500/10
-        opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-
-      {/* Content Container */}
-      <div className="relative flex items-start gap-4">
-        {/* Icon Container */}
-        <div className="flex-shrink-0 w-12 h-12 rounded-2xl bg-white/5 flex items-center
-          justify-center transition-all duration-500 group-hover:scale-110 group-hover:rotate-12">
-          <Icon className="w-6 h-6 text-white/80" />
-        </div>
-
-        {/* Text Content */}
-        <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-semibold text-white mb-1 transition-transform
-            duration-500 group-hover:-translate-y-1">
-            {contact.type}
-          </h3>
-          <p className="text-white/60 text-sm truncate transition-all duration-500
-            group-hover:text-white/80">
-            {contact.detail}
-          </p>
-        </div>
-
-        {/* Action Button */}
-        <div className="flex-shrink-0">
-          <div className="w-8 h-8 rounded-xl bg-white/5 flex items-center justify-center
-            transition-all duration-500 group-hover:bg-white/10">
-            <ActionIcon className="w-4 h-4 text-white/60 group-hover:text-white" />
-          </div>
-        </div>
-      </div>
-
-      {/* Copy Notification */}
-      {isCopied && (
-        <div className="absolute top-4 right-4 px-3 py-1 bg-green-500/20
-          backdrop-blur-sm rounded-full border border-green-500/30">
-          <span className="text-xs text-green-400 flex items-center gap-1">
-            <Check className="w-3 h-3" />
-            Copied!
-          </span>
-        </div>
-      )}
-
-      {/* Hover Line Effect */}
-      <div className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r
-        from-purple-500 via-pink-500 to-blue-500 transform scale-x-0 origin-left
-        transition-transform duration-500 group-hover:scale-x-100" />
-    </div>
-  );
-};
-
-const MobileContactSources = () => {
-  const [copiedId, setCopiedId] = useState(null);
-  const [showOptional, setShowOptional] = useState(false);
-
-  const visibleContacts = contactSources.filter(
-    contact => !contact.optional || showOptional
-  );
-
-  const handleAction = async (contact) => {
-    if (contact.action === 'copy') {
-      try {
-        await navigator.clipboard.writeText(contact.value);
-        setCopiedId(contact.id);
-        setTimeout(() => setCopiedId(null), 2000);
-      } catch (err) {
-        console.error('Failed to copy:', err);
-      }
-    } else if (contact.action === 'link') {
-      window.open(contact.value, '_blank', 'noopener noreferrer');
-    }
-  };
-
-  return (
-    <div className="relative min-h-screen bg-gradient-to-b from-gray-900 via-purple-900/10
-      to-gray-900 py-20 px-4 md:px-8 overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-full h-full bg-[radial-gradient(circle_800px_at_50%_-30%,rgba(120,40,200,0.15),transparent)]" />
-        <div className="absolute w-[500px] h-[500px] top-1/2 left-1/2 -translate-x-1/2
-          -translate-y-1/2 rounded-full bg-purple-500/5 blur-3xl animate-pulse" />
-      </div>
-
-      {/* Content Container */}
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header Section */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full
-            bg-white/5 border border-white/10 text-sm text-white/60 mb-6">
-            <Sparkles className="w-4 h-4" />
-            {contactConfig.sectionTitle}
-          </span>
-
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r
-            from-white via-purple-200 to-white bg-clip-text text-transparent">
+    <div className="w-full pb-20 px-4">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="text-center mb-12"
+      >
+        <div className="inline-block relative">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
             Let's Connect
-          </h1>
+          </h2>
+          <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-gradient-to-r from-blue-400/0 via-purple-400/50 to-pink-400/0" />
+        </div>
+      </motion.div>
 
-          <p className="text-lg text-white/60 mb-8">
-            {contactConfig.sectionSubtitle}
-          </p>
-
-          {/* Quick Links */}
-          <div className="flex flex-wrap justify-center gap-4">
-            {quickLinks.map((link, index) => (
-              <ContactButton key={link.id} link={link} index={index} />
-            ))}
+      <div className="space-y-4 mb-12">
+        <motion.button
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="w-full flex items-center gap-3 p-4 relative overflow-hidden
+            rounded-2xl border border-blue-500/20
+            active:scale-[0.98] transition-all duration-300"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-cyan-500/10 to-blue-500/10 animate-gradient-x" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(59,130,246,0.1),transparent)]" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
+            <Mail className="w-6 h-6 text-blue-400" />
           </div>
-        </div>
+          <span className="text-lg font-medium text-white relative z-10">Email Me</span>
+        </motion.button>
 
-        {/* Contact Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-          {visibleContacts.map((contact, index) => (
-            <ContactCard
-              key={contact.id}
-              contact={contact}
-              isCopied={copiedId === contact.id}
-              onAction={handleAction}
-            />
-          ))}
-        </div>
+        <motion.button
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="w-full flex items-center gap-3 p-4 relative overflow-hidden
+            rounded-2xl border border-green-500/20
+            active:scale-[0.98] transition-all duration-300"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 via-emerald-500/10 to-green-500/10 animate-gradient-x" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(34,197,94,0.1),transparent)]" />
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 flex items-center justify-center">
+            <Calendar className="w-6 h-6 text-green-400" />
+          </div>
+          <span className="text-lg font-medium text-white relative z-10">Schedule a Call</span>
+        </motion.button>
+      </div>
 
-        {/* Show More Button */}
-        {contactSources.some(contact => contact.optional) && (
-          <div className="text-center">
-            <button
-              onClick={() => setShowOptional(!showOptional)}
-              className="group inline-flex items-center gap-2 px-6 py-3 rounded-xl
-                bg-white/5 border border-white/10 text-white/60 transition-all duration-500
-                hover:bg-white/10 hover:border-white/20 hover:text-white"
+      <div className="grid grid-cols-4 gap-4">
+        {primaryPlatforms.map((platform, index) => (
+          <motion.a
+            key={platform.platform}
+            href={platform.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+            className="group relative"
+          >
+            <div className="aspect-square flex items-center justify-center
+              rounded-2xl bg-white/[0.03] border border-white/[0.08]
+              overflow-hidden relative
+              active:scale-95 transition-all duration-300"
             >
-              <span>{showOptional ? 'Show Less' : 'Show More Ways to Connect'}</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-500
-                group-hover:translate-x-1" />
-            </button>
-          </div>
-        )}
+              <div className={`absolute inset-0 ${platform.gradient} opacity-10
+                group-hover:opacity-20 transition-opacity duration-300`} />
+              <platform.icon className="w-6 h-6 text-white/80 group-hover:text-white
+                transition-all duration-300 transform group-hover:scale-110" />
+            </div>
+            <div className="mt-2 text-[10px] text-center text-white/60 group-hover:text-white/80
+              transition-colors duration-300">
+              {platform.stats}
+            </div>
+          </motion.a>
+        ))}
       </div>
     </div>
   );
 };
 
-export default MobileContactSources;
+export default MobileSocial;

@@ -21,7 +21,6 @@ import Skills from './components/sections/Skills';
 import Experience from './components/sections/Experience/Experience';
 import Certifications from './components/sections/Certifications';
 import Projects from './components/sections/Projects';
-import Contact from './components/sections/Contact';
 import Goals from './components/sections/Goals';
 import Socials from './components/sections/DigitalPresence';
 import Education from './components/sections/Education';
@@ -34,22 +33,16 @@ import MobileSkills from './mobileComponents/sections/Skills';
 import MobileExperience from './mobileComponents/sections/Experience/MobileExperience';
 import MobileCertifications from './mobileComponents/sections/Certifications';
 import MobileProjects from './mobileComponents/sections/Projects';
-import MobileContact from './mobileComponents/sections/Contact';
 import MobileGoals from './mobileComponents/sections/Goals';
 import MobileSocials from './mobileComponents/sections/DigitalPresence';
 import MobileEducation from './mobileComponents/sections/Education';
 
 function Portfolio() {
-  // Hook to determine if current viewport is mobile
   const isMobile = useIsMobile();
 
-  /**
-   * Component mapping object that pairs desktop and mobile versions of each section
-   * This approach:
-   * 1. Reduces conditional rendering complexity
-   * 2. Makes it easier to add/remove sections
-   * 3. Centralizes component organization
-   */
+  // Define which components should be hidden on mobile
+  const mobileHiddenComponents = ['Goals', 'Certifications'];
+
   const components = {
     Hero: { Desktop: Hero, Mobile: MobileHero },
     Testimonials: { Desktop: Testimonials, Mobile: MobileTestimonials },
@@ -57,19 +50,17 @@ function Portfolio() {
     Experience: { Desktop: Experience, Mobile: MobileExperience },
     Education: { Desktop: Education, Mobile: MobileEducation },
     Projects: { Desktop: Projects, Mobile: MobileProjects },
-    Contact: { Desktop: Contact, Mobile: MobileContact },
-    Goals: { Desktop: Goals, Mobile: MobileGoals },
     Socials: { Desktop: Socials, Mobile: MobileSocials },
+    Goals: { Desktop: Goals, Mobile: MobileGoals },
     Certifications: { Desktop: Certifications, Mobile: MobileCertifications },
   };
 
-  /**
-   * Helper function to render the appropriate component version (mobile/desktop)
-   * @param {string} name - The component name from the components mapping
-   * @returns {React.Component} - The rendered component with a unique key
-   */
   const renderComponent = (name) => {
-    // Select mobile or desktop version based on viewport
+    // Skip rendering if component should be hidden on mobile
+    if (isMobile && mobileHiddenComponents.includes(name)) {
+      return null;
+    }
+
     const Component = isMobile ? components[name].Mobile : components[name].Desktop;
     return <Component key={name} />;
   };
