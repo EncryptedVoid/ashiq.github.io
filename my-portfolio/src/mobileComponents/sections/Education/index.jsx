@@ -57,10 +57,10 @@ const MobileEducation = () => {
     </div>
   );
 
-  const HorizontalScroller = ({ items, renderItem }) => (
-    <div className="px-4 relative">
+  const HorizontalScroller = ({ items, renderItem, title }) => (
+    <div className="px-4 space-y-4">
       <div className="overflow-x-auto hide-scrollbar">
-        <div className="flex gap-4 pt-2">
+        <div className="flex gap-4 pb-4">
           {items.map((item, index) => (
             <div key={index} className="w-80 flex-shrink-0">
               {renderItem(item)}
@@ -68,8 +68,10 @@ const MobileEducation = () => {
           ))}
         </div>
       </div>
-      <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-        <span className="text-sm text-white/60 animate-pulse">Swipe for more details</span>
+      <div className="text-center pb-4">
+        <span className="text-sm text-white/60 animate-pulse inline-flex items-center gap-2">
+          Swipe for more <ChevronRight className="w-4 h-4" />
+        </span>
       </div>
     </div>
   );
@@ -127,7 +129,7 @@ const MobileEducation = () => {
   );
 
   const ResearchSection = () => (
-    <div className="p-4">
+    <div className="p-4 pb-8">
       <div className="bg-white/10 backdrop-blur-xl rounded-xl p-6 border border-white/10">
         <h3 className="text-xl font-bold text-white mb-4">{researchWork.title}</h3>
         <p className="text-base text-white/80 mb-6">{researchWork.description}</p>
@@ -148,28 +150,33 @@ const MobileEducation = () => {
   );
 
   return (
-    <div className="bg-gradient-to-b from-gray-900 to-black">
+    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen">
       <Header />
       <TabBar />
 
       <AnimatePresence mode="wait">
-        {activeTab === 'overview' && <OverviewSection />}
-
-        {activeTab === 'courses' && (
-          <HorizontalScroller
-            items={courses}
-            renderItem={(course) => <CourseCard course={course} />}
-          />
-        )}
-
-        {activeTab === 'achievements' && (
-          <HorizontalScroller
-            items={achievements}
-            renderItem={(achievement) => <AchievementCard achievement={achievement} />}
-          />
-        )}
-
-        {activeTab === 'research' && <ResearchSection />}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.2 }}
+        >
+          {activeTab === 'overview' && <OverviewSection />}
+          {activeTab === 'courses' && (
+            <HorizontalScroller
+              items={courses}
+              renderItem={(course) => <CourseCard course={course} />}
+            />
+          )}
+          {activeTab === 'achievements' && (
+            <HorizontalScroller
+              items={achievements}
+              renderItem={(achievement) => <AchievementCard achievement={achievement} />}
+            />
+          )}
+          {activeTab === 'research' && <ResearchSection />}
+        </motion.div>
       </AnimatePresence>
 
       <style jsx>{`

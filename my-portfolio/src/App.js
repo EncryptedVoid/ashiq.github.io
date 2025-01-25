@@ -56,11 +56,11 @@ function Portfolio() {
     Skills: { Desktop: Skills, Mobile: MobileSkills },
     Experience: { Desktop: Experience, Mobile: MobileExperience },
     Education: { Desktop: Education, Mobile: MobileEducation },
-    Certifications: { Desktop: Certifications, Mobile: MobileCertifications },
     Projects: { Desktop: Projects, Mobile: MobileProjects },
     Contact: { Desktop: Contact, Mobile: MobileContact },
     Goals: { Desktop: Goals, Mobile: MobileGoals },
     Socials: { Desktop: Socials, Mobile: MobileSocials },
+    Certifications: { Desktop: Certifications, Mobile: MobileCertifications },
   };
 
   /**
