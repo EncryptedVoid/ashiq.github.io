@@ -2,9 +2,10 @@
 import React, { useState } from 'react';
 import CertCard from './components/CertCard';
 import CertModal from './components/CertModal';
-import { certifications } from '../../../data/certificationsData';
+import { Certifications } from '../../../data/CertificationsData';
 
-const Certifications = () => {
+
+const CertificationsSection = () => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -32,7 +33,7 @@ const Certifications = () => {
           Certifications
         </h1>
         <p className="text-lg text-gray-400">
-          Professional certifications and achievements in cloud technologies
+          Professional Certifications and achievements in cloud technologies
         </p>
         {/* Decorative Line */}
         <div className="
@@ -47,7 +48,7 @@ const Certifications = () => {
         grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
         gap-6 max-w-7xl mx-auto
       ">
-        {certifications.map((cert) => (
+        {Certifications.map((cert) => (
           <CertCard
             key={cert.id}
             cert={cert}
@@ -66,4 +67,4 @@ const Certifications = () => {
   );
 };
 
-export default Certifications;
+export default CertificationsSection;

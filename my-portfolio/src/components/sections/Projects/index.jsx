@@ -1,7 +1,7 @@
 // src/components/sections/Projects/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { projectsData } from '../../../data/projectsData';
+import { ProjectsData } from '../../../data/ProjectsData';
 import ProjectCard from './components/ProjectCard';
 import ProjectModal from './components/ProjectModal';
 
@@ -11,7 +11,7 @@ const [filter, setFilter] = useState('all');
 
 const filterTypes = ['all', 'Professional', 'Open Source', 'Personal'];
 
-const filteredProjects = projectsData.filter(project =>
+const filteredProjects = ProjectsData.filter(project =>
     filter === 'all' || project.type === filter
 );
 

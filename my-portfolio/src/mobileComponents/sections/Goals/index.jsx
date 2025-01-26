@@ -4,7 +4,7 @@ import GoalCard from './components/GoalCard';
 import SectionHeader from './components/SectionHeader';
 import { GoalsData } from '../../../data/GoalsData';
 
-const Goals = () => {
+const MobileGoals = () => {
   return (
     <section className="w-full py-20 px-4 md:px-8">
       <SectionHeader
@@ -24,4 +24,4 @@ const Goals = () => {
   );
 };
 
-export default Goals;
+export default MobileGoals;

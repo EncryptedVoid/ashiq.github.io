@@ -1,7 +1,7 @@
 // src/components/Education/index.jsx
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { educationData } from '../../../data/educationData';
+import { EducationData } from '../../../data/EducationData';
 
 // Header subcomponent
 const EducationHeader = ({ university }) => (
@@ -172,7 +172,7 @@ const ResearchWork = ({ research }) => (
 
 // Main Education component
 const Education = () => {
-  const { university, courses, achievements, researchWork } = educationData;
+  const { university, courses, achievements, researchWork } = EducationData;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black">
