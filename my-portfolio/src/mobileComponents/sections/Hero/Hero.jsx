@@ -1,130 +1,147 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
+import { ArrowRight, Mail, MapPin } from 'lucide-react';
 import { TypewriterText } from './components/TypewriterText';
 import ParticleField from './components/ParticleField';
-import { HeroData } from '../../../data/HeroData'
-
+import { HeroData } from '../../../data/HeroData';
 
 const MobileHero = () => {
   const { intro, status, profileImage, quickStats } = HeroData;
 
+  // Scroll handler for the contact button
+  const scrollToContact = () => {
+    // Find the contact section by ID
+    const contactSection = document.getElementById('contact-section');
+    if (contactSection) {
+      contactSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
   return (
-    <div className="relative min-h-screen bg-black">
+    <div className="relative min-h-screen bg-black pb-16"> {/* Added bottom padding */}
       <ParticleField />
 
-      {/* Profile Header Section */}
-      <div className="relative z-10">
-        {/* Status Bar */}
-        <motion.div
-          className="flex items-center justify-between p-4 border-b border-white/10"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-green-400 text-sm">{status.availability}</span>
+      {/* Status Bar - Now in two rows */}
+      <motion.div
+        className="relative z-10 px-4 py-3 bg-gradient-to-r from-black/80 via-black/60 to-black/80 backdrop-blur-lg"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="flex flex-col gap-2"> {/* Changed to column layout */}
+          {/* Availability Status */}
+          <div className="flex items-center gap-2 justify-center">
+            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-[pulse_2s_ease-in-out_infinite]" />
+            <span className="text-green-400 text-xs font-medium">{status.availability}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="w-4 h-4 text-white/60" />
-            <span className="text-white/60 text-sm">{status.location}</span>
+          {/* Location */}
+          <div className="flex items-center gap-1.5 justify-center bg-white/5 px-2.5 py-1 rounded-full mx-auto">
+            <MapPin className="w-3 h-3 text-white/60" />
+            <span className="text-white/80 text-xs">{status.location}</span>
           </div>
-        </motion.div>
+        </div>
+      </motion.div>
 
-        {/* Profile Info */}
-        <div className="p-6">
-          <div className="flex items-start gap-6">
-            {/* Profile Image */}
-            <motion.div
-              className="relative w-24 h-24"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div className="w-full h-full rounded-full overflow-hidden border-2 border-blue-500/30">
-                <img
-                  src={profileImage.src}
-                  alt={profileImage.alt}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-            </motion.div>
-
-            {/* Quick Stats */}
-            <div className="flex-1">
-              <div className="grid grid-cols-3 gap-2 text-center">
-                {quickStats.slice(0, 3).map((stat, index) => (
-                  <motion.div
-                    key={stat.label}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="space-y-1"
-                  >
-                    <div className="text-xl font-bold text-white">{stat.value}</div>
-                    <div className="text-xs text-white/60">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Bio Section */}
+      {/* Main Content Container */}
+      <div className="relative z-10 px-4 pt-6">
+        {/* Profile Section */}
+        <div className="flex flex-col items-center text-center mb-8">
           <motion.div
-            className="mt-6 space-y-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            className="relative mb-6"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-blue-500/30
+                          bg-gradient-to-br from-blue-500/20 to-purple-500/20 p-1">
+              <img
+                src={profileImage.src}
+                alt={profileImage.alt}
+                className="w-full h-full rounded-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Title Section */}
+          <motion.div
+            className="space-y-3 mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
           >
             <div className="text-sm text-blue-400 font-mono">
               <TypewriterText text={intro.terminalText} />
             </div>
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-white/40 bg-clip-text text-transparent">
-              {Object.values(intro.title).join(' ')}
+            <h1 className="text-2xl font-bold">
+              <span className="bg-gradient-to-r from-white via-blue-400 to-purple-400 bg-clip-text text-transparent">
+                {Object.values(intro.title).join(' ')}
+              </span>
             </h1>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed max-w-md mx-auto">
               {intro.description[0]}
             </p>
           </motion.div>
-
-          {/* Action Buttons */}
-          <motion.div
-            className="mt-6 flex gap-3"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-          >
-            <a
-              href={status.resumeLink}
-              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-blue-500/10
-                       rounded-xl border border-blue-500/20 text-blue-400 text-sm font-medium"
-            >
-              View Resume
-              <ArrowRight className="w-4 h-4" />
-            </a>
-            <button
-              className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-white/5
-                       rounded-xl border border-white/10 text-white/80 text-sm font-medium"
-            >
-              <Mail className="w-4 h-4" />
-              Contact Me
-            </button>
-          </motion.div>
         </div>
 
-        {/* Timeline */}
-        {/* <motion.div
-          className="mt-6 p-4 border-t border-white/10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5 }}
+        {/* Stats Grid - Reduced size */}
+        <motion.div
+          className="grid grid-cols-2 gap-2 mb-8 px-2" // Reduced gap and added padding
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
         >
-          <div className="flex items-center gap-2 text-white/60 text-sm">
-            <Calendar className="w-4 h-4" />
-            <span>Recent Activity</span>
-          </div>
-        </motion.div> */}
+          {quickStats.map((stat, index) => {
+            const StatIcon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                className="bg-gradient-to-br from-white/[0.03] to-white/[0.08] rounded-xl p-3" // Reduced padding
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 * index }}
+              >
+                <StatIcon className="w-4 h-4 text-blue-400 mb-1" /> {/* Reduced icon size */}
+                <div className="text-lg font-bold bg-gradient-to-r from-white to-white/60
+                              bg-clip-text text-transparent mb-0.5"> {/* Reduced text size */}
+                  {stat.value}
+                </div>
+                <div className="text-[10px] text-white/60">{stat.label}</div> {/* Reduced label size */}
+              </motion.div>
+            )
+          })}
+        </motion.div>
+
+        {/* Action Buttons */}
+        <motion.div
+          className="flex gap-3 px-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
+          <a
+            href={status.resumeLink}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4
+                     bg-gradient-to-r from-blue-500/20 to-purple-500/20
+                     rounded-xl border border-blue-500/30 text-white text-sm
+                     active:scale-[0.98] transition-all duration-300"
+          >
+            View Resume
+            <ArrowRight className="w-4 h-4" />
+          </a>
+          <button
+            onClick={scrollToContact}
+            className="flex-1 flex items-center justify-center gap-2 py-2.5 px-4
+                     bg-gradient-to-r from-white/[0.05] to-white/[0.02]
+                     rounded-xl border border-white/10 text-white/90 text-sm
+                     active:scale-[0.98] transition-all duration-300"
+          >
+            <Mail className="w-4 h-4" />
+            Contact Me
+          </button>
+        </motion.div>
       </div>
     </div>
   );

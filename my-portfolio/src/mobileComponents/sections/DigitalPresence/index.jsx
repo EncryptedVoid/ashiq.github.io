@@ -8,7 +8,7 @@ const MobileSocial = () => {
   const primaryPlatforms = socialPlatforms.slice(0, 4);
 
   return (
-    <div className="w-full pb-20 px-4">
+    <div id="contact-section" className="w-full pb-20 px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
