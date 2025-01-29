@@ -1,5 +1,5 @@
 // src/components/sections/Testimonials/data/TestimonialsData.js
-export const testimonials = [
+export const TestimonialData = [
     {
       id: 1,
       name: "John Smith",

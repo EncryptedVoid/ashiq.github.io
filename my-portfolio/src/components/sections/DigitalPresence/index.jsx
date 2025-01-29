@@ -2,19 +2,20 @@
 import React from 'react';
 import SocialCard from './components/SocialCard';
 import { socialPlatforms } from '../../../data/SocialsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const Socials = () => {
   return (
     <section className="w-full py-20 px-4 md:px-8">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h1 className="
-          text-4xl md:text-5xl font-bold mb-6
-          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-          bg-clip-text text-transparent
-        ">
-          Digital Presence
-        </h1>
+        <TypewriterText
+          text="Let's Connect!"
+          size={3}
+          typingSpeed={100}
+          delayBeforeRestart={60000}
+        />
         <p className="text-lg text-gray-400">
           Explore my work, contributions, and professional journey across different platforms
         </p>

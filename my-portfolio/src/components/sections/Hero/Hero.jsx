@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import GlassCard from '../../common/GlassCard';
-import ParticleField from './components/ParticleField';
-import { TypewriterText } from './components/TypewriterText';
+import ParticleField from '../../../styles/ParticleField';
+import { TypewriterText } from '../../../styles/TypewriterText';
 import { useMousePosition } from '../../../hooks/useMousePosition';
 import { HeroData } from '../../../data/HeroData';
 

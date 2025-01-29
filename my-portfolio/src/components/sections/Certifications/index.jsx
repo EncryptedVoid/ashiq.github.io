@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import CertCard from './components/CertCard';
 import CertModal from './components/CertModal';
 import { Certifications } from '../../../data/CertificationsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
 
 
 const CertificationsSection = () => {
@@ -25,13 +26,12 @@ const CertificationsSection = () => {
     <section className="w-full py-20 px-4 md:px-8">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <h1 className="
-          text-4xl md:text-5xl font-bold mb-6
-          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-          bg-clip-text text-transparent
-        ">
-          Certifications
-        </h1>
+        <TypewriterText
+          text="Certifications"
+          size={3}
+          typingSpeed={100}
+          delayBeforeRestart={60000}
+        />
         <p className="text-lg text-gray-400">
           Professional Certifications and achievements in cloud technologies
         </p>

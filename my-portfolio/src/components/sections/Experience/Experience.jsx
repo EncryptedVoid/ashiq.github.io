@@ -6,6 +6,8 @@ import AchievementStats from './components/AchievementStats';
 import Testimonials from './components/Testimonials';
 import CaseStudyModal from './components/CaseStudyModal';
 import { ExperienceData } from '../../../data/ExperienceData';  // Update the path based on your file structure
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const getSkillEmoji = (skill) => {
   const emojiMap = {
@@ -253,14 +255,12 @@ const Experience = () => {
       <div className="max-w-6xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <motion.h1
-            className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400 bg-clip-text text-transparent"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            Professional Experience
-          </motion.h1>
+            <TypewriterText
+              text="Professional Experience"
+              size={3}
+              typingSpeed={100}
+              delayBeforeRestart={60000}
+            />
           <motion.p
             className="text-lg text-white/60 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}

@@ -2,6 +2,8 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, Github, Clock, Activity, Star, X, ChevronRight } from 'lucide-react';
 import { ProjectsData as projectsData } from '../../../data/ProjectsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const MobileProjectCard = ({ project, onOpenDetails }) => {
   const statusColors = {
@@ -151,10 +153,12 @@ const MobileProjects = () => {
 
   return (
     <div className="py-8 px-4">
-      <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-500 to-blue-500
-        bg-clip-text text-transparent mb-6 text-center uppercase">
-        Featured Projects
-      </h2>
+      <TypewriterText
+        text="Featured Projects"
+        size={3}
+        typingSpeed={100}
+        delayBeforeRestart={60000}
+      />
 
       <div className="relative mb-6">
         <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
