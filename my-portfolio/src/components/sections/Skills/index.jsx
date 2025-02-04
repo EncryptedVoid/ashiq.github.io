@@ -4,6 +4,8 @@ import GlassCard from '../../common/GlassCard';
 import SkillCategory from './components/SkillCategory';
 import { Search, X, Clock, Code, GitBranch, Users, Activity, Folder, Tag } from 'lucide-react';
 import { skillsData } from '../../../data/SkillsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const Skills = () => {
   const [expandedId, setExpandedId] = useState(null);
@@ -37,9 +39,12 @@ const Skills = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
-          Skills & Expertise
-        </h1>
+        <TypewriterText
+          text="Skills & Expertise"
+          size={3}
+          typingSpeed={100}
+          delayBeforeRestart={60000}
+        />
         <p className="text-lg text-white/60">
           A comprehensive overview of my technical capabilities and professional experience
           across different domains.

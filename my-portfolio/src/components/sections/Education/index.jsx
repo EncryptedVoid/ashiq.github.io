@@ -1,7 +1,8 @@
-// src/components/Education/index.jsx
+// src/components/sections/Education/index.jsx
+import { motion, AnimatePresence } from 'framer-motion';
+import { EducationData } from '../../../data/EducationData.js';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { EducationData } from '../../../data/EducationData';
 
 // Header subcomponent
 const EducationHeader = ({ university }) => (
@@ -143,36 +144,57 @@ const Achievements = ({ achievements }) => (
   </div>
 );
 
-// Research section subcomponent
-const ResearchWork = ({ research }) => (
-  <div className="pt-8">
-    <div className="bg-white/[0.03] border border-white/[0.06] rounded-3xl p-8
-      hover:bg-white/[0.08] transition-all duration-500
-      hover:shadow-lg hover:shadow-blue-500/10">
-      <h3 className="text-2xl font-bold text-white/90 mb-4">
-        {research.title}
-      </h3>
-      <p className="text-white/70 mb-2">
-        <span className="text-blue-400">Advisor:</span> {research.advisor}
-      </p>
-      <p className="text-white/80 mb-6 leading-relaxed">
-        {research.description}
-      </p>
-      <div className="flex flex-wrap gap-4">
-        <span className="bg-blue-500/10 px-4 py-2 rounded-full text-blue-300">
-          Publications: {research.publications}
-        </span>
-        <span className="bg-blue-500/10 px-4 py-2 rounded-full text-blue-300">
-          Citations: {research.citations}
-        </span>
+// ResearchWork component with null check
+const ResearchWork = ({ research }) => {
+  if (!research) return null; // Early return if no research data
+
+  return (
+    <div className="pt-8">
+      <div className="bg-white/[0.03] border border-white/[0.06] rounded-3xl p-8
+        hover:bg-white/[0.08] transition-all duration-500
+        hover:shadow-lg hover:shadow-blue-500/10">
+        <h3 className="text-2xl font-bold text-white/90 mb-4">
+          {research.title}
+        </h3>
+        {research.advisor && (
+          <p className="text-white/70 mb-2">
+            <span className="text-blue-400">Advisor:</span> {research.advisor}
+          </p>
+        )}
+        {research.description && (
+          <p className="text-white/80 mb-6 leading-relaxed">
+            {research.description}
+          </p>
+        )}
+        <div className="flex flex-wrap gap-4">
+          {research.publications !== undefined && (
+            <span className="bg-blue-500/10 px-4 py-2 rounded-full text-blue-300">
+              Publications: {research.publications}
+            </span>
+          )}
+          {research.citations !== undefined && (
+            <span className="bg-blue-500/10 px-4 py-2 rounded-full text-blue-300">
+              Citations: {research.citations}
+            </span>
+          )}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
-// Main Education component
 const Education = () => {
-  const { university, courses, achievements, researchWork } = EducationData;
+  const { university, courses = [], achievements = [], researchWork } = EducationData || {};
+  const [activeTab, setActiveTab] = useState('overview');
+
+  // Early return if no education data
+  if (!EducationData || !university) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white/60">
+        Education data is being updated...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black">
@@ -192,12 +214,14 @@ const Education = () => {
           <Achievements achievements={achievements} />
         </CollapsibleSection>
 
-        <CollapsibleSection
-          title="Research Work"
-          gradientColors="from-blue-500 to-cyan-500"
-        >
-          <ResearchWork research={researchWork} />
-        </CollapsibleSection>
+        {researchWork && ( // Only render if researchWork exists
+          <CollapsibleSection
+            title="Research Work"
+            gradientColors="from-blue-500 to-cyan-500"
+          >
+            <ResearchWork research={researchWork} />
+          </CollapsibleSection>
+        )}
       </div>
     </div>
   );

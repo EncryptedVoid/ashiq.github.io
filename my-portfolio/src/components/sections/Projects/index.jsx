@@ -4,6 +4,8 @@ import { motion } from 'framer-motion';
 import { ProjectsData } from '../../../data/ProjectsData';
 import ProjectCard from './components/ProjectCard';
 import ProjectModal from './components/ProjectModal';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const Projects = () => {
 const [selectedProject, setSelectedProject] = useState(null);
@@ -24,9 +26,12 @@ return (
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
     >
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
-        Featured Projects
-        </h1>
+        <TypewriterText
+            text="Featured Projects"
+            size={3}
+            typingSpeed={100}
+            delayBeforeRestart={60000}
+        />
         <p className="text-lg text-white/60">
         A showcase of my technical projects, ranging from professional work to open-source contributions
         </p>

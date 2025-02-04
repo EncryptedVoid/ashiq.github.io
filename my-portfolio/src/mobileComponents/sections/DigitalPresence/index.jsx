@@ -2,6 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Calendar } from 'lucide-react';
 import { socialPlatforms } from '../../../data/SocialsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const MobileSocial = () => {
   // Take first 4 platforms for the grid
@@ -15,9 +17,12 @@ const MobileSocial = () => {
         className="text-center mb-12"
       >
         <div className="inline-block relative">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Let's Connect
-          </h2>
+          <TypewriterText
+              text="Let's Connect!"
+              size={3}
+              typingSpeed={100}
+              delayBeforeRestart={60000}
+          />
           <div className="absolute -bottom-2 left-0 w-full h-[2px] bg-gradient-to-r from-blue-400/0 via-purple-400/50 to-pink-400/0" />
         </div>
       </motion.div>

@@ -1,49 +1,76 @@
-// src/components/sections/Certifications/CertificationsData.js
+// src/components/sections/Certifications/certificationsData.js
 export const Certifications = [
-    {
-      id: 1,
-      type: 'aws',
-      title: 'AWS Solutions Architect',
-      date: 'December 2023',
-      level: 'Associate',
-      icon: '/images/certs/aws-icon.png',
-      image: '/images/certs/aws-cert.png'
-    },
-    {
-      id: 2,
-      type: 'gcp',
-      title: 'Google Cloud Professional',
-      date: 'November 2023',
-      level: 'Professional',
-      icon: '/images/certs/gcp-icon.png',
-      image: '/images/certs/gcp-cert.png'
-    },
-    {
-      id: 3,
-      type: 'azure',
-      title: 'Azure Solutions Architect',
-      date: 'October 2023',
-      level: 'Expert',
-      icon: '/images/certs/azure-icon.png',
-      image: '/images/certs/azure-cert.png'
-    }
-  ];
+  {
+    id: 1,
+    type: 'performance',
+    title: 'Performance Testing Foundations',
+    date: '2023',
+    level: 'Professional',
+    icon: '/images/certs/performance-icon.png',
+    image: '/images/certs/performance-cert.png'
+  },
+  {
+    id: 2,
+    type: 'python',
+    title: 'Python Automation Testing With Pytest',
+    date: '2023',
+    level: 'Professional',
+    icon: '/images/certs/python-icon.png',
+    image: '/images/certs/python-cert.png'
+  },
+  {
+    id: 3,
+    type: 'docker',
+    title: 'Docker Essentials and Development',
+    date: '2023',
+    level: 'Professional',
+    icon: '/images/certs/docker-icon.png',
+    image: '/images/certs/docker-cert.png'
+  },
+  {
+    id: 4,
+    type: 'networking',
+    title: 'Computer Networking & IoT',
+    date: '2023',
+    level: 'Professional',
+    icon: '/images/certs/networking-icon.png',
+    image: '/images/certs/networking-cert.png'
+  },
+  {
+    id: 5,
+    type: 'gitlab',
+    title: 'GitLab CI/CD: Pipelines & DevOps',
+    date: '2023',
+    level: 'Professional',
+    icon: '/images/certs/gitlab-icon.png',
+    image: '/images/certs/gitlab-cert.png'
+  }
+];
 
-  export const certStyles = {
-    aws: {
-      gradient: 'from-[#ff9900] to-[#ffc300]',
-      shadow: 'shadow-[#ff9900]/20',
-      iconBg: 'bg-[#ff9900]'
-    },
-    gcp: {
-      gradient: 'from-[#4285f4] to-[#34a853]',
-      shadow: 'shadow-[#4285f4]/20',
-      iconBg: 'bg-[#4285f4]'
-    },
-    azure: {
-      gradient: 'from-[#0078d4] to-[#00bcf2]',
-      shadow: 'shadow-[#0078d4]/20',
-      iconBg: 'bg-[#0078d4]'
-    }
-  };
-
+export const certStyles = {
+  performance: {
+    gradient: 'from-[#FF4D4D] to-[#F9CB28]',
+    shadow: 'shadow-[#FF4D4D]/20',
+    iconBg: 'bg-[#FF4D4D]'
+  },
+  python: {
+    gradient: 'from-[#4B8BBE] to-[#FFE873]',
+    shadow: 'shadow-[#4B8BBE]/20',
+    iconBg: 'bg-[#4B8BBE]'
+  },
+  docker: {
+    gradient: 'from-[#2496ED] to-[#0DB7ED]',
+    shadow: 'shadow-[#2496ED]/20',
+    iconBg: 'bg-[#2496ED]'
+  },
+  networking: {
+    gradient: 'from-[#00C7B7] to-[#59E0C5]',
+    shadow: 'shadow-[#00C7B7]/20',
+    iconBg: 'bg-[#00C7B7]'
+  },
+  gitlab: {
+    gradient: 'from-[#FCA121] to-[#FC6D26]',
+    shadow: 'shadow-[#FC6D26]/20',
+    iconBg: 'bg-[#FC6D26]'
+  }
+};

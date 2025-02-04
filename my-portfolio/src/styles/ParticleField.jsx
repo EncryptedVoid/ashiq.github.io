@@ -1,6 +1,6 @@
 // src/components/sections/Hero/components/ParticleField.jsx
 import React, { useEffect, useRef } from 'react';
-import { useMousePosition } from '../../../../hooks/useMousePosition';  // Updated import
+import { useMousePosition } from '../hooks/useMousePosition';  // Updated import
 
 const ParticleField = () => {
   const canvasRef = useRef(null);

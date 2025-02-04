@@ -1,47 +1,44 @@
-/**
- * Portfolio.js
- * Main portfolio application component that handles responsive rendering of sections
- * for both desktop and mobile views.
- *
- * Architecture:
- * - Uses a responsive design approach with separate mobile/desktop components
- * - Implements component mapping for cleaner conditional rendering
- * - Utilizes Tailwind CSS for styling
- */
-
 import React from 'react';
-// Custom hook to detect mobile viewport
+import { motion } from 'framer-motion';
 import useIsMobile from './hooks/useIsMobile';
 
-// Desktop component imports
-// Each section is modularized into its own component for better maintainability
-import Hero from './components/sections/Hero/Hero';
-import Testimonials from './components/sections/Testimonials';
-import Skills from './components/sections/Skills';
-import Experience from './components/sections/Experience/Experience';
-import Certifications from './components/sections/Certifications';
-import Projects from './components/sections/Projects';
-import Goals from './components/sections/Goals';
-import Socials from './components/sections/DigitalPresence';
-import Education from './components/sections/Education';
+// Desktop component imports - using dynamic imports for code splitting
+const Hero = React.lazy(() => import('./components/sections/Hero/Hero'));
+const Testimonials = React.lazy(() => import('./components/sections/Testimonials'));
+const Skills = React.lazy(() => import('./components/sections/Skills'));
+const Experience = React.lazy(() => import('./components/sections/Experience/Experience'));
+const Certifications = React.lazy(() => import('./components/sections/Certifications'));
+const Projects = React.lazy(() => import('./components/sections/Projects'));
+const Goals = React.lazy(() => import('./components/sections/Goals'));
+const Socials = React.lazy(() => import('./components/sections/DigitalPresence'));
+const Education = React.lazy(() => import('./components/sections/Education'));
 
-// Mobile-specific component imports
-// Separate mobile components allow for optimized mobile-first experiences
-import MobileHero from './mobileComponents/sections/Hero/Hero';
-import MobileTestimonials from './mobileComponents/sections/Testimonials';
-import MobileSkills from './mobileComponents/sections/Skills';
-import MobileExperience from './mobileComponents/sections/Experience/MobileExperience';
-import MobileCertifications from './mobileComponents/sections/Certifications';
-import MobileProjects from './mobileComponents/sections/Projects';
-import MobileGoals from './mobileComponents/sections/Goals';
-import MobileSocials from './mobileComponents/sections/DigitalPresence';
-import MobileEducation from './mobileComponents/sections/Education';
+// Mobile component imports
+const MobileHero = React.lazy(() => import('./mobileComponents/sections/Hero/Hero'));
+const MobileTestimonials = React.lazy(() => import('./mobileComponents/sections/Testimonials'));
+const MobileSkills = React.lazy(() => import('./mobileComponents/sections/Skills'));
+const MobileExperience = React.lazy(() => import('./mobileComponents/sections/Experience/MobileExperience'));
+const MobileCertifications = React.lazy(() => import('./mobileComponents/sections/Certifications'));
+const MobileProjects = React.lazy(() => import('./mobileComponents/sections/Projects'));
+const MobileGoals = React.lazy(() => import('./mobileComponents/sections/Goals'));
+const MobileSocials = React.lazy(() => import('./mobileComponents/sections/DigitalPresence'));
+const MobileEducation = React.lazy(() => import('./mobileComponents/sections/Education'));
 
 function Portfolio() {
   const isMobile = useIsMobile();
 
-  // Define which components should be hidden on mobile
-  const mobileHiddenComponents = ['Goals', 'Certifications'];
+  // Define section order and visibility
+  const sections = [
+    { name: 'Hero', hidden: false },
+    { name: 'Skills', hidden: false },
+    { name: 'Experience', hidden: false },
+    { name: 'Projects', hidden: false },
+    { name: 'Testimonials', hidden: false },
+    { name: 'Education', hidden: false },
+    { name: 'Certifications', hidden: isMobile },
+    { name: 'Socials', hidden: false },
+    { name: 'Goals', hidden: isMobile }
+  ];
 
   const components = {
     Hero: { Desktop: Hero, Mobile: MobileHero },
@@ -55,23 +52,44 @@ function Portfolio() {
     Certifications: { Desktop: Certifications, Mobile: MobileCertifications },
   };
 
-  const renderComponent = (name) => {
-    // Skip rendering if component should be hidden on mobile
-    if (isMobile && mobileHiddenComponents.includes(name)) {
-      return null;
-    }
-
-    const Component = isMobile ? components[name].Mobile : components[name].Desktop;
-    return <Component key={name} />;
-  };
-
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-gray-900 to-black text-white">
-      <main className="flex flex-col w-full items-center relative">
-        <div className={`w-full relative ${!isMobile ? 'max-w-7xl px-4 sm:px-6 lg:px-8' : 'px-0'}`}>
-          {Object.keys(components).map(renderComponent)}
-        </div>
-      </main>
+    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black">
+      <React.Suspense
+        fallback={
+          <div className="min-h-screen w-full flex items-center justify-center">
+            <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        }
+      >
+        <main className="flex flex-col w-full items-center">
+          <div className={`
+            w-full relative
+            ${!isMobile ? 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8' : 'px-4'}
+            space-y-20
+          `}>
+            {sections
+              .filter(section => !section.hidden)
+              .map(section => {
+                const Component = isMobile
+                  ? components[section.name].Mobile
+                  : components[section.name].Desktop;
+
+                return (
+                  <motion.div
+                    key={section.name}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="w-full"
+                    id={`section-${section.name.toLowerCase()}`}
+                  >
+                    <Component />
+                  </motion.div>
+                );
+              })}
+          </div>
+        </main>
+      </React.Suspense>
     </div>
   );
 }

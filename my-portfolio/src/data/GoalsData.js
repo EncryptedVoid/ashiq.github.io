@@ -2,71 +2,71 @@ export const GoalsData = [
     {
         id: 1,
         type: "learning",
-        title: "Learning Roadmap",
-        icon: "fas fa-graduation-cap",
-        progress: 35,
+        title: "AI Learning Roadmap",
+        icon: "fas fa-brain",
+        progress: 25,
         timeline: [
         {
             date: "Current - Q2 2024",
-            content: "Advanced iOS Development & SwiftUI Mastery",
+            content: "AI Fundamentals & Neural Networks",
             isActive: true
         },
         {
-            date: "Q3 2024",
-            content: "Machine Learning & AI Integration in Mobile Apps",
+            date: "Q3-Q4 2024",
+            content: "Practical AI Applications Development",
             isActive: false
         },
         {
-            date: "Q4 2024",
-            content: "Advanced System Design & Architecture",
+            date: "2025",
+            content: "Advanced Machine Learning Implementation",
             isActive: false
         }
         ]
     },
     {
         id: 2,
-        type: "Certifications",
-        title: "Upcoming Certifications",
-        icon: "fas fa-certificate",
-        progress: 25,
+        type: "frontend",
+        title: "Frontend Development Path",
+        icon: "fas fa-code",
+        progress: 35,
         timeline: [
         {
-            date: "March 2024",
-            content: "AWS Solutions Architect Professional",
+            date: "Current - Q2 2024",
+            content: "Advanced Frontend Frameworks & Libraries",
             isActive: true
         },
         {
-            date: "June 2024",
-            content: "Google Cloud Professional Architect",
+            date: "Q3-Q4 2024",
+            content: "Interactive Web Applications Development",
             isActive: false
         },
         {
-            date: "September 2024",
-            content: "Apple Certified iOS Developer",
+            date: "2025",
+            content: "User-Centric Design Systems Implementation",
             isActive: false
         }
         ]
     },
     {
         id: 3,
-        type: "projects",
-        title: "Project Pipeline",
-        icon: "fas fa-rocket",
-        progress: 45,
+        type: "academic",
+        title: "University Studies",
+        icon: "fas fa-graduation-cap",
+        progress: 15,
         timeline: [
         {
-            date: "Q1-Q2 2024",
-            content: "AI-Powered Personal Assistant App",
+            date: "2023-2024",
+            content: "Foundation in Mathematics & Computer Science",
             isActive: true
         },
         {
-            date: "Q3 2024",
-            content: "Cross-Platform Design System",
+            date: "2024-2025",
+            content: "Advanced Data Science Specialization",
             isActive: false
         },
         {
-            date: "Q4 2024",
-            content: "Open Source Component Library",
+            date: "2025-2029",
+            content: "Research Integration & Practical Applications",
             isActive: false
         }
         ]
@@ -74,23 +74,47 @@ export const GoalsData = [
     {
         id: 4,
         type: "career",
-        title: "Career Objectives",
+        title: "Professional Growth",
         icon: "fas fa-chart-line",
-        progress: 20,
+        progress: 30,
         timeline: [
         {
-            date: "2024",
-            content: "Lead Design System Architecture",
+            date: "Current",
+            content: "Software Testing Specialist at BlackBerry QNX",
             isActive: true
         },
         {
-            date: "2025",
-            content: "Senior Technical Leadership Role",
+            date: "2024-2025",
+            content: "Advanced AI Implementation Projects",
             isActive: false
         },
         {
-            date: "2026",
-            content: "Principal Design Engineer",
+            date: "2025-2026",
+            content: "Full-Stack Development Leadership",
+            isActive: false
+        }
+        ]
+    },
+    {
+        id: 5,
+        type: "technical",
+        title: "Technical Advancement",
+        icon: "fas fa-laptop-code",
+        progress: 40,
+        timeline: [
+        {
+            date: "Current",
+            content: "Testing Automation & Framework Development",
+            isActive: true
+        },
+        {
+            date: "2024",
+            content: "AI/ML Integration in Web Applications",
+            isActive: false
+        },
+        {
+            date: "2025",
+            content: "Cutting-Edge Project Contributions",
             isActive: false
         }
         ]

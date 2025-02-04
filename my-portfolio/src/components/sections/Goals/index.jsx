@@ -3,13 +3,17 @@ import React from 'react';
 import GoalCard from './components/GoalCard';
 import SectionHeader from './components/SectionHeader';
 import { GoalsData } from '../../../data/GoalsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const Goals = () => {
   return (
     <section className="w-full py-20 px-4 md:px-8">
-      <SectionHeader
-        title="Long-term Professional Goals"
-        subtitle="Charting the path forward with clear objectives and milestones"
+      <TypewriterText
+        text="Long-term Professional Goals"
+        size={3}
+        typingSpeed={100}
+        delayBeforeRestart={60000}
       />
 
       <div className="

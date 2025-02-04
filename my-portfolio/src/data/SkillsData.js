@@ -2,253 +2,313 @@
 
 export const skillsData = [
     {
-    id: 'core-programming',
-    title: 'Programming Languages & Development',
-    icon: '💻',
-    description: 'Expertise in low-level and high-level programming languages',
-    experience: '2018-Present',
-    skills: [
-        {
-        name: 'C/C++',
-        yearStarted: '2018',
-        metrics: {
-            linesOfCode: 145000,
-            projectsCompleted: 28,
-            contributions: 920
-        },
-        description: 'System programming, embedded systems, and performance-critical applications',
-        recentProjects: [
-            { name: 'RTOS Scheduler', metric: '12K lines' },
-            { name: 'Memory Manager', metric: '8K lines' }
-        ],
-        tags: ['Systems', 'Performance', 'Embedded']
-        },
-        {
-        name: 'Python',
-        yearStarted: '2019',
-        metrics: {
-            linesOfCode: 98000,
-            projectsCompleted: 42,
-            contributions: 1240
-        },
-        description: 'Automation, data analysis, and backend development',
-        recentProjects: [
-            { name: 'Test Automation Framework', metric: '15K lines' },
-            { name: 'Data Processing Pipeline', metric: '10K lines' }
-        ],
-        tags: ['Scripting', 'Automation', 'Backend']
-        },
-        {
-        name: 'Assembly/Low-Level',
-        yearStarted: '2018',
-        metrics: {
-            linesOfCode: 25000,
-            projectsCompleted: 12,
-            contributions: 340
-        },
-        description: 'Embedded systems programming and hardware optimization',
-        recentProjects: [
-            { name: 'Bootloader Implementation', metric: '5K lines' },
-            { name: 'ISR Handlers', metric: '3K lines' }
-        ],
-        tags: ['Low-Level', 'Embedded', 'Hardware']
-        }
-    ]
+        id: 'testing-automation',
+        title: 'Testing & Automation',
+        icon: '🧪',
+        description: 'Software testing automation and quality assurance expertise',
+        experience: '2024-Present',
+        skills: [
+            {
+                name: 'Test Automation',
+                yearStarted: '2024',
+                metrics: {
+                    linesOfCode: 5000,
+                    projectsCompleted: 2,
+                    contributions: 100
+                },
+                description: 'Development of automation testing frameworks and quality assurance',
+                recentProjects: [
+                    { name: 'QNX Automation Framework', metric: '3K lines' },
+                    { name: 'Performance Testing', metric: '2K lines' }
+                ],
+                tags: ['Testing', 'Automation', 'QA']
+            },
+            {
+                name: 'CI/CD Pipelines',
+                yearStarted: '2024',
+                metrics: {
+                    linesOfCode: 2000,
+                    projectsCompleted: 1,
+                    contributions: 50
+                },
+                description: 'Implementation of continuous integration and deployment workflows',
+                recentProjects: [
+                    { name: 'CICD Workflow', metric: '2K lines' }
+                ],
+                tags: ['GitLab', 'CI/CD', 'DevOps']
+            }
+        ]
     },
     {
-    id: 'systems',
-    title: 'Operating Systems & Infrastructure',
-    icon: '🖥️',
-    description: 'Deep understanding of operating systems and infrastructure',
-    experience: '2018-Present',
-    skills: [
-        {
-        name: 'Linux/RTOS',
-        yearStarted: '2018',
-        metrics: {
-            linesOfCode: 82000,
-            projectsCompleted: 34,
-            contributions: 760
-        },
-        description: 'System administration, kernel modules, and real-time systems',
-        recentProjects: [
-            { name: 'Custom RTOS Implementation', metric: '20K lines' },
-            { name: 'Linux Kernel Module', metric: '5K lines' }
-        ],
-        tags: ['Operating Systems', 'Linux', 'RTOS']
-        },
-        {
-        name: 'Docker/Virtualization',
-        yearStarted: '2020',
-        metrics: {
-            linesOfCode: 45000,
-            projectsCompleted: 23,
-            contributions: 480
-        },
-        description: 'Container orchestration and virtual environment management',
-        recentProjects: [
-            { name: 'Docker Swarm Cluster', metric: '8K lines' },
-            { name: 'VM Automation', metric: '6K lines' }
-        ],
-        tags: ['Containers', 'DevOps', 'Infrastructure']
-        }
-    ]
+        id: 'frontend-dev',
+        title: 'Frontend Development',
+        icon: '🎨',
+        description: 'Web development and user interface design',
+        experience: '2023-Present',
+        skills: [
+            {
+                name: 'Web Development',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 10000,
+                    projectsCompleted: 8,
+                    contributions: 200
+                },
+                description: 'Frontend development focusing on responsive and interactive web applications',
+                recentProjects: [
+                    { name: 'Russell Driving School', metric: '4K lines' },
+                    { name: 'Weather Dashboard', metric: '2K lines' }
+                ],
+                tags: ['JavaScript', 'CSS', 'HTML']
+            },
+            {
+                name: 'React Development',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 5000,
+                    projectsCompleted: 3,
+                    contributions: 150
+                },
+                description: 'Building modern web applications using React',
+                recentProjects: [
+                    { name: 'Mock ThreeJS Portfolio', metric: '3K lines' },
+                    { name: 'Todo List WebApp', metric: '2K lines' }
+                ],
+                tags: ['React', 'Frontend', 'UI/UX']
+            }
+        ]
     },
     {
-    id: 'software-arch',
-    title: 'Software Architecture & Development',
-    icon: '🏗️',
-    description: 'Architecture design and development practices',
-    experience: '2019-Present',
-    skills: [
-        {
-        name: 'System Architecture',
-        yearStarted: '2019',
-        metrics: {
-            linesOfCode: 120000,
-            projectsCompleted: 18,
-            contributions: 580
-        },
-        description: 'Distributed systems, scalable architecture, and system design',
-        recentProjects: [
-            { name: 'Microservices Platform', metric: '25K lines' },
-            { name: 'IPC Framework', metric: '15K lines' }
-        ],
-        tags: ['Architecture', 'Design', 'Systems']
-        },
-        {
-        name: 'Concurrent Programming',
-        yearStarted: '2019',
-        metrics: {
-            linesOfCode: 75000,
-            projectsCompleted: 15,
-            contributions: 420
-        },
-        description: 'Multi-threading, parallel computing, and synchronization',
-        recentProjects: [
-            { name: 'Thread Pool Implementation', metric: '12K lines' },
-            { name: 'Parallel Processor', metric: '8K lines' }
-        ],
-        tags: ['Concurrency', 'Performance', 'Systems']
-        }
-    ]
+        id: 'computer-science',
+        title: 'Computer Science Fundamentals',
+        icon: '💻',
+        description: 'Core computer science concepts and implementations',
+        experience: '2023-Present',
+        skills: [
+            {
+                name: 'Computer Architecture',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 3000,
+                    projectsCompleted: 4,
+                    contributions: 80
+                },
+                description: 'Understanding and implementation of computer architecture concepts',
+                recentProjects: [
+                    { name: 'CUDA Samples', metric: '2K lines' },
+                    { name: 'Architecture Projects', metric: '1K lines' }
+                ],
+                tags: ['Architecture', 'Systems', 'Hardware']
+            },
+            {
+                name: 'Algorithms',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 4000,
+                    projectsCompleted: 5,
+                    contributions: 100
+                },
+                description: 'Implementation of scheduling and optimization algorithms',
+                recentProjects: [
+                    { name: 'Conway\'s Game of Life', metric: '2K lines' },
+                    { name: 'JUDOKU Sudoku', metric: '2K lines' }
+                ],
+                tags: ['Algorithms', 'Data Structures', 'Optimization']
+            }
+        ]
     },
     {
-    id: 'testing-qa',
-    title: 'Testing & Quality Assurance',
-    icon: '🔍',
-    description: 'Comprehensive testing methodologies and tools',
-    experience: '2020-Present',
-    skills: [
-        {
-        name: 'Automated Testing',
-        yearStarted: '2020',
-        metrics: {
-            linesOfCode: 65000,
-            projectsCompleted: 32,
-            contributions: 840
-        },
-        description: 'Test automation frameworks and continuous testing',
-        recentProjects: [
-            { name: 'E2E Test Framework', metric: '18K lines' },
-            { name: 'Performance Test Suite', metric: '12K lines' }
-        ],
-        tags: ['Testing', 'Automation', 'Quality']
-        },
-        {
-        name: 'Performance Testing',
-        yearStarted: '2020',
-        metrics: {
-            linesOfCode: 48000,
-            projectsCompleted: 24,
-            contributions: 560
-        },
-        description: 'Load testing, stress testing, and performance optimization',
-        recentProjects: [
-            { name: 'Load Test Framework', metric: '15K lines' },
-            { name: 'System Benchmarks', metric: '10K lines' }
-        ],
-        tags: ['Performance', 'Testing', 'Optimization']
-        }
-    ]
+        id: 'ai-ml',
+        title: 'AI & Machine Learning',
+        icon: '🧠',
+        description: 'Artificial Intelligence and Machine Learning projects',
+        experience: '2023-Present',
+        skills: [
+            {
+                name: 'ML Development',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 6000,
+                    projectsCompleted: 3,
+                    contributions: 120
+                },
+                description: 'Development of machine learning applications and analysis tools',
+                recentProjects: [
+                    { name: 'ASGARD Investment Analysis', metric: '3K lines' },
+                    { name: 'FortuneAI', metric: '3K lines' }
+                ],
+                tags: ['Machine Learning', 'Python', 'Data Analysis']
+            },
+            {
+                name: 'Data Science',
+                yearStarted: '2023',
+                metrics: {
+                    linesOfCode: 3000,
+                    projectsCompleted: 2,
+                    contributions: 60
+                },
+                description: 'Data analysis and scientific computing',
+                recentProjects: [
+                    { name: 'SCIKIT Experimenting', metric: '2K lines' },
+                    { name: 'ML Experimenting', metric: '1K lines' }
+                ],
+                tags: ['Data Science', 'Analytics', 'Statistics']
+            }
+        ]
+    }
+];
+
+// Complete list of all GitHub projects
+export const allProjects = [
+    {
+        name: 'Conways-Game-Of-Life-Plus',
+        type: 'Private',
+        language: 'Python',
+        lastUpdated: 'Active'
     },
     {
-    id: 'devops',
-    title: 'DevOps & Continuous Integration',
-    icon: '🔄',
-    description: 'Automation and deployment pipeline expertise',
-    experience: '2020-Present',
-    skills: [
-        {
-        name: 'CI/CD',
-        yearStarted: '2020',
-        metrics: {
-            linesOfCode: 52000,
-            projectsCompleted: 28,
-            contributions: 680
-        },
-        description: 'Pipeline automation and continuous deployment',
-        recentProjects: [
-            { name: 'Jenkins Pipeline', metric: '12K lines' },
-            { name: 'Deployment Automation', metric: '8K lines' }
-        ],
-        tags: ['DevOps', 'Automation', 'CI/CD']
-        },
-        {
-        name: 'Git & Version Control',
-        yearStarted: '2018',
-        metrics: {
-            linesOfCode: 0, // Not applicable for version control
-            projectsCompleted: 85,
-            contributions: 2400
-        },
-        description: 'Advanced version control and collaboration workflows',
-        recentProjects: [
-            { name: 'Git Workflow Automation', metric: '5K lines' },
-            { name: 'Custom Git Hooks', metric: '3K lines' }
-        ],
-        tags: ['Version Control', 'Collaboration', 'DevOps']
-        }
-    ]
+        name: 'RussellDrivingSchool-Freelance',
+        type: 'Private',
+        language: 'JavaScript',
+        lastUpdated: 'Active'
     },
     {
-    id: 'networking',
-    title: 'Networking & Web Technologies',
-    icon: '🌐',
-    description: 'Network protocols and web development',
-    experience: '2019-Present',
-    skills: [
-        {
-        name: 'Network Programming',
-        yearStarted: '2019',
-        metrics: {
-            linesOfCode: 58000,
-            projectsCompleted: 22,
-            contributions: 480
-        },
-        description: 'Protocol implementation and network analysis',
-        recentProjects: [
-            { name: 'Network Monitor', metric: '15K lines' },
-            { name: 'Protocol Parser', metric: '10K lines' }
-        ],
-        tags: ['Networking', 'Protocols', 'Analysis']
-        },
-        {
-        name: 'Web Development',
-        yearStarted: '2020',
-        metrics: {
-            linesOfCode: 72000,
-            projectsCompleted: 26,
-            contributions: 620
-        },
-        description: 'Full-stack web development with modern frameworks',
-        recentProjects: [
-            { name: 'React Dashboard', metric: '20K lines' },
-            { name: 'REST API Service', metric: '15K lines' }
-        ],
-        tags: ['Web', 'Frontend', 'Backend']
-        }
-    ]
+        name: 'Harvard-CS50-Web-Development',
+        type: 'Public',
+        language: 'CSS',
+        lastUpdated: 'Active'
+    },
+    {
+        name: 'PersonalPortfolio',
+        type: 'Public',
+        language: 'JavaScript',
+        lastUpdated: 'Active'
+    },
+    {
+        name: 'MiniProjects',
+        type: 'Private',
+        language: 'Java',
+        lastUpdated: 'Active'
+    },
+    {
+        name: 'BrowserDashboardProject',
+        type: 'Private',
+        language: 'HTML',
+        lastUpdated: 'Active'
+    },
+    {
+        name: 'ASGARD-Automated-Investing-Analysis',
+        type: 'Private',
+        language: 'Python',
+        lastUpdated: 'Dec 2024'
+    },
+    {
+        name: 'FortuneAI',
+        type: 'Public',
+        language: 'Java',
+        lastUpdated: 'Aug 2024'
+    },
+    {
+        name: 'cuda-samples',
+        type: 'Public',
+        language: 'C',
+        lastUpdated: 'Jul 2024'
+    },
+    {
+        name: 'MANIM-PersonalExperimenting',
+        type: 'Private',
+        language: 'Python',
+        lastUpdated: 'Jul 2024'
+    },
+    {
+        name: 'Mock-AI-Chatbot-Webpage',
+        type: 'Private',
+        language: 'CSS',
+        lastUpdated: 'Jun 2024'
+    },
+    {
+        name: 'Mock-ThreeJS-Personal-Portfolio',
+        type: 'Private',
+        language: 'JavaScript',
+        lastUpdated: 'Jun 2024'
+    },
+    {
+        name: 'JONOPOLY-Java-Monopoly',
+        type: 'Private',
+        language: 'Java',
+        lastUpdated: 'Jun 2024'
+    },
+    {
+        name: 'Mock-Restaurant-Webpage',
+        type: 'Private',
+        language: 'JavaScript',
+        lastUpdated: 'May 2024'
+    },
+    {
+        name: 'JUDOKU-Java-Sudoku',
+        type: 'Public',
+        language: 'Java',
+        lastUpdated: 'May 2024'
+    },
+    {
+        name: 'Python-SCIKIT-Experimenting',
+        type: 'Private',
+        language: 'Python',
+        lastUpdated: 'May 2024'
+    },
+    {
+        name: 'ITI1121-LABS-ASSIGNMENTS',
+        type: 'Private',
+        language: 'Java',
+        lastUpdated: 'May 2024'
+    },
+    {
+        name: 'Machine-Learning-Experimenting',
+        type: 'Public',
+        language: 'Python',
+        lastUpdated: 'Feb 2024'
+    },
+    {
+        name: 'ToDo-List-WebApp',
+        type: 'Public',
+        language: 'HTML',
+        lastUpdated: 'Jan 2024'
+    },
+    {
+        name: 'Weather-Dashboard-WebApp',
+        type: 'Public',
+        language: 'CSS',
+        lastUpdated: 'Jan 2024'
+    },
+    {
+        name: 'Mock-Login-Page',
+        type: 'Public',
+        language: 'CSS',
+        lastUpdated: 'Jan 2024'
+    },
+    {
+        name: 'Alarms-Times-Clocks-Dashboard-WebApp',
+        type: 'Public',
+        language: 'JavaScript',
+        lastUpdated: 'Jan 2024'
+    },
+    {
+        name: 'Mock-Sushi-Restaurant-Webpage',
+        type: 'Public',
+        language: 'CSS',
+        lastUpdated: 'Jan 2024'
+    },
+    {
+        name: 'Mock-Gardening-Business-Webpage',
+        type: 'Public',
+        language: 'HTML',
+        lastUpdated: 'Dec 2023'
+    },
+    {
+        name: 'WalkForWenjack.github.io',
+        type: 'Public',
+        language: 'HTML',
+        lastUpdated: 'Nov 2021'
     }
 ];
 

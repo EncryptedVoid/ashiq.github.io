@@ -1,64 +1,64 @@
 // src/data/HeroData.js
-import { Briefcase, GraduationCap, Users, Code } from 'lucide-react';
+import { Code, GraduationCap, Terminal, FileCode } from 'lucide-react';
 
 export const HeroData = {
-intro: {
+  intro: {
     terminalText: "WHOAMI",
     title: {
-    line1: "Senior Full Stack",
-    line2: "Developer"
+      line1: "Software Testing Specialist",
+      line2: "& Frontend Developer"
     },
     description: [
-    "Crafting elegant, user-centric digital experiences with deep expertise in both technical implementation and design philosophy.",
-    "Former Apple Interaction Developer and Meta UI/UX Developer, specializing in creating seamless, responsive experiences."
+      "First-year University of Ottawa student pursuing a double major in Mathematics and Computer Science (Data Science), with a passion for AI and frontend development.",
+      "Currently specializing in software automation and testing at BlackBerry QNX while developing frontend solutions as a freelance developer."
     ]
-},
+  },
 
-status: {
+  status: {
     location: "OTTAWA, ON, CANADA",
-    availability: "Available for Work",
+    availability: "Open to Opportunities",
     resumeLink: "/path-to-resume.pdf"
-},
+  },
 
-profileImage: {
+  profileImage: {
     src: "/profile-image.jpg",
-    alt: "Profile"
-},
+    alt: "Ashiq Gazi - Software Developer"
+  },
 
-quickStats: [
+  quickStats: [
     {
-    icon: Briefcase,
-    label: "Years Experience",
-    value: "15+"
+      icon: Code,
+      label: "Projects Completed",
+      value: "25+"
     },
     {
-    icon: GraduationCap,
-    label: "Projects Completed",
-    value: "200+"
+      icon: GraduationCap,
+      label: "Certifications",
+      value: "5+"
     },
     {
-    icon: Users,
-    label: "Satisfied Clients",
-    value: "50+"
+      icon: Terminal,
+      label: "Technologies",
+      value: "10+"
     },
     {
-    icon: Code,
-    label: "Technologies",
-    value: "30+"
+      icon: FileCode,
+      label: "GitHub Repos",
+      value: "26+"
     }
-],
+  ],
 
-// Animation configs - keeping these with the data for easy tweaking
-animations: {
+  // Animation configs - keeping these with the data for easy tweaking
+  animations: {
     springConfig: { damping: 15, stiffness: 150 },
     textDelays: {
-    terminalText: 0.5,
-    titleLine1: 0.7,
-    titleLine2: 0.9,
-    description: 1.1,
-    status: 1.3
+      terminalText: 0.5,
+      titleLine1: 0.7,
+      titleLine2: 0.9,
+      description: 1.1,
+      status: 1.3
     }
-}
+  }
 };
 
 export default HeroData;

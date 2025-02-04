@@ -1,47 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Quote, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { TestimonialData } from '../../../data/TestimonialsData'
+import { TypewriterText } from '../../../styles/TypewriterText'
 
-// Sample testimonial data - replace with proper import when available
-const testimonialData = [
-    {
-      id: 1,
-      name: "John Smith",
-      role: "Senior Software Engineer",
-      company: "Google",
-      initials: "JS",
-      quote: "Their technical expertise and commitment to quality are outstanding. They consistently deliver exceptional results.",
-      linkedIn: "https://linkedin.com/in/johnsmith"
-    },
-    {
-      id: 2,
-      name: "Sarah Johnson",
-      role: "Engineering Manager",
-      company: "Apple",
-      initials: "SJ",
-      quote: "One of the most talented developers I've had the pleasure to work with. Their problem-solving abilities are remarkable.",
-      linkedIn: "https://linkedin.com/in/sarahjohnson"
-    },
-    {
-      id: 3,
-      name: "Michael Chen",
-      role: "Technical Lead",
-      company: "Microsoft",
-      initials: "MC",
-      quote: "Outstanding technical skills combined with excellent communication. A true asset to any development team.",
-      linkedIn: "https://linkedin.com/in/michaelchen"
-    }
-];
 
-const MobileTestimonialCard = ({ testimonialData }) => (
+const MobileTestimonialCard = () => (
   <div className="w-full relative backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-xl p-3">
     {/* Company Tag */}
     <div className="flex items-center justify-between mb-4">
       <span className="text-sm text-white/60 bg-white/[0.03] px-3 py-1 rounded-full">
-        {testimonialData.company}
+        {TestimonialData.company}
       </span>
       <a
-        href={testimonialData.linkedIn}
+        href={TestimonialData.linkedIn}
         target="_blank"
         rel="noopener noreferrer"
         className="w-10 h-10 flex items-center justify-center rounded-full bg-white/[0.03]
@@ -57,18 +29,18 @@ const MobileTestimonialCard = ({ testimonialData }) => (
       <div className="flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/90 to-purple-500/90
                       flex items-center justify-center text-lg font-bold text-white">
-          {testimonialData.initials}
+          {TestimonialData.initials}
         </div>
         <div>
-          <h3 className="text-lg font-semibold text-white">{testimonialData.name}</h3>
-          <p className="text-sm text-white/60">{testimonialData.role}</p>
+          <h3 className="text-lg font-semibold text-white">{TestimonialData.name}</h3>
+          <p className="text-sm text-white/60">{TestimonialData.role}</p>
         </div>
       </div>
 
       <div className="relative">
         <Quote className="absolute top-0 left-0 w-5 h-5 text-white/20" />
         <p className="pl-8 text-base text-white/80 leading-relaxed">
-          "{testimonialData.quote}"
+          "{TestimonialData.quote}"
         </p>
       </div>
     </div>
@@ -82,11 +54,11 @@ const MobileTestimonials = () => {
   const [isPaused, setIsPaused] = useState(false);
 
   const handleNext = useCallback(() => {
-    setCurrentIndex(prev => (prev + 1) % testimonialData.length);
+    setCurrentIndex(prev => (prev + 1) % TestimonialData.length);
   }, []);
 
   const handlePrev = () => {
-    setCurrentIndex(prev => (prev - 1 + testimonialData.length) % testimonialData.length);
+    setCurrentIndex(prev => (prev - 1 + TestimonialData.length) % TestimonialData.length);
   };
 
   // Touch handling
@@ -121,10 +93,12 @@ const MobileTestimonials = () => {
   return (
     <section className="w-full py-8 px-4">
       <div className="text-center mb-4 space-y-2">
-        <h2 className="text-xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500
-                     bg-clip-text text-transparent">
-          What People Say
-        </h2>
+        <TypewriterText
+          text="What People Say"
+          size={1.5}
+          typingSpeed={100}        // Optional: milliseconds per character
+          delayBeforeRestart={60000} // Optional: milliseconds to wait before restarting
+        />
         <p className="text-sm text-white/60">
           Swipe to explore testimonials
         </p>
@@ -142,7 +116,7 @@ const MobileTestimonials = () => {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <MobileTestimonialCard testimonialData={testimonialData[currentIndex]} />
+            <MobileTestimonialCard TestimonialData={TestimonialData[currentIndex]} />
           </motion.div>
         </AnimatePresence>
 
@@ -152,7 +126,7 @@ const MobileTestimonials = () => {
 
       {/* Progress Indicators - Optimized for touch */}
       <div className="flex justify-center gap-3 mt-6">
-        {testimonialData.map((_, index) => (
+        {TestimonialData.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}

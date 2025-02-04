@@ -3,6 +3,8 @@ import { useMediaQuery } from '../../../hooks/useMediaQuery';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Medal, Calendar, ExternalLink } from 'lucide-react';
 import { certStyles, Certifications } from '../../../data/CertificationsData';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const MobileCertCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];
@@ -101,9 +103,12 @@ const MobileCertifications = () => {
     <section className="py-16 px-4 space-y-6">
       {/* Header */}
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-white mb-2">
-          Professional Certifications
-        </h2>
+        <TypewriterText
+          text="Certifications"
+          size={3}
+          typingSpeed={100}
+          delayBeforeRestart={60000}
+        />
         <p className="text-white/60">
           Industry recognized certificates and achievements
         </p>

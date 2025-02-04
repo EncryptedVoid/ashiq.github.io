@@ -2,6 +2,8 @@ import React, { useState, useCallback } from 'react';
 import { Search, ArrowLeft, ArrowRight } from 'lucide-react';
 import { skillsData } from '../../../data/SkillsData';
 import { motion, AnimatePresence } from 'framer-motion';
+import { TypewriterText } from '../../../styles/TypewriterText'
+
 
 const MobileSkills = () => {
   const [activeCategory, setActiveCategory] = useState(null);
@@ -17,7 +19,12 @@ const MobileSkills = () => {
       {/* Title Bar */}
       <div className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-white/10">
         <div className="px-4 py-3">
-          <h1 className="text-xl font-bold text-white">Technical Skills</h1>
+          <TypewriterText
+            text="Skills & Expertise"
+            size={3}
+            typingSpeed={100}
+            delayBeforeRestart={60000}
+          />
           <p className="text-sm text-white/60">Expertise & capabilities</p>
         </div>
       </div>

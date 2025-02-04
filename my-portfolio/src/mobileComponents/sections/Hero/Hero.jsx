@@ -1,8 +1,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Mail, MapPin } from 'lucide-react';
-import { TypewriterText } from './components/TypewriterText';
-import ParticleField from './components/ParticleField';
+import ParticleField from '../../../styles/ParticleField';
+import { TypewriterText } from '../../../styles/TypewriterText';
 import { HeroData } from '../../../data/HeroData';
 
 const MobileHero = () => {
@@ -73,7 +73,12 @@ const MobileHero = () => {
             transition={{ delay: 0.2 }}
           >
             <div className="text-sm text-blue-400 font-mono">
-              <TypewriterText text={intro.terminalText} />
+              <TypewriterText
+              text={intro.terminalText}
+              size={1.5}
+              typingSpeed={100}
+              delayBeforeRestart={60000}
+              />
             </div>
             <h1 className="text-2xl font-bold">
               <span className="bg-gradient-to-r from-white via-blue-400 to-purple-400 bg-clip-text text-transparent">
