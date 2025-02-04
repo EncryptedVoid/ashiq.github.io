@@ -1,30 +1,46 @@
-// src/components/sections/Testimonials/data/TestimonialsData.js
+// src/data/testimonialsData.js
 export const TestimonialData = [
-    {
+  {
       id: 1,
-      name: "John Smith",
-      role: "Senior Software Engineer",
-      company: "Google",
-      initials: "JS",
-      quote: "Their technical expertise and commitment to quality are outstanding. They consistently deliver exceptional results.",
-      linkedIn: "https://linkedin.com/in/johnsmith"
-    },
-    {
+      name: "David Wilson",
+      role: "Software Testing Lead",
+      company: "BlackBerry QNX",
+      initials: "DW",
+      quote: "Impressive work on the automation testing framework. Achieved significant improvements in testing efficiency and demonstrated strong technical capabilities.",
+      linkedIn: null
+  },
+  {
       id: 2,
-      name: "Sarah Johnson",
-      role: "Engineering Manager",
-      company: "Apple",
-      initials: "SJ",
-      quote: "One of the most talented developers I've had the pleasure to work with. Their problem-solving abilities are remarkable.",
-      linkedIn: "https://linkedin.com/in/sarahjohnson"
-    },
-    {
+      name: "Sarah Russell",
+      role: "Business Owner",
+      company: "Russell Driving School",
+      initials: "SR",
+      quote: "Delivered an exceptional website that perfectly captured our vision. Professional, responsive, and demonstrated great attention to detail throughout the project.",
+      linkedIn: null
+  },
+  {
       id: 3,
-      name: "Michael Chen",
-      role: "Technical Lead",
-      company: "Microsoft",
-      initials: "MC",
-      quote: "Outstanding technical skills combined with excellent communication. A true asset to any development team.",
-      linkedIn: "https://linkedin.com/in/michaelchen"
-    }
-  ];
+      name: "Jennifer Clark",
+      role: "Store Manager",
+      company: "Purdys Chocolatier",
+      initials: "JC",
+      quote: "Consistently demonstrates excellent customer service skills and attention to detail. A reliable team member who contributes positively to our store's success.",
+      linkedIn: null
+  },
+  {
+      id: 4,
+      name: "Michael Turner",
+      role: "Regional Director",
+      company: "Key Club International",
+      initials: "MT",
+      quote: "Excellent leadership as Lieutenant Governor of the Capital Division. Successfully organized multiple events and demonstrated strong organizational skills.",
+      linkedIn: null
+  }
+];
+
+export const TestimonialCategories = {
+  professional: ['BlackBerry QNX'],
+  freelance: ['Russell Driving School'],
+  leadership: ['Key Club International'],
+  retail: ['Purdys Chocolatier']
+};

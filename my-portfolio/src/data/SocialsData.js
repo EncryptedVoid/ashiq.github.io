@@ -51,3 +51,5 @@ export const socialPlatforms = [
     gradient: 'bg-gradient-to-br from-[#f09433] via-[#dc2743] to-[#bc1888]'
   }
 ];
+
+export default socialPlatforms;
