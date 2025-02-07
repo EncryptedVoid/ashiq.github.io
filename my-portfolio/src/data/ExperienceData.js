@@ -80,79 +80,79 @@ export const ExperienceData = [
       caseStudy: false
     }
   },
-  {
-    id: 'key-club',
-    title: 'Lieutenant Governor',
-    company: 'Key Club International',
-    companyLogo: '/company-logos/key-club.png',
-    location: 'Orleans, Ontario, Canada',
-    period: {
-      start: 'Apr 2022',
-      end: 'Apr 2023',
-      display: 'Apr 2022 - Apr 2023'
-    },
-    shortDescription: 'Leadership role in community service organization.',
-    fullDescription: 'Led the Capital Division, organizing major events and managing various service projects while developing leadership and organizational skills.',
+  // {
+  //   id: 'key-club',
+  //   title: 'Lieutenant Governor',
+  //   company: 'Key Club International',
+  //   companyLogo: '/company-logos/key-club.png',
+  //   location: 'Orleans, Ontario, Canada',
+  //   period: {
+  //     start: 'Apr 2022',
+  //     end: 'Apr 2023',
+  //     display: 'Apr 2022 - Apr 2023'
+  //   },
+  //   shortDescription: 'Leadership role in community service organization.',
+  //   fullDescription: 'Led the Capital Division, organizing major events and managing various service projects while developing leadership and organizational skills.',
 
-    technologies: [
-      '👥 Leadership',
-      '📅 Event Planning',
-      '🤝 Team Management',
-      '📊 Project Management'
-    ],
+  //   technologies: [
+  //     '👥 Leadership',
+  //     '📅 Event Planning',
+  //     '🤝 Team Management',
+  //     '📊 Project Management'
+  //   ],
 
-    achievements: [
-      {
-        stat: '3+',
-        label: 'Major Events',
-        description: 'Fall Rally, DLTC, Spring Rally'
-      },
-      {
-        stat: '100%',
-        label: 'Project Success',
-        description: 'Service activities and fundraisers'
-      }
-    ],
+  //   achievements: [
+  //     {
+  //       stat: '3+',
+  //       label: 'Major Events',
+  //       description: 'Fall Rally, DLTC, Spring Rally'
+  //     },
+  //     {
+  //       stat: '100%',
+  //       label: 'Project Success',
+  //       description: 'Service activities and fundraisers'
+  //     }
+  //   ],
 
-    links: {
-      company: 'https://www.keyclub.org',
-      caseStudy: false
-    }
-  },
-  {
-    id: 'purdys',
-    title: 'Sales Associate',
-    company: 'Purdys Chocolatier',
-    companyLogo: '/company-logos/purdys.png',
-    location: 'Orleans, Ontario, Canada',
-    period: {
-      start: 'Sep 2022',
-      end: null,
-      display: 'Sep 2022 - Present'
-    },
-    shortDescription: 'Retail sales and customer service.',
-    fullDescription: 'Provide exceptional customer service, manage transactions, and maintain store presentation while contributing to team sales goals.',
+  //   links: {
+  //     company: 'https://www.keyclub.org',
+  //     caseStudy: false
+  //   }
+  // },
+  // {
+  //   id: 'purdys',
+  //   title: 'Sales Associate',
+  //   company: 'Purdys Chocolatier',
+  //   companyLogo: '/company-logos/purdys.png',
+  //   location: 'Orleans, Ontario, Canada',
+  //   period: {
+  //     start: 'Sep 2022',
+  //     end: null,
+  //     display: 'Sep 2022 - Present'
+  //   },
+  //   shortDescription: 'Retail sales and customer service.',
+  //   fullDescription: 'Provide exceptional customer service, manage transactions, and maintain store presentation while contributing to team sales goals.',
 
-    technologies: [
-      '💼 Customer Service',
-      '🏷️ Sales',
-      '📦 Inventory Management',
-      '💰 Transaction Processing'
-    ],
+  //   technologies: [
+  //     '💼 Customer Service',
+  //     '🏷️ Sales',
+  //     '📦 Inventory Management',
+  //     '💰 Transaction Processing'
+  //   ],
 
-    achievements: [
-      {
-        stat: '100%',
-        label: 'Customer Satisfaction',
-        description: 'Exceptional service delivery'
-      },
-      {
-        stat: '99%',
-        label: 'Transaction Accuracy',
-        description: 'Precise processing'
-      }
-    ]
-  }
+  //   achievements: [
+  //     {
+  //       stat: '100%',
+  //       label: 'Customer Satisfaction',
+  //       description: 'Exceptional service delivery'
+  //     },
+  //     {
+  //       stat: '99%',
+  //       label: 'Transaction Accuracy',
+  //       description: 'Precise processing'
+  //     }
+  //   ]
+  // }
 ];
 
 // Helper function for calculating experience duration
