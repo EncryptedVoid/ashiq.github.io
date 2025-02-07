@@ -5,7 +5,7 @@ export const ProjectsData = [
         id: 'conways-game',
         title: 'Conway\'s Game of Life Plus',
         description: 'Enhanced implementation of Conway\'s Game of Life with additional features, optimization algorithms, and interactive visualization.',
-        image: '/project-images/conway.jpg',
+        image: '/project-thumbnails/conways-game-of-life.webp',
         status: 'Active',
         duration: '1 month',
         type: 'Algorithm',
@@ -35,7 +35,7 @@ export const ProjectsData = [
         id: 'russell-driving',
         title: 'Russell Driving School Website',
         description: 'Professional website development for a driving school, featuring modern design principles and interactive elements.',
-        image: '/project-images/russell.jpg',
+        image: '/project-thumbnails/russell-driving-school.png',
         status: 'Active',
         duration: '2 months',
         type: 'Frontend',
@@ -65,7 +65,7 @@ export const ProjectsData = [
         id: 'harvard-cs50',
         title: 'Harvard CS50 Web Development',
         description: 'Web development projects and assignments from Harvard\'s CS50 course, showcasing various web technologies.',
-        image: '/project-images/cs50.jpg',
+        image: '/project-thumbnails/harvard-cs50.webp',
         status: 'Active',
         duration: 'Ongoing',
         type: 'Educational',
@@ -91,70 +91,70 @@ export const ProjectsData = [
             github: 'https://github.com/EncryptedVoid/Harvard-CS50-Web-Development'
         }
     },
-    {
-        id: 'asgard',
-        title: 'ASGARD - Automated Investing Analysis',
-        description: 'Sophisticated investment analysis tool using machine learning and data analytics for market insights.',
-        image: '/project-images/asgard.jpg',
-        status: 'Active',
-        duration: '3 months',
-        type: 'Data Science',
-        metrics: {
-            accuracy: '90%+',
-            dataPoints: '1000+',
-            algorithms: '5+'
-        },
-        technologies: [
-            'Python',
-            'Machine Learning',
-            'Data Analysis',
-            'Financial APIs',
-            'Visualization'
-        ],
-        features: [
-            'Market analysis',
-            'Investment patterns',
-            'Risk assessment',
-            'Performance tracking'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/ASGARD-Automated-Investing-Analysis'
-        }
-    },
-    {
-        id: 'fortune-ai',
-        title: 'FortuneAI',
-        description: 'AI-powered prediction and pattern recognition system implemented in Java.',
-        image: '/project-images/fortune.jpg',
-        status: 'Completed',
-        duration: '2 months',
-        type: 'AI/ML',
-        metrics: {
-            accuracy: '85%+',
-            predictions: '1000+',
-            patterns: '20+'
-        },
-        technologies: [
-            'Java',
-            'AI Algorithms',
-            'Pattern Recognition',
-            'Data Processing'
-        ],
-        features: [
-            'Pattern recognition',
-            'Predictive modeling',
-            'Data analysis',
-            'Custom algorithms'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/FortuneAI'
-        }
-    },
+    // {
+    //     id: 'asgard',
+    //     title: 'ASGARD - Automated Investing Analysis',
+    //     description: 'Sophisticated investment analysis tool using machine learning and data analytics for market insights.',
+    //     image: '/project-thumbnails/asgard.webp',
+    //     status: 'Active',
+    //     duration: '3 months',
+    //     type: 'Data Science',
+    //     metrics: {
+    //         accuracy: '90%+',
+    //         dataPoints: '1000+',
+    //         algorithms: '5+'
+    //     },
+    //     technologies: [
+    //         'Python',
+    //         'Machine Learning',
+    //         'Data Analysis',
+    //         'Financial APIs',
+    //         'Visualization'
+    //     ],
+    //     features: [
+    //         'Market analysis',
+    //         'Investment patterns',
+    //         'Risk assessment',
+    //         'Performance tracking'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/ASGARD-Automated-Investing-Analysis'
+    //     }
+    // },
+    // {
+    //     id: 'fortune-ai',
+    //     title: 'FortuneAI',
+    //     description: 'AI-powered prediction and pattern recognition system implemented in Java.',
+    //     image: '/project-thumbnails/fortune.webp',
+    //     status: 'Completed',
+    //     duration: '2 months',
+    //     type: 'AI/ML',
+    //     metrics: {
+    //         accuracy: '85%+',
+    //         predictions: '1000+',
+    //         patterns: '20+'
+    //     },
+    //     technologies: [
+    //         'Java',
+    //         'AI Algorithms',
+    //         'Pattern Recognition',
+    //         'Data Processing'
+    //     ],
+    //     features: [
+    //         'Pattern recognition',
+    //         'Predictive modeling',
+    //         'Data analysis',
+    //         'Custom algorithms'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/FortuneAI'
+    //     }
+    // },
     {
         id: 'jonopoly',
         title: 'JONOPOLY - Java Monopoly',
         description: 'Java implementation of the classic Monopoly board game with custom features and modifications.',
-        image: '/project-images/jonopoly.jpg',
+        image: '/project-thumbnails/jonopoly.png',
         status: 'Completed',
         duration: '1 month',
         type: 'Game Development',
@@ -183,7 +183,7 @@ export const ProjectsData = [
         id: 'weather-dashboard',
         title: 'Weather Dashboard WebApp',
         description: 'Interactive weather dashboard providing real-time weather data and forecasts.',
-        image: '/project-images/weather.jpg',
+        image: '/project-thumbnails/weather-dashboard.webp',
         status: 'Completed',
         duration: '2 weeks',
         type: 'Web Development',
@@ -213,7 +213,7 @@ export const ProjectsData = [
         id: 'judoku',
         title: 'JUDOKU - Java Sudoku',
         description: 'Java-based Sudoku game implementation with solver and difficulty levels.',
-        image: '/project-images/judoku.jpg',
+        image: '/project-thumbnails/judoku.webp',
         status: 'Completed',
         duration: '3 weeks',
         type: 'Game Development',
@@ -243,7 +243,7 @@ export const ProjectsData = [
         id: 'machine-learning',
         title: 'Machine Learning Experimenting',
         description: 'Collection of machine learning experiments and implementations exploring various ML concepts.',
-        image: '/project-images/ml.jpg',
+        image: '/project-thumbnails/machine-learning.webp',
         status: 'Active',
         duration: 'Ongoing',
         type: 'AI/ML',
@@ -272,7 +272,7 @@ export const ProjectsData = [
         id: 'todo-list',
         title: 'Todo List WebApp',
         description: 'Interactive todo list application with task management features.',
-        image: '/project-images/todo.jpg',
+        image: '/project-thumbnails/todo-webapp.webp',
         status: 'Completed',
         duration: '1 week',
         type: 'Web Development',
@@ -301,7 +301,7 @@ export const ProjectsData = [
         id: 'mock-restaurant',
         title: 'Mock Restaurant Webpage',
         description: 'Modern restaurant website showcasing menu, services, and booking functionality.',
-        image: '/project-images/restaurant.jpg',
+        image: '/project-thumbnails/restaurant.webp',
         status: 'Completed',
         duration: '2 weeks',
         type: 'Frontend',
@@ -330,7 +330,7 @@ export const ProjectsData = [
         id: 'mock-gardening',
         title: 'Mock Gardening Business Webpage',
         description: 'Professional website for a gardening and landscaping business.',
-        image: '/project-images/gardening.jpg',
+        image: '/project-thumbnails/gardening.webp',
         status: 'Completed',
         duration: '2 weeks',
         type: 'Frontend',
@@ -353,6 +353,213 @@ export const ProjectsData = [
         ],
         links: {
             github: 'https://github.com/EncryptedVoid/Mock-Gardening-Business-Webpage'
+        }
+    },
+    {
+        id: 'browser-dashboard',
+        title: 'Browser Dashboard Project',
+        description: 'Personal browser dashboard with customizable widgets and productivity tools.',
+        image: '/project-thumbnails/browser-dashboard.webp',
+        status: 'Active',
+        duration: '3 weeks',
+        type: 'Web Development',
+        metrics: {
+            widgets: '10+',
+            features: '15+',
+            components: '20+'
+        },
+        technologies: [
+            'HTML',
+            'JavaScript',
+            'CSS',
+            'Local Storage',
+            'Browser APIs'
+        ],
+        features: [
+            'Customizable widgets',
+            'Productivity tools',
+            'Data persistence',
+            'Browser integration'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/BrowswerDashboardProject'
+        }
+    },
+    {
+        id: 'ai-chatbot',
+        title: 'AI Chatbot Interface',
+        description: 'Modern chatbot interface with AI integration and responsive design.',
+        image: '/project-thumbnails/ai-chatbot.webp',
+        status: 'Completed',
+        duration: '2 weeks',
+        type: 'Frontend',
+        metrics: {
+            components: '15+',
+            interactions: '25+',
+            animations: '10+'
+        },
+        technologies: [
+            'CSS',
+            'React',
+            'AI Integration',
+            'Modern UI'
+        ],
+        features: [
+            'Real-time chat interface',
+            'AI response simulation',
+            'Responsive design',
+            'Custom animations'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/Mock-AI-Chatbot-Webpage'
+        }
+        },
+    {
+        id: 'threejs-portfolio',
+        title: 'ThreeJS Portfolio',
+        description: '3D interactive portfolio website showcasing projects with ThreeJS animations.',
+        image: '/project-thumbnails/threejs-portfolio.webp',
+        status: 'Completed',
+        duration: '1 month',
+        type: 'Frontend',
+        metrics: {
+            models: '5+',
+            animations: '10+',
+            interactions: '15+'
+        },
+        technologies: [
+            'JavaScript',
+            'ThreeJS',
+            'React',
+            '3D Modeling',
+            'WebGL'
+        ],
+        features: [
+            '3D model integration',
+            'Interactive animations',
+            'Custom shaders',
+            'Performance optimization'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/Mock-ThreeJS-Personal-Portfolio'
+        }
+    },
+    {
+        id: 'scikit-learn',
+        title: 'Python SCIKIT Experiments',
+        description: 'Collection of machine learning experiments and implementations using scikit-learn.',
+        image: '/project-thumbnails/scikit-learn.webp',
+        status: 'Active',
+        duration: 'Ongoing',
+        type: 'Data Science',
+        metrics: {
+            experiments: '15+',
+            datasets: '10+',
+            models: '8+'
+        },
+        technologies: [
+            'Python',
+            'Scikit-learn',
+            'Pandas',
+            'NumPy',
+            'Data Visualization'
+        ],
+        features: [
+            'ML model implementations',
+            'Data preprocessing',
+            'Model evaluation',
+            'Performance metrics'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/Python-SCIKIT-Experimenting'
+        }
+    },
+    {
+        id: 'manim-animations',
+        title: 'MANIM Math Animations',
+        description: 'Mathematical animations and visualizations created using the MANIM engine.',
+        image: '/project-thumbnails/manim-animations.webp',
+        status: 'Active',
+        duration: 'Ongoing',
+        type: 'Educational',
+        metrics: {
+            animations: '20+',
+            concepts: '15+',
+            visualizations: '10+'
+        },
+        technologies: [
+            'Python',
+            'MANIM',
+            'Mathematics',
+            'Animation',
+            'LaTeX'
+        ],
+        features: [
+            'Mathematical animations',
+            'Complex visualizations',
+            'Educational content',
+            'Custom scenes'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/MANIM-PersonalExperimenting'
+        }
+    },
+    {
+        id: 'alarm-dashboard',
+        title: 'Clock & Alarm Dashboard',
+        description: 'Interactive dashboard featuring multiple timezones, alarms, and time management tools.',
+        image: '/project-thumbnails/alarm-dashboard.webp',
+        status: 'Completed',
+        duration: '2 weeks',
+        type: 'Web Development',
+        metrics: {
+            features: '12+',
+            timezones: '24+',
+            components: '15+'
+        },
+        technologies: [
+            'JavaScript',
+            'HTML',
+            'CSS',
+            'Date/Time APIs'
+        ],
+        features: [
+            'Multiple timezone support',
+            'Alarm functionality',
+            'Custom time formats',
+            'Interactive UI'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/Alarms-Times-Clocks-Dashboard-WebApp'
+        }
+    },
+    {
+        id: 'mock-sushi',
+        title: 'Sushi Restaurant Website',
+        description: 'Modern and responsive website design for a Japanese restaurant.',
+        image: '/project-thumbnails/sushi-restaurant.webp',
+        status: 'Completed',
+        duration: '2 weeks',
+        type: 'Frontend',
+        metrics: {
+            pages: '5+',
+            components: '20+',
+            animations: '15+'
+        },
+        technologies: [
+            'CSS',
+            'HTML',
+            'JavaScript',
+            'Responsive Design'
+        ],
+        features: [
+            'Menu showcase',
+            'Online ordering',
+            'Custom animations',
+            'Mobile-first design'
+        ],
+        links: {
+            github: 'https://github.com/EncryptedVoid/Mock-Sushi-Restaurant-Webpage'
         }
     }
 
