@@ -10,11 +10,13 @@ import Contact from '../components/sections/Contact';
 import Goals from '../components/sections/Goals';
 import Socials from '../components/sections/DigitalPresence';
 import Education from '../components/sections/Education/index.jsx'
+import NavBar from '../NavBar';
 
 function Portfolio() {
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black text-white">
-      <main className="flex flex-col w-full items-center">
+      <NavBar />
+      <main className="flex flex-col w-full items-center pt-20">
         <div className="w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <Hero />
           <Testimonials />
