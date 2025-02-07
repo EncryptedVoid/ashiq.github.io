@@ -297,183 +297,183 @@ export const ProjectsData = [
             github: 'https://github.com/EncryptedVoid/ToDo-List-WebApp'
         }
     },
-    {
-        id: 'mock-restaurant',
-        title: 'Mock Restaurant Webpage',
-        description: 'Modern restaurant website showcasing menu, services, and booking functionality.',
-        image: '/project-thumbnails/restaurant.webp',
-        status: 'Completed',
-        duration: '2 weeks',
-        type: 'Frontend',
-        metrics: {
-            pages: '5+',
-            components: '15+',
-            features: '10+'
-        },
-        technologies: [
-            'JavaScript',
-            'HTML',
-            'CSS',
-            'Responsive Design'
-        ],
-        features: [
-            'Menu display',
-            'Reservation system',
-            'Contact form',
-            'Location map'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Mock-Restaurant-Webpage'
-        }
-    },
-    {
-        id: 'mock-gardening',
-        title: 'Mock Gardening Business Webpage',
-        description: 'Professional website for a gardening and landscaping business.',
-        image: '/project-thumbnails/gardening.webp',
-        status: 'Completed',
-        duration: '2 weeks',
-        type: 'Frontend',
-        metrics: {
-            pages: '6+',
-            sections: '10+',
-            images: '20+'
-        },
-        technologies: [
-            'HTML',
-            'CSS',
-            'JavaScript',
-            'Responsive Design'
-        ],
-        features: [
-            'Service showcase',
-            'Portfolio gallery',
-            'Contact system',
-            'Testimonials'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Mock-Gardening-Business-Webpage'
-        }
-    },
-    {
-        id: 'browser-dashboard',
-        title: 'Browser Dashboard Project',
-        description: 'Personal browser dashboard with customizable widgets and productivity tools.',
-        image: '/project-thumbnails/browser-dashboard.webp',
-        status: 'Active',
-        duration: '3 weeks',
-        type: 'Web Development',
-        metrics: {
-            widgets: '10+',
-            features: '15+',
-            components: '20+'
-        },
-        technologies: [
-            'HTML',
-            'JavaScript',
-            'CSS',
-            'Local Storage',
-            'Browser APIs'
-        ],
-        features: [
-            'Customizable widgets',
-            'Productivity tools',
-            'Data persistence',
-            'Browser integration'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/BrowswerDashboardProject'
-        }
-    },
-    {
-        id: 'ai-chatbot',
-        title: 'AI Chatbot Interface',
-        description: 'Modern chatbot interface with AI integration and responsive design.',
-        image: '/project-thumbnails/ai-chatbot.webp',
-        status: 'Completed',
-        duration: '2 weeks',
-        type: 'Frontend',
-        metrics: {
-            components: '15+',
-            interactions: '25+',
-            animations: '10+'
-        },
-        technologies: [
-            'CSS',
-            'React',
-            'AI Integration',
-            'Modern UI'
-        ],
-        features: [
-            'Real-time chat interface',
-            'AI response simulation',
-            'Responsive design',
-            'Custom animations'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Mock-AI-Chatbot-Webpage'
-        }
-        },
-    {
-        id: 'threejs-portfolio',
-        title: 'ThreeJS Portfolio',
-        description: '3D interactive portfolio website showcasing projects with ThreeJS animations.',
-        image: '/project-thumbnails/threejs-portfolio.webp',
-        status: 'Completed',
-        duration: '1 month',
-        type: 'Frontend',
-        metrics: {
-            models: '5+',
-            animations: '10+',
-            interactions: '15+'
-        },
-        technologies: [
-            'JavaScript',
-            'ThreeJS',
-            'React',
-            '3D Modeling',
-            'WebGL'
-        ],
-        features: [
-            '3D model integration',
-            'Interactive animations',
-            'Custom shaders',
-            'Performance optimization'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Mock-ThreeJS-Personal-Portfolio'
-        }
-    },
-    {
-        id: 'scikit-learn',
-        title: 'Python SCIKIT Experiments',
-        description: 'Collection of machine learning experiments and implementations using scikit-learn.',
-        image: '/project-thumbnails/scikit-learn.webp',
-        status: 'Active',
-        duration: 'Ongoing',
-        type: 'Data Science',
-        metrics: {
-            experiments: '15+',
-            datasets: '10+',
-            models: '8+'
-        },
-        technologies: [
-            'Python',
-            'Scikit-learn',
-            'Pandas',
-            'NumPy',
-            'Data Visualization'
-        ],
-        features: [
-            'ML model implementations',
-            'Data preprocessing',
-            'Model evaluation',
-            'Performance metrics'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Python-SCIKIT-Experimenting'
-        }
-    },
+    // {
+    //     id: 'mock-restaurant',
+    //     title: 'Mock Restaurant Webpage',
+    //     description: 'Modern restaurant website showcasing menu, services, and booking functionality.',
+    //     image: '/project-thumbnails/restaurant.webp',
+    //     status: 'Completed',
+    //     duration: '2 weeks',
+    //     type: 'Frontend',
+    //     metrics: {
+    //         pages: '5+',
+    //         components: '15+',
+    //         features: '10+'
+    //     },
+    //     technologies: [
+    //         'JavaScript',
+    //         'HTML',
+    //         'CSS',
+    //         'Responsive Design'
+    //     ],
+    //     features: [
+    //         'Menu display',
+    //         'Reservation system',
+    //         'Contact form',
+    //         'Location map'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Mock-Restaurant-Webpage'
+    //     }
+    // },
+    // {
+    //     id: 'mock-gardening',
+    //     title: 'Mock Gardening Business Webpage',
+    //     description: 'Professional website for a gardening and landscaping business.',
+    //     image: '/project-thumbnails/gardening.webp',
+    //     status: 'Completed',
+    //     duration: '2 weeks',
+    //     type: 'Frontend',
+    //     metrics: {
+    //         pages: '6+',
+    //         sections: '10+',
+    //         images: '20+'
+    //     },
+    //     technologies: [
+    //         'HTML',
+    //         'CSS',
+    //         'JavaScript',
+    //         'Responsive Design'
+    //     ],
+    //     features: [
+    //         'Service showcase',
+    //         'Portfolio gallery',
+    //         'Contact system',
+    //         'Testimonials'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Mock-Gardening-Business-Webpage'
+    //     }
+    // },
+    // {
+    //     id: 'browser-dashboard',
+    //     title: 'Browser Dashboard Project',
+    //     description: 'Personal browser dashboard with customizable widgets and productivity tools.',
+    //     image: '/project-thumbnails/browser-dashboard.webp',
+    //     status: 'Active',
+    //     duration: '3 weeks',
+    //     type: 'Web Development',
+    //     metrics: {
+    //         widgets: '10+',
+    //         features: '15+',
+    //         components: '20+'
+    //     },
+    //     technologies: [
+    //         'HTML',
+    //         'JavaScript',
+    //         'CSS',
+    //         'Local Storage',
+    //         'Browser APIs'
+    //     ],
+    //     features: [
+    //         'Customizable widgets',
+    //         'Productivity tools',
+    //         'Data persistence',
+    //         'Browser integration'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/BrowswerDashboardProject'
+    //     }
+    // },
+    // {
+    //     id: 'ai-chatbot',
+    //     title: 'AI Chatbot Interface',
+    //     description: 'Modern chatbot interface with AI integration and responsive design.',
+    //     image: '/project-thumbnails/ai-chatbot.webp',
+    //     status: 'Completed',
+    //     duration: '2 weeks',
+    //     type: 'Frontend',
+    //     metrics: {
+    //         components: '15+',
+    //         interactions: '25+',
+    //         animations: '10+'
+    //     },
+    //     technologies: [
+    //         'CSS',
+    //         'React',
+    //         'AI Integration',
+    //         'Modern UI'
+    //     ],
+    //     features: [
+    //         'Real-time chat interface',
+    //         'AI response simulation',
+    //         'Responsive design',
+    //         'Custom animations'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Mock-AI-Chatbot-Webpage'
+    //     }
+    // },
+    // {
+    //     id: 'threejs-portfolio',
+    //     title: 'ThreeJS Portfolio',
+    //     description: '3D interactive portfolio website showcasing projects with ThreeJS animations.',
+    //     image: '/project-thumbnails/threejs-portfolio.webp',
+    //     status: 'Completed',
+    //     duration: '1 month',
+    //     type: 'Frontend',
+    //     metrics: {
+    //         models: '5+',
+    //         animations: '10+',
+    //         interactions: '15+'
+    //     },
+    //     technologies: [
+    //         'JavaScript',
+    //         'ThreeJS',
+    //         'React',
+    //         '3D Modeling',
+    //         'WebGL'
+    //     ],
+    //     features: [
+    //         '3D model integration',
+    //         'Interactive animations',
+    //         'Custom shaders',
+    //         'Performance optimization'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Mock-ThreeJS-Personal-Portfolio'
+    //     }
+    // },
+    // {
+    //     id: 'scikit-learn',
+    //     title: 'Python SCIKIT Experiments',
+    //     description: 'Collection of machine learning experiments and implementations using scikit-learn.',
+    //     image: '/project-thumbnails/scikit-learn.webp',
+    //     status: 'Active',
+    //     duration: 'Ongoing',
+    //     type: 'Data Science',
+    //     metrics: {
+    //         experiments: '15+',
+    //         datasets: '10+',
+    //         models: '8+'
+    //     },
+    //     technologies: [
+    //         'Python',
+    //         'Scikit-learn',
+    //         'Pandas',
+    //         'NumPy',
+    //         'Data Visualization'
+    //     ],
+    //     features: [
+    //         'ML model implementations',
+    //         'Data preprocessing',
+    //         'Model evaluation',
+    //         'Performance metrics'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Python-SCIKIT-Experimenting'
+    //     }
+    // },
     {
         id: 'manim-animations',
         title: 'MANIM Math Animations',
@@ -504,64 +504,64 @@ export const ProjectsData = [
             github: 'https://github.com/EncryptedVoid/MANIM-PersonalExperimenting'
         }
     },
-    {
-        id: 'alarm-dashboard',
-        title: 'Clock & Alarm Dashboard',
-        description: 'Interactive dashboard featuring multiple timezones, alarms, and time management tools.',
-        image: '/project-thumbnails/alarm-dashboard.webp',
-        status: 'Completed',
-        duration: '2 weeks',
-        type: 'Web Development',
-        metrics: {
-            features: '12+',
-            timezones: '24+',
-            components: '15+'
-        },
-        technologies: [
-            'JavaScript',
-            'HTML',
-            'CSS',
-            'Date/Time APIs'
-        ],
-        features: [
-            'Multiple timezone support',
-            'Alarm functionality',
-            'Custom time formats',
-            'Interactive UI'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Alarms-Times-Clocks-Dashboard-WebApp'
-        }
-    },
-    {
-        id: 'mock-sushi',
-        title: 'Sushi Restaurant Website',
-        description: 'Modern and responsive website design for a Japanese restaurant.',
-        image: '/project-thumbnails/sushi-restaurant.webp',
-        status: 'Completed',
-        duration: '2 weeks',
-        type: 'Frontend',
-        metrics: {
-            pages: '5+',
-            components: '20+',
-            animations: '15+'
-        },
-        technologies: [
-            'CSS',
-            'HTML',
-            'JavaScript',
-            'Responsive Design'
-        ],
-        features: [
-            'Menu showcase',
-            'Online ordering',
-            'Custom animations',
-            'Mobile-first design'
-        ],
-        links: {
-            github: 'https://github.com/EncryptedVoid/Mock-Sushi-Restaurant-Webpage'
-        }
-    }
+    // {
+    //     id: 'alarm-dashboard',
+    //     title: 'Clock & Alarm Dashboard',
+    //     description: 'Interactive dashboard featuring multiple timezones, alarms, and time management tools.',
+    //     image: '/project-thumbnails/alarm-dashboard.webp',
+    //     status: 'Completed',
+    //     duration: '2 weeks',
+    //     type: 'Web Development',
+    //     metrics: {
+    //         features: '12+',
+    //         timezones: '24+',
+    //         components: '15+'
+    //     },
+    //     technologies: [
+    //         'JavaScript',
+    //         'HTML',
+    //         'CSS',
+    //         'Date/Time APIs'
+    //     ],
+    //     features: [
+    //         'Multiple timezone support',
+    //         'Alarm functionality',
+    //         'Custom time formats',
+    //         'Interactive UI'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Alarms-Times-Clocks-Dashboard-WebApp'
+    //     }
+    // },
+    // {
+    //     id: 'mock-sushi',
+    //     title: 'Sushi Restaurant Website',
+    //     description: 'Modern and responsive website design for a Japanese restaurant.',
+    //     image: '/project-thumbnails/sushi-restaurant.webp',
+    //     status: 'Completed',
+    //     duration: '2 weeks',
+    //     type: 'Frontend',
+    //     metrics: {
+    //         pages: '5+',
+    //         components: '20+',
+    //         animations: '15+'
+    //     },
+    //     technologies: [
+    //         'CSS',
+    //         'HTML',
+    //         'JavaScript',
+    //         'Responsive Design'
+    //     ],
+    //     features: [
+    //         'Menu showcase',
+    //         'Online ordering',
+    //         'Custom animations',
+    //         'Mobile-first design'
+    //     ],
+    //     links: {
+    //         github: 'https://github.com/EncryptedVoid/Mock-Sushi-Restaurant-Webpage'
+    //     }
+    // }
 
 ];
 
