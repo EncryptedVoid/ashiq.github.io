@@ -5,8 +5,8 @@ export const HeroData = {
   intro: {
     terminalText: "WHOAMI",
     title: {
-      line1: "Software Testing Specialist",
-      line2: "& Frontend Developer"
+      line1: "Ashiq Gazi",
+      line2: "Software Engineer"
     },
     description: [
       "First-year University of Ottawa student pursuing a double major in Mathematics and Computer Science (Data Science), with a passion for AI and frontend development.",
