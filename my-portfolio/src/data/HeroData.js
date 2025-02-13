@@ -17,11 +17,11 @@ export const HeroData = {
   status: {
     location: "OTTAWA, ON, CANADA",
     availability: "Open to Opportunities",
-    resumeLink: "/path-to-resume.pdf"
+    resumeLink: "public/resume.pdf"
   },
 
   profileImage: {
-    src: "/profile-image.jpg",
+    src: "public/pfp.jpg",
     alt: "Ashiq Gazi - Software Developer"
   },
 

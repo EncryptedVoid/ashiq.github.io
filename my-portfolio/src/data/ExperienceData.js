@@ -4,7 +4,7 @@ export const ExperienceData = [
     id: 'blackberry-qnx',
     title: 'Software Testing Specialist',
     company: 'BlackBerry QNX',
-    companyLogo: '/company-logos/blackberry-qnx.png',
+    companyLogo: 'public/company-logos/blackberry-qnx.png',
     location: 'Kanata, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -49,7 +49,7 @@ export const ExperienceData = [
     id: 'freelance-dev',
     title: 'Frontend Developer',
     company: 'Freelance',
-    companyLogo: '/company-logos/freelance.png',
+    companyLogo: 'public/company-logos/freelance.png',
     location: 'Ottawa, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -84,7 +84,7 @@ export const ExperienceData = [
   //   id: 'key-club',
   //   title: 'Lieutenant Governor',
   //   company: 'Key Club International',
-  //   companyLogo: '/company-logos/key-club.png',
+  //   companyLogo: 'public/company-logos/key-club.png',
   //   location: 'Orleans, Ontario, Canada',
   //   period: {
   //     start: 'Apr 2022',
@@ -123,7 +123,7 @@ export const ExperienceData = [
   //   id: 'purdys',
   //   title: 'Sales Associate',
   //   company: 'Purdys Chocolatier',
-  //   companyLogo: '/company-logos/purdys.png',
+  //   companyLogo: 'public/company-logos/purdys.png',
   //   location: 'Orleans, Ontario, Canada',
   //   period: {
   //     start: 'Sep 2022',

@@ -29,7 +29,7 @@ export const socialPlatforms = [
   {
     platform: 'LinkedIn',
     icon: Linkedin,
-    stats: '5000+ Network',
+    stats: '100+ Connections',
     description: 'Connect professionally and explore my career journey',
     href: 'https://www.linkedin.com/in/ashiq-gazi-090a6b213/',
     gradient: 'bg-gradient-to-r from-[#0077b5] to-[#00a0dc]'
@@ -37,7 +37,7 @@ export const socialPlatforms = [
   {
     platform: 'YouTube',
     icon: Youtube,
-    stats: '10K+ Views',
+    stats: '40+ Videos',
     description: 'Watch my technical tutorials and design process videos',
     href: 'https://www.youtube.com/@DOCTOR-ASH',
     gradient: 'bg-gradient-to-r from-[#ff0000] to-[#ff4e45]'
