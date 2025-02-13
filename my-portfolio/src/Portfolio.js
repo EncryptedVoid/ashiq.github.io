@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import Navigation from './Navigation';
 import useIsMobile from './hooks/useIsMobile';
 
 // Desktop component imports - using dynamic imports for code splitting
@@ -29,31 +30,33 @@ function Portfolio() {
 
   // Define section order and visibility
   const sections = [
-    { name: 'Hero', hidden: false },
-    { name: 'Skills', hidden: false },
-    { name: 'Experience', hidden: false },
-    { name: 'Projects', hidden: false },
-    { name: 'Testimonials', hidden: false },
-    { name: 'Education', hidden: false },
-    { name: 'Certifications', hidden: isMobile },
-    { name: 'Socials', hidden: false },
-    { name: 'Goals', hidden: isMobile }
+    { name: 'hero', hidden: false },
+    { name: 'skills', hidden: false },
+    { name: 'experience', hidden: false },
+    { name: 'projects', hidden: false },
+    { name: 'testimonials', hidden: false },
+    { name: 'education', hidden: false },
+    { name: 'certifications', hidden: isMobile },
+    { name: 'contact', hidden: false },
+    { name: 'goals', hidden: isMobile }
   ];
 
   const components = {
-    Hero: { Desktop: Hero, Mobile: MobileHero },
-    Testimonials: { Desktop: Testimonials, Mobile: MobileTestimonials },
-    Skills: { Desktop: Skills, Mobile: MobileSkills },
-    Experience: { Desktop: Experience, Mobile: MobileExperience },
-    Education: { Desktop: Education, Mobile: MobileEducation },
-    Projects: { Desktop: Projects, Mobile: MobileProjects },
-    Socials: { Desktop: Socials, Mobile: MobileSocials },
-    Goals: { Desktop: Goals, Mobile: MobileGoals },
-    Certifications: { Desktop: Certifications, Mobile: MobileCertifications },
+    hero: { Desktop: Hero, Mobile: MobileHero },
+    testimonials: { Desktop: Testimonials, Mobile: MobileTestimonials },
+    skills: { Desktop: Skills, Mobile: MobileSkills },
+    experience: { Desktop: Experience, Mobile: MobileExperience },
+    education: { Desktop: Education, Mobile: MobileEducation },
+    projects: { Desktop: Projects, Mobile: MobileProjects },
+    contact: { Desktop: Socials, Mobile: MobileSocials },
+    goals: { Desktop: Goals, Mobile: MobileGoals },
+    certifications: { Desktop: Certifications, Mobile: MobileCertifications },
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-gray-900 to-black">
+    <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-black">
+      <Navigation />
+
       <React.Suspense
         fallback={
           <div className="min-h-screen w-full flex items-center justify-center">
@@ -61,32 +64,37 @@ function Portfolio() {
           </div>
         }
       >
-        <main className="flex flex-col w-full items-center">
-          <div className={`
-            w-full relative
-            ${!isMobile ? 'max-w-7xl mx-auto px-4 sm:px-6 lg:px-8' : 'px-4'}
-            space-y-20
-          `}>
-            {sections
-              .filter(section => !section.hidden)
-              .map(section => {
-                const Component = isMobile
-                  ? components[section.name].Mobile
-                  : components[section.name].Desktop;
+        {/* Main content container */}
+        {/* Main content with conditional padding */}
+        <main
+          className="relative w-full"
+          style={{
+            paddingTop: isMobile ? '0' : '6rem', // Add padding for desktop navbar
+            paddingBottom: isMobile ? '5rem' : '0' // Add padding for mobile navbar
+          }}
+        >
+          {/* Inner max-width container */}
+          <div className="relative w-full max-w-7xl mx-auto px-4">
+            {/* Sections container */}
+            <div className="relative w-full space-y-20">
+              {sections
+                .filter(section => !section.hidden)
+                .map(section => {
+                  const Component = isMobile
+                    ? components[section.name].Mobile
+                    : components[section.name].Desktop;
 
-                return (
-                  <motion.div
-                    key={section.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                    className="w-full"
-                    id={`section-${section.name.toLowerCase()}`}
-                  >
-                    <Component />
-                  </motion.div>
-                );
-              })}
+                  return (
+                    <section
+                      key={section.name}
+                      id={`section-${section.name.toLowerCase()}`}
+                      className="relative w-full"
+                    >
+                      <Component />
+                    </section>
+                  );
+                })}
+            </div>
           </div>
         </main>
       </React.Suspense>

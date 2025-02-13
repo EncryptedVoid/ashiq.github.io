@@ -18,7 +18,10 @@ export const TypewriterText = ({
 
   // Create gradient styles if colors are provided
   const textStyles = {
+    fontFamily: "'Roboto Mono', monospace",
     fontSize: `${size}rem`,
+    letterSpacing: '0.05em', // Added wider spacing for the mono font
+    fontWeight: '400',
     ...(fromColor && toColor ? {
       background: `linear-gradient(to right, ${fromColor}, ${toColor})`,
       WebkitBackgroundClip: 'text',
@@ -95,7 +98,7 @@ export const TypewriterText = ({
   }, [isTyping, displayedText.length, text.length, isDeleting]);
 
   return (
-    <div className="inline-flex items-center font-mono">
+    <div className="inline-flex items-center">
       <span style={textStyles}>
         {displayedText}
       </span>
