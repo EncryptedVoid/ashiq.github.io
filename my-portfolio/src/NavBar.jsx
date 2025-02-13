@@ -1,170 +1,137 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
+import { Home, Code, Briefcase, FolderGit2, GraduationCap, Mail, Star } from 'lucide-react';
 import useIsMobile from './hooks/useIsMobile';
 
 const NavBar = () => {
-  const [activeSection, setActiveSection] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const [isScrollingUp, setIsScrollingUp] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const isMobile = useIsMobile();
 
   const navItems = [
-    { id: 'hero', label: 'Home' },
-    { id: 'skills', label: 'Skills' },
-    { id: 'experience', label: 'Experience' },
-    { id: 'projects', label: 'Projects' },
-    { id: 'testimonials', label: 'Testimonials' },
-    { id: 'education', label: 'Education' },
-    { id: 'certifications', label: 'Certificates' },
-    { id: 'contact', label: 'Contact' },
-    { id: 'goals', label: 'Future Goals' },
+    { id: 'hero', label: 'Home', icon: Home },
+    { id: 'skills', label: 'Skills', icon: Code },
+    { id: 'experience', label: 'Work', icon: Briefcase },
+    { id: 'projects', label: 'Projects', icon: FolderGit2 },
+    { id: 'education', label: 'Education', icon: GraduationCap },
+    { id: 'contact', label: 'Contact', icon: Mail },
   ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Handle scroll direction
+      const currentScrollY = window.scrollY;
+      setIsScrollingUp(currentScrollY < lastScrollY || currentScrollY < 100);
+      setLastScrollY(currentScrollY);
+
+      // Handle active section
+      const scrollPosition = window.scrollY + (isMobile ? 200 : 100);
+
+      for (let i = navItems.length - 1; i >= 0; i--) {
+        const section = document.getElementById(`section-${navItems[i].id}`);
+        if (section && section.offsetTop <= scrollPosition) {
+          setActiveSection(navItems[i].id);
+          break;
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY, isMobile]);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(`section-${sectionId}`);
     if (element) {
-      const offset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - offset;
+      const offset = isMobile ? 0 : 80;
+      const offsetPosition = element.offsetTop - offset;
 
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
-      setIsOpen(false);
     }
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const sections = navItems.map(item =>
-        document.getElementById(`section-${item.id}`)
-      ).filter(Boolean);
-
-      const currentSection = sections.find(section => {
-        const rect = section.getBoundingClientRect();
-        return rect.top <= 100 && rect.bottom >= 100;
-      });
-
-      if (currentSection) {
-        setActiveSection(currentSection.id.replace('section-', ''));
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Get current section label
-  const currentSectionLabel = navItems.find(item => item.id === activeSection)?.label || '';
-
   if (isMobile) {
     return (
-      <motion.nav
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        className="fixed top-0 left-0 right-0 z-50 px-4 py-3"
+      <motion.div
+        initial={{ y: 100 }}
+        animate={{ y: isScrollingUp ? 0 : 100 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="fixed bottom-0 left-0 right-0 z-50"
       >
-        <div className="relative max-w-lg mx-auto">
-          <div className="bg-black/80 backdrop-blur-lg border border-white/10 rounded-2xl">
-            {/* Mobile Header Bar */}
-            <div className="flex items-center justify-between px-4 py-2">
-              {/* Menu Button and Current Section */}
-              <div className="flex items-center gap-3">
+        <div className="bg-black/95 backdrop-blur-xl border-t border-white/10">
+          <div className="max-w-lg mx-auto flex justify-around items-center px-4">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
                 <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="p-1.5 -ml-1.5 text-white/60 hover:text-white transition-colors rounded-lg
-                           hover:bg-white/10 active:bg-white/20"
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="flex flex-col items-center py-3 px-2 relative w-1/5"
                 >
-                  {isOpen ? <X size={20} /> : <Menu size={20} />}
+                  <div className={`
+                    p-2 rounded-lg transition-all duration-300
+                    ${activeSection === item.id
+                      ? 'bg-blue-500/20 text-blue-400'
+                      : 'text-white/60'
+                    }
+                  `}>
+                    <Icon size={20} />
+                  </div>
+                  <span className={`
+                    text-[10px] mt-1 font-medium transition-colors duration-300
+                    ${activeSection === item.id ? 'text-blue-400' : 'text-white/60'}
+                  `}>
+                    {item.label}
+                  </span>
                 </button>
-
-                {/* Animated Current Section Label */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={currentSectionLabel}
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -5 }}
-                    className="text-sm font-medium text-white"
-                  >
-                    {currentSectionLabel}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
-
-            {/* Mobile Menu Dropdown */}
-            <AnimatePresence>
-              {isOpen && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="overflow-hidden border-t border-white/10"
-                >
-                  {navItems.map((item) => (
-                    <motion.button
-                      key={item.id}
-                      onClick={() => scrollToSection(item.id)}
-                      className={`
-                        w-full px-6 py-3 text-left text-sm
-                        transition-all duration-300
-                        ${activeSection === item.id
-                          ? 'bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 text-white'
-                          : 'text-white/60 hover:bg-white/5 hover:text-white/80'}
-                      `}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      {item.label}
-                    </motion.button>
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+              );
+            })}
           </div>
+          <div className="h-[env(safe-area-inset-bottom)] bg-black/95" />
         </div>
-      </motion.nav>
+      </motion.div>
     );
   }
 
-  // Desktop Navigation
   return (
-    <motion.nav
+    <motion.div
       initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      animate={{ y: isScrollingUp ? 0 : -100 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
       className="fixed top-0 left-0 right-0 z-50 px-4 py-4"
     >
       <div className="max-w-6xl mx-auto">
-        <div className="relative bg-black/80 backdrop-blur-lg border border-white/10 rounded-full px-2 py-2">
-          <div className="flex items-center justify-center gap-2">
-            {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`
-                  relative px-4 py-2 text-sm font-medium rounded-full
-                  transition-all duration-300
-                  ${activeSection === item.id ? 'text-white' : 'text-white/60 hover:text-white/80'}
-                `}
-              >
-                {activeSection === item.id && (
-                  <motion.div
-                    layoutId="activeSection"
-                    className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-500/20 via-purple-500/20 to-pink-500/20 animate-gradient-x"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-                  />
-                )}
-                <span className="relative z-10">{item.label}</span>
-              </button>
-            ))}
+        <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-full p-2">
+          <div className="flex justify-center items-center gap-2">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className={`
+                    px-4 py-2 rounded-full
+                    flex items-center gap-2
+                    transition-all duration-300
+                    ${activeSection === item.id
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/60 hover:text-white/80'
+                    }
+                  `}
+                >
+                  <Icon size={18} />
+                  <span className="text-sm font-medium">{item.label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>
-    </motion.nav>
+    </motion.div>
   );
 };
 
