@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import useIsMobile from '../hooks/useIsMobile'; // Adjust the import path as necessary
 
 export const TypewriterText = ({
   text,
@@ -97,17 +98,24 @@ export const TypewriterText = ({
     return () => clearInterval(interval);
   }, [isTyping, displayedText.length, text.length, isDeleting]);
 
+  // Check if the screen is mobile
+  const isMobile = useIsMobile();
+
+  // Apply styles only for mobile views
+  const containerStyles = {
+    display: 'flex',
+    justifyContent: isMobile ? 'center' : 'flex-start', // Center text on mobile, left align otherwise
+    width: '100%', // Ensure it takes full width
+    ...(isMobile && { textAlign: 'center' }) // Center text within the container on mobile
+  };
+
   return (
-    <div className="inline-flex items-center">
+    <div style={containerStyles}>
       <span style={textStyles}>
         {displayedText}
       </span>
       <span
-        className={`
-          ml-1 w-[2px]
-          transition-opacity duration-200
-          ${showCursor ? 'opacity-100' : 'opacity-0'}
-        `}
+        className={`ml-1 w-[2px] transition-opacity duration-200 ${showCursor ? 'opacity-100' : 'opacity-0'}`}
         style={cursorStyles}
       />
     </div>

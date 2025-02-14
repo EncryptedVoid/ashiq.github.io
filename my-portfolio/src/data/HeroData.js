@@ -21,6 +21,11 @@ export const HeroData = {
     resumeLink: getAssetPath("resume.pdf"),
   },
 
+  booking: {
+    text: "Meet with me",
+    link: "https://calendly.com/ashiqarib/45min"
+  },
+
   profileImage: {
     src: getAssetPath("pfp.jpg"),
     alt: "Ashiq Gazi - Software Developer"
