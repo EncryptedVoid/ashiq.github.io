@@ -1,5 +1,6 @@
 // src/data/HeroData.js
 import { Code, GraduationCap, Terminal, FileCode } from 'lucide-react';
+import { getAssetPath } from '../utils/assetUtils';
 
 export const HeroData = {
   intro: {
@@ -17,11 +18,11 @@ export const HeroData = {
   status: {
     location: "OTTAWA, ON, CANADA",
     availability: "Open to Opportunities",
-    resumeLink: "public/resume.pdf"
+    resumeLink: getAssetPath("resume.pdf"),
   },
 
   profileImage: {
-    src: "public/pfp.jpg",
+    src: getAssetPath("pfp.jpg"),
     alt: "Ashiq Gazi - Software Developer"
   },
 

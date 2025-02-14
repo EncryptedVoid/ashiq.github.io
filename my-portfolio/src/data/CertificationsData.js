@@ -1,4 +1,5 @@
 // src/data/CertificationsData.js
+import { getAssetPath } from '../utils/assetUtils';
 
 export const Certifications = [
   {
@@ -8,8 +9,8 @@ export const Certifications = [
     date: 'Oct. 12, 2024',
     length: '4.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/udemy-logo.webp',
-    document: 'public/certifications/DOCKER-FOR-BEGINNERS.pdf'
+    icon: getAssetPath('logo/udemy-logo.webp'),
+    document: getAssetPath('certifications/DOCKER-FOR-BEGINNERS.pdf')
   },
   {
     id: 2,
@@ -18,8 +19,8 @@ export const Certifications = [
     date: 'Oct. 21, 2024',
     length: '10.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/jenkins-logo.webp',
-    document: 'public/certifications/JENKINS-FOR-BEGINNERS.pdf'
+    icon: getAssetPath('logo/jenkins-logo.webp'),
+    document: getAssetPath('certifications/JENKINS-FOR-BEGINNERS.pdf')
   },
   {
     id: 3,
@@ -28,8 +29,8 @@ export const Certifications = [
     date: 'Oct. 25, 2024',
     length: '5.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/gitlab-logo.webp',
-    document: 'public/certifications/GITLAB-CI-CD.pdf'
+    icon: getAssetPath('logo/gitlab-logo.webp'),
+    document: getAssetPath('certifications/GITLAB-CI-CD.pdf')
   },
   {
     id: 4,
@@ -38,8 +39,8 @@ export const Certifications = [
     date: 'Oct. 5, 2024',
     length: '4.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/udemy-logo.webp',
-    document: 'public/certifications/COMPUTER-NETWORKING.pdf'
+    icon: getAssetPath('logo/udemy-logo.webp'),
+    document: getAssetPath('certifications/COMPUTER-NETWORKING.pdf')
   },
   {
     id: 5,
@@ -48,8 +49,8 @@ export const Certifications = [
     date: 'Oct. 11, 2024',
     length: '2 hours',
     level: 'Beginner',
-    icon: 'public/logo/udemy-logo.webp',
-    document: 'public/certifications/PERFORMANCE-TESTING.pdf'
+    icon: getAssetPath('logo/udemy-logo.webp'),
+    document: getAssetPath('certifications/PERFORMANCE-TESTING.pdf')
   },
   {
     id: 6,
@@ -58,8 +59,8 @@ export const Certifications = [
     date: 'Nov. 10, 2024',
     length: '21.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/udemy-logo.webp',
-    document: 'public/certifications/OPERATING-SYSTEMS.pdf'
+    icon: getAssetPath('logo/udemy-logo.webp'),
+    document: getAssetPath('certifications/OPERATING-SYSTEMS.pdf')
   },
   {
     id: 7,
@@ -68,8 +69,8 @@ export const Certifications = [
     date: 'Sept. 23, 2024',
     length: '7 hours',
     level: 'Intermediate',
-    icon: 'public/logo/python-logo.webp',
-    document: 'public/certifications/PYTEST-AUTOMATION.pdf'
+    icon: getAssetPath('logo/python-logo.webp'),
+    document: getAssetPath('certifications/PYTEST-AUTOMATION.pdf')
   },
   {
     id: 8,
@@ -78,8 +79,8 @@ export const Certifications = [
     date: 'Sept. 24, 2024',
     length: '2.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/python-logo.webp',
-    document: 'public/certifications/PYTHON-OOP.pdf'
+    icon: getAssetPath('logo/python-logo.webp'),
+    document: getAssetPath('certifications/PYTHON-OOP.pdf')
   },
   {
     id: 9,
@@ -88,8 +89,8 @@ export const Certifications = [
     date: 'Oct. 7, 2024',
     length: '43 mins',
     level: 'Beginner',
-    icon: 'public/logo/udemy-logo.webp',
-    document: 'public/certifications/REST-API.pdf'
+    icon: getAssetPath('logo/udemy-logo.webp'),
+    document: getAssetPath('certifications/REST-API.pdf')
   },
   {
     id: 10,
@@ -98,8 +99,8 @@ export const Certifications = [
     date: 'Sept. 24, 2024',
     length: '5.5 hours',
     level: 'Beginner',
-    icon: 'public/logo/bash-logo.webp',
-    document: 'public/certifications/BASH-SCRIPTING.pdf'
+    icon: getAssetPath('logo/bash-logo.webp'),
+    document: getAssetPath('certifications/BASH-SCRIPTING.pdf')
   },
   {
     id: 11,
@@ -108,8 +109,8 @@ export const Certifications = [
     date: 'Sept. 19, 2024',
     length: '9 hours',
     level: 'Beginner',
-    icon: 'public/logo/docker-logo.webp',
-    document: 'public/certifications/DOCKER-DEVOPS.pdf'
+    icon: getAssetPath('logo/docker-logo.webp'),
+    document: getAssetPath('certifications/DOCKER-DEVOPS.pdf')
   }
 ];
 

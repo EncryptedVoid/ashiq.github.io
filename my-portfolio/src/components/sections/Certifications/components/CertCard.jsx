@@ -1,4 +1,4 @@
-// src/components/sections/Certifications/components/CertCard.jsx
+// src/components/sections/certifications/components/CertCard.jsx
 import React from 'react';
 import { certStyles } from '../../../../data/CertificationsData';
 

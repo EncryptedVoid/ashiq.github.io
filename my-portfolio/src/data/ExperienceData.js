@@ -1,10 +1,13 @@
 // src/data/experienceData.js
+import { getAssetPath } from '../utils/assetUtils';
+
+
 export const ExperienceData = [
   {
     id: 'blackberry-qnx',
     title: 'Software Testing Specialist',
     company: 'BlackBerry QNX',
-    companyLogo: 'public/company-logos/blackberry-qnx.png',
+    companyLogo: getAssetPath('company-logos/blackberry-qnx.png'),
     location: 'Kanata, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -49,7 +52,7 @@ export const ExperienceData = [
     id: 'freelance-dev',
     title: 'Frontend Developer',
     company: 'Freelance',
-    companyLogo: 'public/company-logos/freelance.png',
+    companyLogo: getAssetPath('company-logos/freelance.png'),
     location: 'Ottawa, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -84,7 +87,7 @@ export const ExperienceData = [
   //   id: 'key-club',
   //   title: 'Lieutenant Governor',
   //   company: 'Key Club International',
-  //   companyLogo: 'public/company-logos/key-club.png',
+  //   companyLogo: getAssetPath('company-logos/key-club.png'),
   //   location: 'Orleans, Ontario, Canada',
   //   period: {
   //     start: 'Apr 2022',
@@ -123,7 +126,7 @@ export const ExperienceData = [
   //   id: 'purdys',
   //   title: 'Sales Associate',
   //   company: 'Purdys Chocolatier',
-  //   companyLogo: 'public/company-logos/purdys.png',
+  //   companyLogo: getAssetPath('company-logos/purdys.png'),
   //   location: 'Orleans, Ontario, Canada',
   //   period: {
   //     start: 'Sep 2022',

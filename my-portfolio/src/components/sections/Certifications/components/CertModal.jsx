@@ -1,4 +1,4 @@
-// src/components/sections/Certifications/components/CertModal.jsx
+// src/components/sections/certifications/components/CertModal.jsx
 import React from 'react';
 import { X, Download } from 'lucide-react';
 

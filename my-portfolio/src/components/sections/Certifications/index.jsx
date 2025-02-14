@@ -1,4 +1,4 @@
-// src/components/sections/Certifications/index.jsx
+// src/components/sections/certifications/index.jsx
 import React, { useState } from 'react';
 import CertCard from './components/CertCard';
 import CertModal from './components/CertModal';

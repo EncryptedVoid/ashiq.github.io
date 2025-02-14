@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Navigation from './Navigation';
 import useIsMobile from './hooks/useIsMobile';
+import ImageTest from './ImageTest';
 
 // Desktop component imports - using dynamic imports for code splitting
 const Hero = React.lazy(() => import('./components/sections/Hero/Hero'));
