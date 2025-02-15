@@ -7,7 +7,7 @@ export const ExperienceData = [
     id: 'blackberry-qnx',
     title: 'Software Testing Specialist',
     company: 'BlackBerry QNX',
-    companyLogo: getAssetPath('company-logos/blackberry-qnx.png'),
+    companyLogo: getAssetPath('logo/qnx-logo.webp'),
     location: 'Kanata, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -52,7 +52,7 @@ export const ExperienceData = [
     id: 'freelance-dev',
     title: 'Frontend Developer',
     company: 'Freelance',
-    companyLogo: getAssetPath('company-logos/freelance.png'),
+    companyLogo: getAssetPath('logo/freelance-logo.webp'),
     location: 'Ottawa, Ontario, Canada',
     period: {
       start: 'Sep 2024',

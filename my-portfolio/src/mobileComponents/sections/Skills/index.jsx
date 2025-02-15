@@ -1,177 +1,203 @@
-import React, { useState, useCallback } from 'react';
-import { Search, ArrowLeft, ArrowRight } from 'lucide-react';
-import { skillsData } from '../../../data/SkillsData';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TypewriterText } from '../../../styles/TypewriterText'
-
+import { ChevronLeft, ChevronRight, Clock, Code, Activity, Sparkles } from 'lucide-react';
+import { skillsData } from '../../../data/SkillsData';
 
 const MobileSkills = () => {
-  const [activeCategory, setActiveCategory] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState(null);
   const [skillIndex, setSkillIndex] = useState(0);
 
-  const handleCategorySelect = useCallback((category) => {
-    setActiveCategory(category);
-    setSkillIndex(0);
-  }, []);
-
-  return (
-    <section className="min-h-screen bg-gray-900">
-      {/* Title Bar */}
-      <div className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-lg border-b border-white/10">
-        <div className="px-4 py-3">
-          <TypewriterText
-            text="Skills & Expertise"
-            size={3}
-            typingSpeed={100}
-            delayBeforeRestart={60000}
-          />
-          <p className="text-sm text-white/60">Expertise & capabilities</p>
-        </div>
-      </div>
-
-      {/* Main Content */}
-      <div className="py-4">
-        {!activeCategory ? (
-          <CategoryList onSelect={handleCategorySelect} />
-        ) : (
-          <SkillView
-            category={activeCategory}
-            skillIndex={skillIndex}
-            onBack={() => setActiveCategory(null)}
-            onNext={() => setSkillIndex(i => i + 1)}
-            onPrev={() => setSkillIndex(i => i - 1)}
-          />
-        )}
-      </div>
-    </section>
-  );
-};
-
-const CategoryList = ({ searchQuery, onSelect }) => (
-  <div className="grid grid-cols-2 gap-2 px-2">
-    <AnimatePresence>
-      {skillsData.map((category, index) => (
-        <motion.div
-          key={category.id}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1 }}
-        >
-          <button
-            onClick={() => onSelect(category)}
-            className="w-full bg-white/5 hover:bg-white/10 rounded-xl p-3 text-left
-                     transition-all duration-300 active:scale-98"
-          >
-            <div className="flex flex-col gap-2">
-              <div className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center text-base">
-                {category.icon}
-              </div>
-              <div>
-                <h3 className="text-sm font-semibold text-white mb-0.5 line-clamp-2">{category.title}</h3>
-                <p className="text-xs text-white/60">{category.skills.length} skills</p>
-              </div>
-            </div>
-          </button>
-        </motion.div>
-      ))}
-    </AnimatePresence>
-  </div>
-);
-
-const SkillView = ({ category, skillIndex, onBack, onNext, onPrev }) => {
-  const skill = category.skills[skillIndex];
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-
-    const distance = touchStart - touchEnd;
-    const isLeftSwipe = distance > minSwipeDistance;
-    const isRightSwipe = distance < -minSwipeDistance;
-
-    if (isLeftSwipe && skillIndex < category.skills.length - 1) {
-      onNext();
-    }
-    if (isRightSwipe && skillIndex > 0) {
-      onPrev();
-    }
-  };
-
-  return (
-    <div className="px-4">
+  // Full page modal for skill details
+  const SkillDetailsView = ({ skill, onClose, onNext, onPrev, index, total }) => (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 bg-black z-50 overflow-y-auto"
+    >
       {/* Header */}
-      <div className="mb-6">
-        <button
-          onClick={onBack}
-          className="flex items-center gap-2 text-white/60 mb-4"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          Back to Categories
-        </button>
-        <h2 className="text-2xl font-bold text-white mb-2">{category.title}</h2>
-        <p className="text-white/60">
-          {skillIndex + 1} of {category.skills.length} skills
-        </p>
+      <div className="fixed top-0 left-0 right-0 bg-black/80 backdrop-blur-lg border-b border-white/10 z-10">
+        <div className="px-4 py-4 flex items-center justify-between">
+          <button
+            onClick={onClose}
+            className="flex items-center gap-2 text-white/60 hover:text-white"
+          >
+            <ChevronLeft className="w-6 h-6" />
+            <span>All Skills</span>
+          </button>
+          <span className="text-white/60 text-sm font-medium">{index + 1} of {total}</span>
+        </div>
       </div>
 
-      {/* Skill Card */}
-      <motion.div
-        key={skill.name}
-        initial={{ opacity: 0, x: 20 }}
-        animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: -20 }}
-        className="bg-white/5 rounded-xl p-4 mb-4"
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
-        <h3 className="text-xl font-semibold text-white mb-4">{skill.name}</h3>
-        <p className="text-white/80 mb-6">{skill.description}</p>
-
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          {Object.entries(skill.metrics).slice(0, 2).map(([key, value]) => (
-            <button key={key}
-              className="bg-white/5 hover:bg-white/10 rounded-lg p-3 text-left transition-all
-                       active:scale-95 h-16 flex flex-col justify-center">
-              <div className="text-xs text-white/60">{key}</div>
-              <div className="text-sm font-semibold text-white">{value}</div>
-            </button>
-          ))}
+      {/* Content */}
+      <div className="px-4 pt-20 pb-24 space-y-8">
+        {/* Skill Title */}
+        <div className="flex items-center gap-4">
+          <div className="p-3 rounded-xl bg-rose-500/10">
+            <Sparkles className="w-6 h-6 text-rose-400" />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold text-white">{skill.name}</h2>
+            <div className="flex items-center gap-2 text-white/60 text-sm mt-1">
+              <Clock className="w-4 h-4" />
+              <span>Since {skill.yearStarted}</span>
+            </div>
+          </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {skill.tags.map((tag, index) => (
-            <span
-              key={index}
-              className="px-3 py-1 bg-white/5 rounded-full text-sm text-white/80"
+        {/* Description */}
+        <p className="text-lg text-white/80 leading-relaxed">{skill.description}</p>
+
+        {/* Metrics */}
+        <div className="grid grid-cols-2 gap-3">
+          {Object.entries(skill.metrics).map(([key, value]) => (
+            <div
+              key={key}
+              className="p-4 rounded-xl bg-white/5 space-y-1"
             >
-              {tag}
-            </span>
+              <span className="text-white/40 text-sm capitalize">
+                {key.replace(/([A-Z])/g, ' $1').trim()}
+              </span>
+              <div className="text-xl font-semibold text-white">{value}</div>
+            </div>
           ))}
         </div>
+
+        {/* Recent Projects */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-white">Recent Work</h3>
+          <div className="grid grid-cols-2 gap-3">
+            {skill.recentProjects.map((project, i) => (
+              <div
+                key={i}
+                className="p-4 rounded-xl bg-white/5 space-y-1"
+              >
+                <div className="text-white/80 font-medium">{project.name}</div>
+                <div className="text-sm text-white/40">{project.metric}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tags */}
+        <div className="space-y-3">
+          <h3 className="text-lg font-semibold text-white">Technologies</h3>
+          <div className="flex flex-wrap gap-2">
+            {skill.tags.map((tag, i) => (
+              <span
+                key={i}
+                className="px-4 py-2 rounded-xl bg-white/5 text-white/80"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 p-4 bg-black/80 backdrop-blur-lg border-t border-white/10">
+        <div className="flex items-center justify-between gap-4">
+          <button
+            onClick={onPrev}
+            disabled={index === 0}
+            className="flex-1 p-4 rounded-xl bg-white/5 disabled:opacity-50 disabled:pointer-events-none
+                     text-white font-medium text-center"
+          >
+            Previous
+          </button>
+
+          <button
+            onClick={onNext}
+            disabled={index === total - 1}
+            className="flex-1 p-4 rounded-xl bg-rose-500/10 text-rose-400
+                     disabled:opacity-50 disabled:pointer-events-none
+                     font-medium text-center"
+          >
+            Next Skill
+          </button>
+        </div>
+      </div>
+    </motion.div>
+  );
+
+  return (
+    <div className="min-h-screen bg-black">
+      {/* Header */}
+      <motion.div
+        className="py-8 px-4"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        <motion.h1
+          className="text-2xl font-bold text-center bg-gradient-to-r from-rose-400 to-red-500
+                     bg-clip-text text-transparent mb-2"
+          animate={{
+            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
+          }}
+          transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
+        >
+          Skills & Expertise
+        </motion.h1>
+        <p className="text-white/60 text-sm text-center">
+          Tap a category to explore skills
+        </p>
       </motion.div>
 
-      {/* Progress Indicator */}
-      <div className="fixed bottom-6 left-4 right-4">
-        <div className="bg-white/10 h-1 rounded-full overflow-hidden">
-          <div
-            className="h-full bg-blue-500 transition-all duration-300"
-            style={{ width: `${(skillIndex + 1) / category.skills.length * 100}%` }}
-          />
-        </div>
+      {/* Categories */}
+      <div className="px-4 space-y-3">
+        {skillsData.map((category, index) => (
+          <motion.button
+            key={category.id}
+            onClick={() => {
+              setSelectedCategory(category);
+              setSkillIndex(0);
+            }}
+            className="w-full group"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
+          >
+            {/* Category Card */}
+            <div className="relative w-full h-20 rounded-2xl bg-gradient-to-r from-white/5 to-white/10
+                          border border-white/10 overflow-hidden group-hover:bg-white/10
+                          transition-all duration-300">
+              {/* Content */}
+              <div className="absolute inset-0 p-4 flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center
+                              justify-center text-2xl group-hover:scale-110
+                              transition-transform duration-300">
+                  {category.icon}
+                </div>
+                <div className="flex-1 text-left">
+                  <h3 className="text-lg font-semibold text-white">
+                    {category.title}
+                  </h3>
+                  <p className="text-sm text-white/60 mt-0.5">
+                    {category.skills.length} skills • {category.experience}
+                  </p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-white/40 group-hover:translate-x-1
+                                      transition-transform duration-300" />
+              </div>
+            </div>
+          </motion.button>
+        ))}
       </div>
+
+      {/* Skill Details Modal */}
+      <AnimatePresence>
+        {selectedCategory && (
+          <SkillDetailsView
+            skill={selectedCategory.skills[skillIndex]}
+            index={skillIndex}
+            total={selectedCategory.skills.length}
+            onClose={() => setSelectedCategory(null)}
+            onNext={() => skillIndex < selectedCategory.skills.length - 1 && setSkillIndex(i => i + 1)}
+            onPrev={() => skillIndex > 0 && setSkillIndex(i => i - 1)}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 };
