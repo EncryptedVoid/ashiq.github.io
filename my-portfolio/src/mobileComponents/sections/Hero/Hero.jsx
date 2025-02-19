@@ -38,7 +38,7 @@ const MobileHero = () => {
   };
 
   return (
-    <div className="relative min-h-screen bg-black pb-16">
+    <div className="relative min-h-screen  pb-16">
       <ParticleField />
 
       {/* Status Bar */}
@@ -46,7 +46,7 @@ const MobileHero = () => {
         className="relative z-10 w-full"
         {...animations.fadeIn}
       >
-        <div className="px-4 py-3 bg-black/80 backdrop-blur-xl border-b border-white/5">
+        <div className="px-4 py-3 /80 backdrop-blur-xl border-b border-white/5">
           <div className="flex flex-col gap-2 items-center">
             {/* Availability Badge */}
             <motion.div
