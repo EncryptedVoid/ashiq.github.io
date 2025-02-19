@@ -1,60 +1,182 @@
-// src/components/sections/Experience/Experience.jsx
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import MobileExperienceCard from './components/MobileExperienceCard';
-import MobileCaseStudyModal from './components/MobileCaseStudyModal';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Calendar, MapPin, ChevronDown, ExternalLink, Award } from 'lucide-react';
 import { ExperienceData } from '../../../data/ExperienceData';
-
+import MobileCaseStudyModal from './MobileCaseStudyModal';
 
 const MobileExperience = () => {
-  const [activeId, setActiveId] = useState(null);
-  const [caseStudyData, setCaseStudyData] = useState(null);
+  const [expandedId, setExpandedId] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
 
-  const handleCaseStudyOpen = (experience) => {
-    setCaseStudyData(experience);
-    setActiveId(null);
+  if (!ExperienceData?.length) {
+    return null;
+  }
+
+  const handleCaseStudyOpen = (job) => {
+    setSelectedJob(job);
+    document.body.style.overflow = 'hidden';
   };
 
   const handleCaseStudyClose = () => {
-    setCaseStudyData(null);
+    setSelectedJob(null);
+    document.body.style.overflow = 'auto';
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-gray-900 to-black">
-      {/* Fixed Header */}
-      <div className="sticky top-0 z-20 bg-gray-900/80 backdrop-blur-lg border-b border-white/10">
-        <div className="px-4 py-6">
-          <motion.h1
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-blue-400
-              bg-clip-text text-transparent text-center"
-          >
-            Professional Experience
-          </motion.h1>
-        </div>
+    <div className="min-h-screen">
+      {/* Header matching other sections */}
+      <div className="px-4 py-8 mb-6 text-center">
+        <h1 className="text-xl font-bold text-center bg-gradient-to-r from-rose-400
+                      to-red-500 bg-clip-text text-transparent mb-1">
+          Professional Experience
+        </h1>
+        <p className="text-sm text-white/60">Career journey and achievements</p>
       </div>
 
       {/* Experience Cards */}
-      <div className="px-4 py-6 space-y-4">
-        {ExperienceData.map((experience, index) => (
-          <MobileExperienceCard
-            key={experience.id}
-            experience={experience}
-            isActive={activeId === experience.id}
-            onClick={() => setActiveId(activeId === experience.id ? null : experience.id)}
-            onCaseStudyClick={() => handleCaseStudyOpen(experience)}
-            index={index}
-          />
+      <div className="px-4 space-y-6">
+        {ExperienceData.map((job) => (
+          <motion.div
+            key={job.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className={`relative ${!job.period.end ? 'animate-pulse-subtle' : ''}`}
+          >
+            {/* Glowing border for current role */}
+            {!job.period.end && (
+              <div className="absolute inset-0 bg-gradient-to-r from-rose-400/20 to-red-500/20
+                             rounded-lg blur-lg animate-pulse-slow" />
+            )}
+
+            {/* Card Header */}
+            <button
+              onClick={() => setExpandedId(expandedId === job.id ? null : job.id)}
+              className="w-full text-left relative bg-black/20 rounded-lg p-4"
+            >
+              <div className="flex justify-between items-start gap-4">
+                <div>
+                  <h3 className="text-base font-medium text-white/90">
+                    {job.title}
+                  </h3>
+                  <p className="text-sm font-medium text-rose-400 mt-1">
+                    {job.company}
+                  </p>
+
+                  <div className="flex flex-wrap gap-3 mt-2 text-xs text-white/50">
+                    <div className="flex items-center gap-1">
+                      <Calendar className="w-3 h-3" />
+                      {job.period.display}
+                    </div>
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-3 h-3" />
+                      {job.location}
+                    </div>
+                  </div>
+                </div>
+
+                <ChevronDown
+                  className={`w-4 h-4 text-rose-400 transform transition-transform duration-300
+                    ${expandedId === job.id ? 'rotate-180' : ''}`}
+                />
+              </div>
+
+              {/* Expandable Content */}
+              <AnimatePresence>
+                {expandedId === job.id && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="overflow-hidden"
+                  >
+                    <div className="pt-4 mt-4 border-t border-white/10 space-y-4">
+                      {/* Description */}
+                      <p className="text-xs text-white/70 leading-relaxed">
+                        {job.shortDescription}
+                      </p>
+
+                      {/* Technologies */}
+                      <div className="space-y-2">
+                        <h4 className="text-xs text-white/40 uppercase tracking-wider">
+                          Technologies
+                        </h4>
+                        <div className="flex flex-wrap gap-1.5">
+                          {job.technologies.map((tech, index) => (
+                            <span
+                              key={index}
+                              className="px-2 py-1 text-xs text-rose-400 border border-rose-400/20
+                                       rounded-full bg-rose-400/5"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action Buttons */}
+                      <div className="flex gap-4 pt-2">
+                        {job.links?.company && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              window.open(job.links.company, '_blank');
+                            }}
+                            className="text-xs text-rose-400 hover:text-rose-300
+                                     transition-colors duration-300 flex items-center gap-1"
+                          >
+                            Visit Company
+                            <ExternalLink className="w-3 h-3" />
+                          </button>
+                        )}
+
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleCaseStudyOpen(job);
+                          }}
+                          className="text-xs text-rose-400 hover:text-rose-300
+                                   transition-colors duration-300 flex items-center gap-1 ml-auto"
+                        >
+                          View Impact
+                          <Award className="w-3 h-3" />
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
+          </motion.div>
         ))}
       </div>
 
       {/* Case Study Modal */}
       <MobileCaseStudyModal
-        isOpen={!!caseStudyData}
+        isOpen={!!selectedJob}
         onClose={handleCaseStudyClose}
-        experience={caseStudyData}
+        experience={selectedJob}
+        accentColor="#f87171"
       />
+
+      {/* Add the animation keyframes */}
+      <style jsx global>{`
+        @keyframes pulse-subtle {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.8; }
+        }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.1; }
+          50% { opacity: 0.2; }
+        }
+        .animate-pulse-subtle {
+          animation: pulse-subtle 2s ease-in-out infinite;
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 3s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 };
