@@ -1,105 +1,186 @@
-import React, { useState, useCallback, useEffect } from 'react';
+import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink, Github, Clock, Activity, Star, X, ChevronRight } from 'lucide-react';
-import { ProjectsData as projectsData } from '../../../data/ProjectsData';
-import { TypewriterText } from '../../../styles/TypewriterText'
+import { ChevronLeft, ChevronRight, ExternalLink, Github, Clock, Tag, X } from 'lucide-react';
+import { TypewriterText } from '../../../styles/TypewriterText';
+import { ProjectsData } from '../../../data/ProjectsData';
 
-
-const MobileProjectCard = ({ project, onOpenDetails }) => {
-  const statusColors = {
-    'Completed': 'bg-green-500/20 text-green-400 border-green-500/30',
-    'In Progress': 'bg-blue-500/20 text-blue-400 border-blue-500/30',
-    'Planning': 'bg-yellow-500/20 text-yellow-400 border-yellow-500/30'
+const ProjectCard = ({ project, onOpen }) => {
+  const getStatusColor = (status) => {
+    const colors = {
+      'Active': 'bg-rose-500/20 text-rose-400 border-rose-500/30',
+      'Completed': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
+      'Planning': 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+    };
+    return colors[status] || colors['Active'];
   };
 
   return (
-    <div className="bg-white/[0.03] rounded-xl overflow-hidden">
-      <div className="relative h-48">
+    <motion.div
+      className="relative w-full overflow-hidden rounded-2xl bg-white/[0.02] border border-white/10"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      whileTap={{ scale: 0.98 }}
+      onClick={onOpen}
+    >
+      {/* Project Image or Gradient */}
+      <div className="relative h-48 overflow-hidden">
         {project.image ? (
-          <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover"
+          />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-purple-500/20 to-blue-500/20 flex items-center justify-center">
-            <Activity className="w-12 h-12 text-white/20" />
-          </div>
+          <div className="w-full h-full bg-gradient-to-br from-rose-500/20 to-red-500/20" />
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
 
-        <span className={`absolute top-4 right-4 px-3 py-1 text-xs font-medium rounded-full border
-          ${statusColors[project.status]}`}>
+        {/* Status Badge */}
+        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
           {project.status}
-        </span>
+        </div>
+
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
       </div>
 
-      <div className="p-4 space-y-3">
+      {/* Content */}
+      <div className="p-4 space-y-4">
         <div>
-          <h3 className="text-lg font-bold text-white">{project.title}</h3>
-          <div className="flex items-center gap-1 mt-1 text-xs text-white/40">
-            <Clock className="w-3 h-3" />
-            {project.duration}
+          <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+          <div className="flex items-center gap-2 text-sm text-white/60">
+            <Clock className="w-4 h-4" />
+            <span>{project.duration}</span>
           </div>
         </div>
 
-        <p className="text-sm text-white/60 line-clamp-2">{project.description}</p>
+        <p className="text-sm text-white/80 line-clamp-2">
+          {project.description}
+        </p>
 
-        <div className="flex flex-wrap gap-1.5">
-          {project.technologies.slice(0, 3).map((tech) => (
-            <span key={tech} className="px-2 py-0.5 text-xs bg-white/5 rounded-full text-white/60">
+        {/* Tech Stack */}
+        <div className="flex flex-wrap gap-2">
+          {project.technologies.slice(0, 3).map((tech, index) => (
+            <span
+              key={index}
+              className="px-2 py-1 text-xs rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20"
+            >
               {tech}
             </span>
           ))}
           {project.technologies.length > 3 && (
-            <span className="px-2 py-0.5 text-xs bg-white/5 rounded-full text-white/60">
+            <span className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60">
               +{project.technologies.length - 3}
             </span>
           )}
         </div>
-
-        <div className="flex justify-between items-center pt-3 border-t border-white/10">
-          {project.links.github && (
-            <a href={`${project.links.github}/stargazers`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white/40 hover:text-white/80 transition-colors"
-              onClick={(e) => e.stopPropagation()}>
-              <Star className="w-5 h-5" />
-              <span className="text-sm">Star Project</span>
-            </a>
-          )}
-          <button onClick={onOpenDetails}
-            className="px-3 py-1.5 text-sm bg-blue-500/10 text-blue-400 rounded-lg">
-            View Details
-          </button>
-        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
-const MobileProjectModal = ({ project, isOpen, onClose }) => {
+const ProjectModal = ({ project, isOpen, onClose }) => {
   if (!project) return null;
 
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0, y: "100%" }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: "100%" }}
-          className="fixed inset-0 z-50 bg-black/95 overflow-y-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg"
         >
-          <div className="min-h-screen">
-            <div className="sticky top-0 z-10 p-4 bg-black/80 backdrop-blur-lg">
-              <div className="flex justify-between items-center">
-                <h2 className="text-xl font-semibold text-white">{project.title}</h2>
-                <button onClick={onClose}
-                  className="p-2 hover:bg-white/10 rounded-full transition-colors">
+          <div className="relative h-full overflow-y-auto">
+            {/* Header */}
+            <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-xl border-b border-white/10">
+              <div className="px-4 py-4 flex justify-between items-center">
+                <h2 className="text-xl font-bold text-white">{project.title}</h2>
+                <button
+                  onClick={onClose}
+                  className="p-2 rounded-full hover:bg-white/10"
+                >
                   <X className="w-6 h-6 text-white/60" />
                 </button>
               </div>
             </div>
 
+            {/* Content */}
             <div className="p-4 space-y-6">
-              {/* Rest of modal content remains the same */}
+              {/* Image */}
+              {project.image && (
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full rounded-xl overflow-hidden"
+                />
+              )}
+
+              {/* Description */}
+              <div className="space-y-4">
+                <p className="text-white/80 leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Metrics */}
+                <div className="grid grid-cols-2 gap-4">
+                  {Object.entries(project.metrics).map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20"
+                    >
+                      <div className="text-lg font-bold text-rose-400">{value}</div>
+                      <div className="text-sm text-white/60">{key}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Technologies */}
+                <div className="space-y-2">
+                  <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider">
+                    Technologies
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {project.technologies.map((tech, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1.5 rounded-full text-sm bg-rose-500/10 text-rose-300 border border-rose-500/20"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Links */}
+                <div className="flex gap-4 pt-4">
+                  {project.links.github && (
+                    <a
+                      href={project.links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4
+                        rounded-xl bg-white/5 text-white hover:bg-white/10
+                        border border-white/10 transition-all duration-300"
+                    >
+                      <Github className="w-5 h-5" />
+                      <span>View Code</span>
+                    </a>
+                  )}
+                  {project.links.live && (
+                    <a
+                      href={project.links.live}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4
+                        rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30
+                        border border-rose-500/30 transition-all duration-300"
+                    >
+                      <ExternalLink className="w-5 h-5" />
+                      <span>Live Demo</span>
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -110,117 +191,92 @@ const MobileProjectModal = ({ project, isOpen, onClose }) => {
 
 const MobileProjects = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [filter, setFilter] = useState('all');
   const [selectedProject, setSelectedProject] = useState(null);
-  const [touchStart, setTouchStart] = useState(null);
-  const [touchEnd, setTouchEnd] = useState(null);
-  const [isPaused, setIsPaused] = useState(false);
+  const [category, setCategory] = useState('all');
 
-  const filteredProjects = projectsData.filter(project =>
-    filter === 'all' || project.type === filter
+  const filteredProjects = ProjectsData.filter(project =>
+    category === 'all' || project.type.toLowerCase() === category.toLowerCase()
   );
-
-  const filterTypes = ['all', 'Professional', 'Open Source', 'Personal'];
 
   const handleNext = useCallback(() => {
     setCurrentIndex(prev => (prev + 1) % filteredProjects.length);
   }, [filteredProjects.length]);
 
   const handlePrev = () => {
-    setCurrentIndex(prev => (prev - 1 + filteredProjects.length) % filteredProjects.length);
-  };
-
-  const minSwipeDistance = 50;
-
-  const onTouchStart = (e) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientX);
-    setIsPaused(true);
-  };
-
-  const onTouchMove = (e) => {
-    setTouchEnd(e.targetTouches[0].clientX);
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd) return;
-    const distance = touchStart - touchEnd;
-    if (Math.abs(distance) > minSwipeDistance) {
-      distance > 0 ? handleNext() : handlePrev();
-    }
-    setIsPaused(false);
+    setCurrentIndex(prev =>
+      prev === 0 ? filteredProjects.length - 1 : prev - 1
+    );
   };
 
   return (
-    <div className="py-8 px-4">
-      <TypewriterText
-        text="Featured Projects"
-        size={3}
-        typingSpeed={100}
-        delayBeforeRestart={60000}
-      />
+    <div className="py-16 px-4">
+      {/* Header */}
+      <div className="space-y-4 mb-8">
+        <TypewriterText
+          text="Featured Projects"
+          size={2.5}
+          fromColor="#FA8072"
+          toColor="#FF6B6B"
+        />
+        <p className="text-white/60 text-center">
+          Swipe to explore my latest work
+        </p>
+      </div>
 
-      <div className="relative mb-6">
-        <div className="flex gap-2 overflow-x-auto hide-scrollbar pb-2">
-          {filterTypes.map((type) => (
+      {/* Category Filter */}
+      <div className="overflow-x-auto hide-scrollbar mb-8">
+        <div className="flex gap-2 pb-4">
+          {['All', 'Frontend', 'Backend', 'Full Stack'].map((cat) => (
             <button
-              key={type}
+              key={cat}
               onClick={() => {
-                setFilter(type);
+                setCategory(cat.toLowerCase());
                 setCurrentIndex(0);
               }}
-              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap border uppercase
-                ${filter === type
-                  ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                  : 'bg-white/5 text-white/60 border-white/10'}`}
+              className={`
+                px-4 py-2 rounded-full text-sm whitespace-nowrap
+                transition-all duration-300
+                ${category === cat.toLowerCase()
+                  ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
+                  : 'bg-white/5 text-white/60'}
+                border
+              `}
             >
-              {type}
+              {cat}
             </button>
           ))}
         </div>
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-12 h-full
-          bg-gradient-to-l from-black to-transparent pointer-events-none flex items-center">
-          <ChevronRight className="w-5 h-5 text-white/40 ml-auto" />
+      </div>
+
+      {/* Project Cards */}
+      <div className="relative">
+        <AnimatePresence mode="wait">
+          <ProjectCard
+            key={currentIndex}
+            project={filteredProjects[currentIndex]}
+            onOpen={() => setSelectedProject(filteredProjects[currentIndex])}
+          />
+        </AnimatePresence>
+
+        {/* Navigation Dots */}
+        <div className="flex justify-center gap-2 mt-6">
+          {filteredProjects.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentIndex(index)}
+              className={`
+                transition-all duration-300 rounded-full
+                ${index === currentIndex
+                  ? 'w-8 h-2 bg-gradient-to-r from-rose-500 to-red-500'
+                  : 'w-2 h-2 bg-white/20'}
+              `}
+            />
+          ))}
         </div>
       </div>
 
-      <div className="relative touch-pan-x"
-           onTouchStart={onTouchStart}
-           onTouchMove={onTouchMove}
-           onTouchEnd={onTouchEnd}>
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -50 }}
-            transition={{ duration: 0.3 }}
-          >
-            <MobileProjectCard
-              project={filteredProjects[currentIndex]}
-              onOpenDetails={() => setSelectedProject(filteredProjects[currentIndex])}
-            />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div className="flex justify-center gap-3 mt-6">
-        {filteredProjects.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentIndex(index)}
-            className={`
-              transition-all duration-300 rounded-full touch-manipulation
-              ${index === currentIndex
-                ? 'w-10 h-2 bg-gradient-to-r from-purple-500 to-blue-500'
-                : 'w-2 h-2 bg-white/20 active:bg-white/30'
-              }
-            `}
-          />
-        ))}
-      </div>
-
-      <MobileProjectModal
+      {/* Project Modal */}
+      <ProjectModal
         project={selectedProject}
         isOpen={!!selectedProject}
         onClose={() => setSelectedProject(null)}
