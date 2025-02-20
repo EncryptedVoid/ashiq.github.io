@@ -1,76 +1,154 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ExternalLink, Github, Clock, Tag, X } from 'lucide-react';
+import { Github, ExternalLink, Youtube, Book, FileText, Star, Calendar, Clock, ArrowUpRight } from 'lucide-react';
 import { TypewriterText } from '../../../styles/TypewriterText';
-import { ProjectsData } from '../../../data/ProjectsData';
+import ProjectsData from '../../../data/ProjectsData'
 
-const ProjectCard = ({ project, onOpen }) => {
-  const getStatusColor = (status) => {
-    const colors = {
-      'Active': 'bg-rose-500/20 text-rose-400 border-rose-500/30',
-      'Completed': 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30',
-      'Planning': 'bg-amber-500/20 text-amber-400 border-amber-500/30'
+
+// ProjectCard Component
+const ProjectCard = ({ project }) => {
+  const {
+    title,
+    description,
+    image,
+    version,
+    difficulty,
+    timeInvestment,
+    startDate,
+    lastUpdate,
+    progress,
+    technologies,
+    links,
+    metrics
+  } = project;
+
+  // Dynamic tag layout algorithm
+  const [tagLayout, setTagLayout] = useState({ columns: 3, width: 'auto' });
+
+  useEffect(() => {
+    const calculateOptimalLayout = () => {
+      const avgLength = technologies.reduce((acc, tech) => acc + tech.length, 0) / technologies.length;
+      const columns = avgLength > 12 ? 2 : 3;
+      const width = avgLength > 15 ? 'w-full' : 'w-auto';
+      setTagLayout({ columns, width });
     };
-    return colors[status] || colors['Active'];
-  };
+
+    calculateOptimalLayout();
+  }, [technologies]);
 
   return (
     <motion.div
-      className="relative w-full overflow-hidden rounded-2xl bg-white/[0.02] border border-white/10"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      whileTap={{ scale: 0.98 }}
-      onClick={onOpen}
+      className="group relative overflow-hidden rounded-2xl bg-white/[0.02] border border-white/[0.1]
+                 hover:bg-white/[0.04] hover:border-white/[0.2] transition-all duration-500"
     >
-      {/* Project Image or Gradient */}
-      <div className="relative h-48 overflow-hidden">
-        {project.image ? (
-          <img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-full object-cover"
-          />
+      {/* Project Image & Header */}
+      <div className="relative h-48">
+        {image ? (
+          <img src={image} alt={title} className="w-full h-full object-cover" />
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-rose-500/20 to-red-500/20" />
+          <div className="w-full h-full bg-gradient-to-br from-blue-500/20 to-purple-500/20" />
         )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
 
-        {/* Status Badge */}
-        <div className={`absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-medium border ${getStatusColor(project.status)}`}>
-          {project.status}
+        {/* Version Badge */}
+        <div className="absolute top-4 right-4 flex items-center gap-2">
+          <span className="px-2 py-1 text-xs font-medium rounded-full
+                         bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            v{version}
+          </span>
+          <div className="flex items-center gap-1 px-2 py-1 text-xs font-medium rounded-full
+                         bg-purple-500/20 text-purple-400 border border-purple-500/30">
+            <Star className="w-3 h-3" />
+            <span>{difficulty}/5</span>
+          </div>
         </div>
-
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
       </div>
 
       {/* Content */}
-      <div className="p-4 space-y-4">
-        <div>
-          <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-          <div className="flex items-center gap-2 text-sm text-white/60">
-            <Clock className="w-4 h-4" />
-            <span>{project.duration}</span>
+      <div className="p-6 space-y-4">
+        {/* Title & Timeline */}
+        <div className="space-y-2">
+          <h3 className="text-xl font-bold text-white group-hover:text-transparent
+                         group-hover:bg-clip-text group-hover:bg-gradient-to-r
+                         group-hover:from-blue-400 group-hover:to-purple-400">
+            {title}
+          </h3>
+
+          <div className="flex items-center gap-4 text-sm text-white/60">
+            <div className="flex items-center gap-1">
+              <Calendar className="w-4 h-4" />
+              <span>Started {startDate}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Clock className="w-4 h-4" />
+              <span>{timeInvestment}</span>
+            </div>
           </div>
         </div>
 
-        <p className="text-sm text-white/80 line-clamp-2">
-          {project.description}
-        </p>
+        {/* Progress Bar */}
+        <div className="space-y-2">
+          <div className="flex justify-between text-sm">
+            <span className="text-white/60">Progress</span>
+            <span className="text-white/80">{progress}%</span>
+          </div>
+          <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full
+                         transition-all duration-300"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <div className="text-xs text-white/40 text-right">
+            Last updated: {lastUpdate}
+          </div>
+        </div>
 
-        {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2">
-          {project.technologies.slice(0, 3).map((tech, index) => (
+        {/* Description */}
+        <p className="text-white/80 line-clamp-2">{description}</p>
+
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-3 gap-3">
+          {Object.entries(metrics).map(([key, value]) => (
+            <div key={key} className="p-2 rounded-lg bg-white/5 text-center">
+              <div className="text-sm font-medium text-white/80">{value}</div>
+              <div className="text-xs text-white/40">{key}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Technologies */}
+        <div className={`grid grid-cols-${tagLayout.columns} gap-2`}>
+          {technologies.map((tech, index) => (
             <span
               key={index}
-              className="px-2 py-1 text-xs rounded-full bg-rose-500/10 text-rose-300 border border-rose-500/20"
+              className={`${tagLayout.width} px-3 py-1 text-sm rounded-full
+                         bg-white/5 text-white/60 border border-white/10
+                         hover:bg-white/10 hover:border-white/20 transition-all duration-300`}
             >
               {tech}
             </span>
           ))}
-          {project.technologies.length > 3 && (
-            <span className="px-2 py-1 text-xs rounded-full bg-white/5 text-white/60">
-              +{project.technologies.length - 3}
-            </span>
+        </div>
+
+        {/* Links */}
+        <div className="grid grid-cols-2 gap-3 pt-4 border-t border-white/10">
+          {links.github && (
+            <LinkButton href={links.github} icon={Github} text="Code" />
+          )}
+          {links.live && (
+            <LinkButton href={links.live} icon={ExternalLink} text="Demo" />
+          )}
+          {links.caseStudy && (
+            <LinkButton href={links.caseStudy} icon={FileText} text="Case Study" />
+          )}
+          {links.blog && (
+            <LinkButton href={links.blog} icon={Book} text="Blog Post" />
+          )}
+          {links.video && (
+            <LinkButton href={links.video} icon={Youtube} text="Video" />
           )}
         </div>
       </div>
@@ -78,209 +156,102 @@ const ProjectCard = ({ project, onOpen }) => {
   );
 };
 
-const ProjectModal = ({ project, isOpen, onClose }) => {
-  if (!project) return null;
+// Link Button Component
+const LinkButton = ({ href, icon: Icon, text }) => (
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg
+               bg-white/5 text-white/60 hover:bg-white/10 hover:text-white/80
+               group transition-all duration-300"
+  >
+    <Icon className="w-4 h-4" />
+    <span>{text}</span>
+    <ArrowUpRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+  </a>
+);
 
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-black/95 backdrop-blur-lg"
-        >
-          <div className="relative h-full overflow-y-auto">
-            {/* Header */}
-            <div className="sticky top-0 z-10 bg-black/80 backdrop-blur-xl border-b border-white/10">
-              <div className="px-4 py-4 flex justify-between items-center">
-                <h2 className="text-xl font-bold text-white">{project.title}</h2>
-                <button
-                  onClick={onClose}
-                  className="p-2 rounded-full hover:bg-white/10"
-                >
-                  <X className="w-6 h-6 text-white/60" />
-                </button>
-              </div>
-            </div>
+// Section Header Component
+const SectionHeader = ({ title, description }) => (
+  <div className="mb-12 text-center">
+    <TypewriterText
+      text={title}
+      size={2}
+      typingSpeed={100}
+      delayBeforeRestart={60000}
+    />
+    <p className="text-white/60 mt-2">{description}</p>
+  </div>
+);
 
-            {/* Content */}
-            <div className="p-4 space-y-6">
-              {/* Image */}
-              {project.image && (
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full rounded-xl overflow-hidden"
-                />
-              )}
-
-              {/* Description */}
-              <div className="space-y-4">
-                <p className="text-white/80 leading-relaxed">
-                  {project.description}
-                </p>
-
-                {/* Metrics */}
-                <div className="grid grid-cols-2 gap-4">
-                  {Object.entries(project.metrics).map(([key, value]) => (
-                    <div
-                      key={key}
-                      className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/20"
-                    >
-                      <div className="text-lg font-bold text-rose-400">{value}</div>
-                      <div className="text-sm text-white/60">{key}</div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Technologies */}
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium text-white/60 uppercase tracking-wider">
-                    Technologies
-                  </h3>
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech, index) => (
-                      <span
-                        key={index}
-                        className="px-3 py-1.5 rounded-full text-sm bg-rose-500/10 text-rose-300 border border-rose-500/20"
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Links */}
-                <div className="flex gap-4 pt-4">
-                  {project.links.github && (
-                    <a
-                      href={project.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4
-                        rounded-xl bg-white/5 text-white hover:bg-white/10
-                        border border-white/10 transition-all duration-300"
-                    >
-                      <Github className="w-5 h-5" />
-                      <span>View Code</span>
-                    </a>
-                  )}
-                  {project.links.live && (
-                    <a
-                      href={project.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex-1 flex items-center justify-center gap-2 py-3 px-4
-                        rounded-xl bg-rose-500/20 text-rose-300 hover:bg-rose-500/30
-                        border border-rose-500/30 transition-all duration-300"
-                    >
-                      <ExternalLink className="w-5 h-5" />
-                      <span>Live Demo</span>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
-
+// Main Projects Component
 const MobileProjects = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [category, setCategory] = useState('all');
+  const [projects, setProjects] = useState({
+    top: [],
+    developed: [],
+    developing: []
+  });
 
-  const filteredProjects = ProjectsData.filter(project =>
-    category === 'all' || project.type.toLowerCase() === category.toLowerCase()
-  );
+  useEffect(() => {
+    // Categorize projects based on criteria
+    const categorizeProjects = (projectsData) => {
+      setProjects({
+        top: projectsData.filter(p => p.isTopProject),
+        developed: projectsData.filter(p => p.progress === 100 && !p.isTopProject),
+        developing: projectsData.filter(p => p.progress < 100 && !p.isTopProject)
+      });
+    };
 
-  const handleNext = useCallback(() => {
-    setCurrentIndex(prev => (prev + 1) % filteredProjects.length);
-  }, [filteredProjects.length]);
-
-  const handlePrev = () => {
-    setCurrentIndex(prev =>
-      prev === 0 ? filteredProjects.length - 1 : prev - 1
-    );
-  };
+    categorizeProjects(ProjectsData);
+  }, []);
 
   return (
-    <div className="py-16 px-4">
-      {/* Header */}
-      <div className="space-y-4 mb-8">
-        <TypewriterText
-          text="Featured Projects"
-          size={2.5}
-          fromColor="#FA8072"
-          toColor="#FF6B6B"
-        />
-        <p className="text-white/60 text-center">
-          Swipe to explore my latest work
-        </p>
-      </div>
-
-      {/* Category Filter */}
-      <div className="overflow-x-auto hide-scrollbar mb-8">
-        <div className="flex gap-2 pb-4">
-          {['All', 'Frontend', 'Backend', 'Full Stack'].map((cat) => (
-            <button
-              key={cat}
-              onClick={() => {
-                setCategory(cat.toLowerCase());
-                setCurrentIndex(0);
-              }}
-              className={`
-                px-4 py-2 rounded-full text-sm whitespace-nowrap
-                transition-all duration-300
-                ${category === cat.toLowerCase()
-                  ? 'bg-rose-500/20 text-rose-300 border-rose-500/30'
-                  : 'bg-white/5 text-white/60'}
-                border
-              `}
-            >
-              {cat}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Project Cards */}
-      <div className="relative">
-        <AnimatePresence mode="wait">
-          <ProjectCard
-            key={currentIndex}
-            project={filteredProjects[currentIndex]}
-            onOpen={() => setSelectedProject(filteredProjects[currentIndex])}
+    <div className="py-20">
+      {/* Top Projects Section */}
+      {projects.top.length > 0 && (
+        <section className="mb-20">
+          <SectionHeader
+            title="Market-Ready Solutions"
+            description="Production-grade projects solving real-world problems"
           />
-        </AnimatePresence>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.top.map(project => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
 
-        {/* Navigation Dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {filteredProjects.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`
-                transition-all duration-300 rounded-full
-                ${index === currentIndex
-                  ? 'w-8 h-2 bg-gradient-to-r from-rose-500 to-red-500'
-                  : 'w-2 h-2 bg-white/20'}
-              `}
-            />
-          ))}
-        </div>
-      </div>
+      {/* Developed Projects Section */}
+      {projects.developed.length > 0 && (
+        <section className="mb-20">
+          <SectionHeader
+            title="Completed Projects"
+            description="Polished solutions demonstrating technical expertise"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.developed.map(project => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
 
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        isOpen={!!selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Developing Projects Section */}
+      {projects.developing.length > 0 && (
+        <section>
+          <SectionHeader
+            title="In Development"
+            description="Ongoing projects exploring new technologies"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.developing.map(project => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 };

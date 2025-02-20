@@ -1,183 +1,229 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
-import { EducationData } from '../../../data/EducationData.js';
+import {
+  GraduationCap,
+  Book,
+  Award,
+  Calendar,
+  MapPin,
+  Star,
+  ScrollText,
+  Briefcase
+} from 'lucide-react';
+import { TypewriterText } from '../../../styles/TypewriterText';
+import { EducationData } from '../../../data/EducationData';
 
 const MobileEducation = () => {
-  const { university, courses, achievements, researchWork } = EducationData;
-  const [activeTab, setActiveTab] = useState('overview');
+  const [activeSection, setActiveSection] = useState('overview');
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
-  const Header = () => (
-    <div className="sticky top-0 z-50 bg-white/5 backdrop-blur-xl border-b border-white/10">
-      <h1 className="text-lg font-bold text-white px-4 py-3">Education</h1>
-    </div>
-  );
+  // Touch handlers for swipe functionality
+  const handleTouchStart = (e) => {
+    setTouchStart(e.targetTouches[0].clientX);
+    setTouchEnd(null);
+  };
 
-  const TabBar = () => (
-    <div className="flex gap-2 px-4 py-3 overflow-x-auto hide-scrollbar bg-white/5 backdrop-blur-xl">
-      {['Overview', 'Courses', 'Achievements', 'Research'].map((tab) => (
-        <button
-          key={tab}
-          onClick={() => setActiveTab(tab.toLowerCase())}
-          className={`
-            px-4 py-2 rounded-full text-sm font-medium
-            whitespace-nowrap transition-all
-            ${activeTab === tab.toLowerCase()
-              ? 'bg-white/20 text-white'
-              : 'text-white/60 hover:text-white/80'}
-          `}
-        >
-          {tab}
-        </button>
-      ))}
-    </div>
-  );
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
 
-  const OverviewSection = () => (
-    <div className="p-4 bg-white/5 backdrop-blur-xl rounded-xl m-4">
-      <div className="flex items-center gap-4 mb-6">
-        <div className="w-20 h-20 rounded-xl overflow-hidden border border-white/20">
+  const handleTouchEnd = (data) => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+
+    if (isLeftSwipe && currentIndex < data.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+    }
+  };
+
+  // Section components
+  const UniversityCard = () => (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="bg-black/20 backdrop-blur-lg rounded-2xl p-6 border border-salmon/20"
+    >
+      <div className="flex items-start gap-4">
+        <div className="w-20 h-20 rounded-xl overflow-hidden bg-salmon/10 border border-salmon/20">
           <img
-            src={university.logo}
-            alt={university.name}
+            src="/logo/uottawa-logo.jpg"
+            alt="University of Ottawa"
             className="w-full h-full object-cover"
           />
         </div>
-        <div>
-          <h2 className="text-xl font-bold text-white">{university.name}</h2>
-          <p className="text-sm text-white/80 mt-1">{university.degree}</p>
-          <p className="text-sm text-white/60 mt-1">
-            {university.duration.start} - {university.duration.end}
+        <div className="flex-1">
+          <h3 className="text-xl font-bold text-white mb-2">
+            University of Ottawa
+          </h3>
+          <p className="text-salmon-300 text-sm mb-4">
+            Honours BSc Mathematics and Computer Science
           </p>
-        </div>
-      </div>
-      <p className="text-base text-white/80 leading-relaxed">
-        {university.programDescription}
-      </p>
-    </div>
-  );
-
-  const HorizontalScroller = ({ items, renderItem, title }) => (
-    <div className="px-4 space-y-4">
-      <div className="overflow-x-auto hide-scrollbar">
-        <div className="flex gap-4 pb-4">
-          {items.map((item, index) => (
-            <div key={index} className="w-80 flex-shrink-0">
-              {renderItem(item)}
-            </div>
-          ))}
-        </div>
-      </div>
-      <div className="text-center pb-4">
-        <span className="text-sm text-white/60 animate-pulse inline-flex items-center gap-2">
-          Swipe for more <ChevronRight className="w-4 h-4" />
-        </span>
-      </div>
-    </div>
-  );
-
-  const CourseCard = ({ course }) => (
-    <div className="bg-white/10 backdrop-blur-xl rounded-xl overflow-hidden h-full border border-white/10">
-      <div className="aspect-video relative">
-        <img
-          src={course.image}
-          alt={course.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-        <div className="absolute bottom-0 p-4">
-          <h3 className="text-lg font-bold text-white mb-1">{course.name}</h3>
-          <p className="text-sm text-white/90">Prof. {course.professor}</p>
-        </div>
-      </div>
-
-      <div className="p-4">
-        <div className="flex justify-end mb-3">
-          <div className="px-3 py-1 bg-green-500/20 backdrop-blur-sm rounded-full">
-            <span className="text-sm font-medium text-green-400">{course.grade}</span>
+          <div className="flex items-center gap-2 text-white/60 text-sm">
+            <Calendar className="w-4 h-4" />
+            <span>2023 - 2029</span>
           </div>
         </div>
+      </div>
 
-        <p className="text-sm text-white/80 line-clamp-2 mb-3">
-          {course.description}
-        </p>
+      <div className="mt-6 grid grid-cols-2 gap-3">
+        <div className="p-4 rounded-xl bg-salmon/10 border border-salmon/20">
+          <div className="text-lg font-bold text-salmon-300">4.0</div>
+          <div className="text-sm text-white/60">Current GPA</div>
+        </div>
+        <div className="p-4 rounded-xl bg-salmon/10 border border-salmon/20">
+          <div className="text-lg font-bold text-salmon-300">10</div>
+          <div className="text-sm text-white/60">Current Courses</div>
+        </div>
+      </div>
 
+      <div className="mt-6">
+        <h4 className="text-white/80 mb-3">Program Focus</h4>
         <div className="flex flex-wrap gap-2">
-          {course.skills.map((skill, index) => (
+          {['Data Science', 'AI/ML', 'Algorithms', 'Statistics'].map(skill => (
             <span
-              key={index}
-              className="px-2 py-1 text-xs bg-white/10 backdrop-blur-sm rounded-full text-white/80"
+              key={skill}
+              className="px-3 py-1 rounded-full text-sm
+                bg-salmon/10 text-salmon-300 border border-salmon/20"
             >
               {skill}
             </span>
           ))}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 
-  const AchievementCard = ({ achievement }) => (
-    <div className="bg-white/10 backdrop-blur-xl rounded-xl p-4 h-full border border-white/10">
-      <div className="flex justify-between items-start mb-3">
-        <h3 className="text-lg font-bold text-white">{achievement.title}</h3>
-        <span className="px-2 py-1 text-xs bg-purple-500/20 backdrop-blur-sm rounded-full text-purple-300">
-          {achievement.year}
-        </span>
-      </div>
-      <p className="text-base text-white/80">{achievement.description}</p>
-    </div>
-  );
+  const CourseCard = ({ course }) => (
+    <motion.div
+      initial={{ opacity: 0, x: 100 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -100 }}
+      className="bg-black/20 backdrop-blur-lg rounded-2xl overflow-hidden border border-salmon/20"
+    >
+      <div className="relative h-48">
+        <img
+          src={course.image}
+          alt={course.name}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
 
-  const ResearchSection = () => (
-    <div className="p-4 pb-8">
-      <div className="bg-white/10 backdrop-blur-xl rounded-xl p-6 border border-white/10">
-        <h3 className="text-xl font-bold text-white mb-4">{researchWork.title}</h3>
-        <p className="text-base text-white/80 mb-6">{researchWork.description}</p>
-        <div className="grid grid-cols-2 gap-4">
-          <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3">
-            <p className="text-sm text-white/60 mb-1">Advisor</p>
-            <p className="text-base text-white">{researchWork.advisor}</p>
-          </div>
-          <div className="bg-white/5 backdrop-blur-sm rounded-lg p-3">
-            <p className="text-sm text-white/60 mb-1">Impact</p>
-            <p className="text-base text-white">
-              {researchWork.publications} pub · {researchWork.citations} citations
-            </p>
+        <div className="absolute bottom-4 left-4 right-4">
+          <h3 className="text-xl font-bold text-white mb-2">{course.name}</h3>
+          <div className="flex items-center gap-2 text-salmon-300">
+            <ScrollText className="w-4 h-4" />
+            <span>{course.code}</span>
           </div>
         </div>
       </div>
-    </div>
+
+      <div className="p-4">
+        <div className="flex items-center justify-between mb-4">
+          <span className={`
+            px-3 py-1 rounded-full text-sm
+            ${course.status === 'Current'
+              ? 'bg-salmon/10 text-salmon-300 border border-salmon/20'
+              : 'bg-green-500/10 text-green-300 border border-green-500/20'}
+          `}>
+            {course.status}
+          </span>
+          <div className="flex items-center gap-1">
+            <Star className="w-4 h-4 text-salmon-300" />
+            <span className="text-white font-medium">{course.grade}</span>
+          </div>
+        </div>
+
+        <p className="text-white/70 text-sm mb-4">{course.description}</p>
+
+        <div className="flex flex-wrap gap-2">
+          {course.skills.map((skill, index) => (
+            <span
+              key={index}
+              className="px-3 py-1 rounded-full text-sm
+                bg-salmon/10 text-salmon-300 border border-salmon/20"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.div>
   );
 
-  return (
-    <div className="bg-gradient-to-b from-gray-900 to-black min-h-screen">
-      <Header />
-      <TabBar />
+  // Navigation tabs
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: GraduationCap },
+    { id: 'courses', label: 'Courses', icon: Book },
+    { id: 'achievements', label: 'Awards', icon: Award }
+  ];
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.2 }}
-        >
-          {activeTab === 'overview' && <OverviewSection />}
-          {activeTab === 'courses' && (
-            <HorizontalScroller
-              items={courses}
-              renderItem={(course) => <CourseCard course={course} />}
-            />
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black text-white">
+      {/* Minimal Header */}
+      <div className="fixed top-0 inset-x-0 z-50">
+        <div className="flex justify-between items-center px-4 py-3 bg-black/80 backdrop-blur-xl border-b border-salmon/20">
+          <div className="text-salmon-300 text-sm font-medium">Education</div>
+          <div className="flex gap-1">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveSection(tab.id)}
+                className={`
+                  p-2 rounded-lg transition-all duration-300
+                  ${activeSection === tab.id
+                    ? 'bg-salmon/10 text-salmon-300'
+                    : 'text-white/60'}
+                `}
+              >
+                <tab.icon className="w-4 h-4" />
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="pt-14 px-4 pb-24">
+        <AnimatePresence mode="wait">
+          {activeSection === 'overview' && <UniversityCard />}
+
+          {activeSection === 'courses' && (
+            <div
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={() => handleTouchEnd(EducationData.courses)}
+              className="relative"
+            >
+              <CourseCard course={EducationData.courses[currentIndex]} />
+
+              {/* Progress Dots */}
+              <div className="flex justify-center gap-2 mt-6">
+                {EducationData.courses.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx)}
+                    className={`
+                      transition-all duration-300 rounded-full
+                      ${idx === currentIndex
+                        ? 'w-8 h-2 bg-gradient-to-r from-salmon-500 to-red-500'
+                        : 'w-2 h-2 bg-white/20'}
+                    `}
+                  />
+                ))}
+              </div>
+            </div>
           )}
-          {activeTab === 'achievements' && (
-            <HorizontalScroller
-              items={achievements}
-              renderItem={(achievement) => <AchievementCard achievement={achievement} />}
-            />
-          )}
-          {activeTab === 'research' && <ResearchSection />}
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </div>
 
       <style jsx>{`
         .hide-scrollbar {
