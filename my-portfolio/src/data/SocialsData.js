@@ -1,55 +1,73 @@
-// src/components/sections/Socials/data/SocialsData.js
-import { Github, Code, Brain, Linkedin, Youtube, Instagram } from 'lucide-react';
+import {
+  Mail,
+  Calendar,
+  Github,
+  Linkedin,
+  Youtube,
+  Brain,
+  ExternalLink,
+  Code,
+  MessageCircle
+} from 'lucide-react';
 
-export const socialPlatforms = [
-  {
-    platform: 'GitHub',
+const SocialsData = {
+  email: {
+    icon: Mail,
+    label: "Send me an email",
+    gradient: "from-blue-500 via-cyan-400 to-blue-500",
+    bgColor: "bg-blue-950/40",
+    hoverColor: "text-blue-400",
+    onClick: () => window.location.href = 'mailto:ashiqarib@gmail.com'
+  },
+  calendly: {
+    icon: Calendar,
+    label: "Schedule a call",
+    gradient: "from-emerald-500 via-green-400 to-emerald-500",
+    bgColor: "bg-emerald-950/40",
+    hoverColor: "text-emerald-400",
+    onClick: () => window.open("https://calendly.com/your-calendly-link", '_blank'),
+    description: "Book a 30-minute slot to discuss collaboration opportunities"
+  },
+  github: {
     icon: Github,
-    stats: '25+ Repos',
-    description: 'Explore my open source contributions and personal projects in UI/UX development',
-    href: 'https://github.com/EncryptedVoid',
-    gradient: 'bg-gradient-to-r from-[#2ea043] to-[#238636]'
+    label: "GitHub",
+    gradient: "from-[#2ea043] via-[#238636] to-[#2ea043]",
+    bgColor: "bg-[#0d1117]",
+    hoverColor: "text-[#2ea043]",
+    onClick: () => window.open("https://github.com/yourusername", '_blank'),
+    stats: "View my code repositories",
+    description: "Check out my open-source projects and contributions"
   },
-  // {
-  //   platform: 'LeetCode',
-  //   icon: Code,
-  //   stats: '5+ Problems Solved',
-  //   description: 'Check out my problem-solving approach and algorithmic thinking',
-  //   href: 'https://leetcode.com/u/EncryptedAsh/',
-  //   gradient: 'bg-gradient-to-r from-[#ffa116] to-[#ff6b6b]'
-  // },
-  // {
-  //   platform: 'W&B',
-  //   icon: Brain,
-  //   stats: '15+ Projects',
-  //   description: 'View my machine learning experiments and research projects',
-  //   href: 'https://wandb.ai',
-  //   gradient: 'bg-gradient-to-r from-[#ff9d00] to-[#ff0080]'
-  // },
-  {
-    platform: 'LinkedIn',
+  linkedin: {
     icon: Linkedin,
-    stats: '100+ Connections',
-    description: 'Connect professionally and explore my career journey',
-    href: 'https://www.linkedin.com/in/ashiq-gazi-090a6b213/',
-    gradient: 'bg-gradient-to-r from-[#0077b5] to-[#00a0dc]'
+    label: "LinkedIn",
+    gradient: "from-[#0077b5] via-[#00a0dc] to-[#0077b5]",
+    bgColor: "bg-[#0a66c2]/20",
+    hoverColor: "text-[#0077b5]",
+    onClick: () => window.open("https://linkedin.com/in/yourusername", '_blank'),
+    stats: "Connect professionally",
+    description: "View my professional experience and achievements"
   },
-  {
-    platform: 'YouTube',
+  youtube: {
     icon: Youtube,
-    stats: '40+ Videos',
-    description: 'Watch my technical tutorials and design process videos',
-    href: 'https://www.youtube.com/@DOCTOR-ASH',
-    gradient: 'bg-gradient-to-r from-[#ff0000] to-[#ff4e45]'
+    label: "YouTube",
+    gradient: "from-[#ff0000] via-[#ff4e45] to-[#ff0000]",
+    bgColor: "bg-[#282828]",
+    hoverColor: "text-[#ff0000]",
+    onClick: () => window.open("https://youtube.com/c/yourchannel", '_blank'),
+    stats: "Watch my tutorials",
+    description: "Technical tutorials and design system insights"
   },
-  // {
-  //   platform: 'Instagram',
-  //   icon: Instagram,
-  //   stats: '1000+ Followers',
-  //   description: 'Follow my design inspiration and creative process',
-  //   href: 'https://instagram.com',
-  //   gradient: 'bg-gradient-to-br from-[#f09433] via-[#dc2743] to-[#bc1888]'
-  // }
-];
+  wandb: {
+    icon: Brain,
+    label: "Weights & Biases",
+    gradient: "from-[#ff9d00] via-[#ff0080] to-[#ff9d00]",
+    bgColor: "bg-[#111827]",
+    hoverColor: "text-[#ff9d00]",
+    onClick: () => window.open("https://wandb.ai/yourusername", '_blank'),
+    stats: "Explore ML experiments",
+    description: "Machine learning experiments and research projects"
+  }
+};
 
-export default socialPlatforms;
+export default SocialsData
