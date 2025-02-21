@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Code, Briefcase, FolderGit2, GraduationCap, Mail, Star } from 'lucide-react';
-import useIsMobile from './hooks/useIsMobile';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const NavBar = () => {
   const [activeSection, setActiveSection] = useState('hero');

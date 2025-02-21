@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import Navigation from './Navigation';
+import Navigation from './components/Navigation/Navigation';
 import useIsMobile from './hooks/useIsMobile';
 import ImageTest from './ImageTest';
 

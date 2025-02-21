@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Home, Code, Briefcase, FolderGit2, Star } from 'lucide-react';
-import useIsMobile from './hooks/useIsMobile';
+import useIsMobile from '../../hooks/useIsMobile';
 
 const MobileNavBar = () => {
   const [active, setActive] = useState('hero');

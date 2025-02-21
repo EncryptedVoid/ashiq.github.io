@@ -1,5 +1,5 @@
 import React from 'react';
-import { useMediaQuery } from './hooks/useMediaQuery';
+import { useMediaQuery } from '../../hooks/useMediaQuery';
 import { motion } from 'framer-motion';
 import { Home, Code, Briefcase, FolderGit2, GraduationCap, Mail, Star, Award, Target } from 'lucide-react';
 
