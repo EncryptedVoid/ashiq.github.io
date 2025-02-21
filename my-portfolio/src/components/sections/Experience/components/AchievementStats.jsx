@@ -1,94 +1,64 @@
-// src/components/sections/Experience/components/AchievementStats.jsx
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import GlassCard from '../../../common/GlassCard';
+// src/components/sections/Experience/components/AchievementStat.jsx
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
-const AchievementCard = ({ achievement }) => {
-const [isHovered, setIsHovered] = useState(false);
-const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+const AchievementStat = ({ achievement }) => {
+  const [isHovered, setIsHovered] = useState(false);
 
-useEffect(() => {
-    const handleMouseMove = (e) => {
-    if (isHovered) {
-        setMousePosition({ x: e.clientX, y: e.clientY });
-    }
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-}, [isHovered]);
-
-return (
-    <div
-    className="relative"
-    onMouseEnter={() => setIsHovered(true)}
-    onMouseLeave={() => setIsHovered(false)}
+  return (
+    <motion.div
+      className="
+        rounded-lg
+        bg-white/[0.03] hover:bg-white/[0.06]
+        border border-white/[0.06] hover:border-white/[0.12]
+        p-3
+        transition-all duration-300
+        hover:-translate-y-1
+        group
+        cursor-pointer
+      "
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      whileHover={{ scale: 1.03 }}
     >
-    {/* Main Achievement Card */}
-    <GlassCard className="h-full">
-        <div className="flex items-center gap-3 p-3">
-        <motion.div
-            className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"
-            animate={{
-            scale: isHovered ? 1.1 : 1,
-            translateY: isHovered ? -2 : 0
-            }}
-            transition={{
-            type: "spring",
-            stiffness: 400,
-            damping: 10
-            }}
-        >
-            {achievement.stat}
-        </motion.div>
-        <div className="text-sm text-white/60">
-            {achievement.label}
+      <div className="text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-105 transition-transform">
+        {achievement.stat}
+      </div>
+      <div className="text-xs text-white/60 group-hover:text-white/80 transition-colors">
+        {achievement.label}
+      </div>
+      {achievement.description && (
+        <div className="
+          mt-2 pt-2
+          border-t border-white/10
+          text-xs text-white/40
+          group-hover:text-white/60
+          transition-colors
+          line-clamp-2
+        ">
+          {achievement.description}
         </div>
-        </div>
-    </GlassCard>
+      )}
 
-    {/* Cursor-following Details Card */}
-    <AnimatePresence>
-        {isHovered && (
+      {/* Tooltip on hover to show full description */}
+      {isHovered && achievement.description && (
         <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="fixed z-50 pointer-events-none"
-            style={{
-            left: mousePosition.x + 5, // Moved closer to cursor
-            top: mousePosition.y + 5,  // Moved closer to cursor
-            width: '280px'
-            }}
+          className="absolute z-10 p-3 rounded-lg bg-gray-800/95 border border-white/10 shadow-xl max-w-xs"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          style={{
+            top: '100%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            width: 'max-content',
+            maxWidth: '200px'
+          }}
         >
-            <div className="bg-gray-900/95 backdrop-blur-md rounded-xl border border-white/20 p-4">
-            <div className="text-sm leading-relaxed text-white">
-                {achievement.description}
-            </div>
-            </div>
+          <div className="text-xs text-white/80">{achievement.description}</div>
         </motion.div>
-        )}
-    </AnimatePresence>
-    </div>
-);
+      )}
+    </motion.div>
+  );
 };
 
-const AchievementStats = ({ achievements }) => {
-return (
-    <div className="py-4">
-    <h4 className="text-sm font-semibold text-white/60 uppercase mb-3">
-        Key Achievements
-    </h4>
-    <div className="flex flex-wrap gap-3">
-        {achievements.map((achievement, index) => (
-        <AchievementCard
-            key={index}
-            achievement={achievement}
-        />
-        ))}
-    </div>
-    </div>
-);
-};
-
-export default AchievementStats;
+export default AchievementStat;

@@ -10,7 +10,7 @@ import {
   MessageCircle
 } from 'lucide-react';
 
-const SocialsData = {
+export const SocialsData = {
   email: {
     icon: Mail,
     label: "Send me an email",
