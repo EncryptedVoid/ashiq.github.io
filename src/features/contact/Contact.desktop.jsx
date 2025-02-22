@@ -1,8 +1,7 @@
 // src/components/sections/Socials/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SocialsData } from '../../../data/SocialsData';
-import { TypewriterText } from '../../../styles/TypewriterText';
+import { SocialsData } from '../../data/SocialsData';
 import { ExternalLink } from 'lucide-react';
 
 const Socials = () => {
@@ -12,12 +11,6 @@ const Socials = () => {
     <section className="w-full py-24 px-8 bg-gradient-to-b from-gray-900 to-black">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <TypewriterText
-          text="Let's Connect!"
-          size={3}
-          typingSpeed={100}
-          delayBeforeRestart={60000}
-        />
         <p className="text-lg text-gray-300 mt-4">
           Explore my work, contributions, and professional journey across different platforms
         </p>

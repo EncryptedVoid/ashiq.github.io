@@ -1,6 +1,6 @@
 // src/components/sections/Education/index.jsx
 import { motion, AnimatePresence } from 'framer-motion';
-import { EducationData } from '../../../data/EducationData.js';
+import { EducationData } from '../../data/EducationData';
 import { useEffect, useRef, useState } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 

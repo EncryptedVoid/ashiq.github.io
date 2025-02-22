@@ -10,8 +10,7 @@ import {
   ChevronRight,
   Star
 } from 'lucide-react';
-import { TypewriterText } from '../../../styles/TypewriterText';
-import { EducationData } from '../../../data/EducationData';
+import { EducationData } from '../../data/EducationData';
 
 const MobileEducation = () => {
   // State management
@@ -253,18 +252,6 @@ const MobileEducation = () => {
 
   return (
     <div className="pb-20">
-      {/* Header with TypewriterText */}
-      <div className="px-4 py-6">
-        <TypewriterText
-          text="Education & Academics"
-          className="text-2xl font-bold text-white"
-          cursorClassName="bg-salmon-300"
-        />
-        <p className="text-white/60 text-sm mt-2">
-          Academic journey, courses and achievements
-        </p>
-      </div>
-
       {/* Section Tabs */}
       <div className="px-4 mb-5">
         <div className="flex bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-salmon/10">

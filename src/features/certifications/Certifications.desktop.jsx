@@ -1,10 +1,8 @@
 // src/components/sections/certifications/index.jsx
 import React, { useState } from 'react';
-import CertCard from './components/CertCard';
-import CertModal from './components/CertModal';
-import { Certifications } from '../../../data/CertificationsData';
-import { TypewriterText } from '../../../styles/TypewriterText'
-
+import CertCard from './components/CertCard.desktop';
+import CertModal from './components/CertModal.desktop';
+import { Certifications } from '../../data/CertificationsData';
 
 const CertificationsSection = () => {
   const [selectedCert, setSelectedCert] = useState(null);
@@ -26,12 +24,6 @@ const CertificationsSection = () => {
     <section className="w-full py-20 px-4 md:px-8">
       {/* Header */}
       <div className="text-center max-w-3xl mx-auto mb-20">
-        <TypewriterText
-          text="Certifications"
-          size={3}
-          typingSpeed={100}
-          delayBeforeRestart={60000}
-        />
         <p className="text-lg text-gray-400">
           Professional Certifications and achievements in cloud technologies
         </p>

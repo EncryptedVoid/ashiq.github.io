@@ -1,9 +1,10 @@
 import React from 'react';
-import { useMediaQuery } from '../../../hooks/useMediaQuery';
+import { useMediaQuery } from '../../hooks/useMedia';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Medal, Calendar, ExternalLink } from 'lucide-react';
-import { certStyles, Certifications } from '../../../data/CertificationsData';
-import { TypewriterText } from '../../../styles/TypewriterText'
+import CertCard from './components/CertCard.mobile';
+import CertModal from './components/CertModal.mobile';
+import { Certifications } from '../../data/CertificationsData';
 
 
 const MobileCertCard = ({ cert, onClick }) => {

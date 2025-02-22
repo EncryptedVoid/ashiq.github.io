@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import SocialsData from '../../../data/SocialsData'
+import { SocialsData } from '../../data/SocialsData';
 import {
   Mail,
   Calendar,

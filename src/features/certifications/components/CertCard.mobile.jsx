@@ -1,6 +1,6 @@
 // src/components/sections/certifications/components/CertCard.jsx
 import React from 'react';
-import { certStyles } from '../../../../data/CertificationsData';
+import { certStyles } from '../../../data/CertificationsData';
 
 const CertCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];
