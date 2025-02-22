@@ -1,53 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+// src/features/testimonials/Testimonials.mobile.jsx
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Quote, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
-import { TestimonialData } from '../../../data/TestimonialsData'
-import { TypewriterText } from '../../../styles/TypewriterText'
+import { TypewriterText } from '@/components/ui';
+import { TestimonialData } from '@/data';
+import { TestimonialCardMobile } from './components';
 
-
-const MobileTestimonialCard = () => (
-  <div className="w-full relative backdrop-blur-xl bg-white/[0.03] border border-white/[0.08] rounded-xl p-3">
-    {/* Company Tag */}
-    <div className="flex items-center justify-between mb-4">
-      <span className="text-sm text-white/60 bg-white/[0.03] px-3 py-1 rounded-full">
-        {TestimonialData.company}
-      </span>
-      <a
-        href={TestimonialData.linkedIn}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="w-10 h-10 flex items-center justify-center rounded-full bg-white/[0.03]
-                 active:scale-95 transition-all touch-manipulation"
-        onClick={e => e.stopPropagation()}
-      >
-        <ExternalLink className="w-5 h-5 text-white/60" />
-      </a>
-    </div>
-
-    {/* Content */}
-    <div className="space-y-4">
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-red-500/90 to-purple-500/90
-                      flex items-center justify-center text-lg font-bold text-white">
-          {TestimonialData.initials}
-        </div>
-        <div>
-          <h3 className="text-lg font-semibold text-white">{TestimonialData.name}</h3>
-          <p className="text-sm text-white/60">{TestimonialData.role}</p>
-        </div>
-      </div>
-
-      <div className="relative">
-        <Quote className="absolute top-0 left-0 w-5 h-5 text-white/20" />
-        <p className="pl-8 text-base text-white/80 leading-relaxed">
-          "{TestimonialData.quote}"
-        </p>
-      </div>
-    </div>
-  </div>
-);
-
-const MobileTestimonials = () => {
+export const TestimonialsMobile = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);
@@ -96,18 +54,20 @@ const MobileTestimonials = () => {
         <TypewriterText
           text="What People Say"
           size={1.5}
-          typingSpeed={100}        // Optional: milliseconds per character
-          delayBeforeRestart={60000} // Optional: milliseconds to wait before restarting
+          typingSpeed={100}
+          delayBeforeRestart={60000}
         />
         <p className="text-sm text-white/60">
           Swipe to explore testimonials
         </p>
       </div>
 
-      <div className="relative touch-pan-x"
-           onTouchStart={onTouchStart}
-           onTouchMove={onTouchMove}
-           onTouchEnd={onTouchEnd}>
+      <div
+        className="relative touch-pan-x"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <AnimatePresence mode="wait">
           <motion.div
             key={currentIndex}
@@ -116,15 +76,12 @@ const MobileTestimonials = () => {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <MobileTestimonialCard TestimonialData={TestimonialData[currentIndex]} />
+            <TestimonialCardMobile testimonial={TestimonialData[currentIndex]} />
           </motion.div>
         </AnimatePresence>
-
-        {/* Navigation Buttons - Larger touch targets */}
-
       </div>
 
-      {/* Progress Indicators - Optimized for touch */}
+      {/* Progress Indicators */}
       <div className="flex justify-center gap-3 mt-6">
         {TestimonialData.map((_, index) => (
           <button
@@ -143,5 +100,3 @@ const MobileTestimonials = () => {
     </section>
   );
 };
-
-export default MobileTestimonials;

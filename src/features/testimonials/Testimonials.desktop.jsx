@@ -1,27 +1,26 @@
-// src/components/sections/Testimonials/index.jsx
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import TestimonialCard from './components/TestimonialCard';
-import { TestimonialData } from '../../../data/TestimonialsData';
-import { TypewriterText } from '../../../styles/TypewriterText';
+import { TypewriterText } from '@/components/ui';
+import { TestimonialCard } from './components';
+import { TestimonialData } from '@/data';
 
-const Testimonials = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+export const TestimonialsDesktop = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-    const handleNext = () => {
-        setCurrentIndex((prev) => (prev + 1) % TestimonialData.length);
-    };
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % TestimonialData.length);
+  };
 
-    const handlePrev = () => {
-        setCurrentIndex((prev) =>
-            prev === 0 ? TestimonialData.length - 1 : prev - 1
-        );
-    };
+  const handlePrev = () => {
+    setCurrentIndex((prev) =>
+      prev === 0 ? TestimonialData.length - 1 : prev - 1
+    );
+  };
 
-    useEffect(() => {
-        const timer = setInterval(handleNext, 5000);
-        return () => clearInterval(timer);
-    }, []);
+  useEffect(() => {
+    const timer = setInterval(handleNext, 5000);
+    return () => clearInterval(timer);
+  }, []);
 
     return (
         <section className="w-full py-20 min-h-[600px]">
@@ -102,5 +101,3 @@ const Testimonials = () => {
         </section>
     );
 };
-
-export default Testimonials;

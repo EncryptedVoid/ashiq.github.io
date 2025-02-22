@@ -1,8 +1,10 @@
-import { useIsMobile } from '@hooks/useIsMobile';
-import TestimonialsDesktop from './Testimonials.desktop';
-import TestimonialsMobile from './Testimonials.mobile';
+import { useMedia } from '@/hooks';
+import { TestimonialsDesktop } from './Testimonials.desktop';
+import { TestimonialsMobile } from './Testimonials.mobile';
 
-export default function Testimonials() {
-  const isMobile = useIsMobile();
+export const Testimonials = () => {
+  const isMobile = useMedia('(max-width: 768px)');
   return isMobile ? <TestimonialsMobile /> : <TestimonialsDesktop />;
-}
+};
+
+export * from './components';
