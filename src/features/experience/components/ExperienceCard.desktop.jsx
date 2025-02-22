@@ -10,10 +10,10 @@ import {
   Briefcase,
   Target
 } from 'lucide-react';
-import AchievementStats from './AchievementStats';
-import TechnologyTag from './TechnologyTag';
-import ProjectItem from './ProjectItem';
-import TestimonialItem from './TestimonialItem';
+import AchievementStats from './AchievementStats.desktop';
+import TechnologyTag from './TechnologyTag.desktop';
+import ProjectItem from './ProjectItem.desktop';
+import TestimonialItem from './TestimonialItem.desktop';
 
 const ExperienceCard = ({ experience, isActive, onClick, onCaseStudyClick, index }) => {
   const isCurrentJob = experience.period.end === null;

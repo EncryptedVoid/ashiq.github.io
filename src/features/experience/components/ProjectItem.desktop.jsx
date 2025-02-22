@@ -1,6 +1,6 @@
 // src/components/sections/Experience/components/ProjectItem.jsx
 import React from 'react';
-import TechnologyTag from './TechnologyTag';
+import TechnologyTag from './TechnologyTag.desktop';
 
 const ProjectItem = ({ project }) => {
   return (

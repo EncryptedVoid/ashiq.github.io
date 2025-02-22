@@ -10,7 +10,7 @@ import {
   Target,
   Code
 } from 'lucide-react';
-import TechnologyTag from './TechnologyTag';
+import TechnologyTag from './TechnologyTag.desktop';
 
 const CaseStudyModal = ({ isOpen, onClose, experience }) => {
   if (!isOpen || !experience) return null;

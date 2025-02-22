@@ -13,7 +13,7 @@ const Certifications = React.lazy(() => import('./components/sections/Certificat
 const Projects = React.lazy(() => import('./components/sections/Projects'));
 const Goals = React.lazy(() => import('./components/sections/Goals'));
 const Socials = React.lazy(() => import('./components/sections/DigitalPresence'));
-const Education = React.lazy(() => import('./components/sections/Education'));
+const Education = React.lazy(() => import('./src/features/education/Education.desktop'));
 
 // Mobile component imports
 const MobileHero = React.lazy(() => import('./mobileComponents/sections/Hero/Hero'));
