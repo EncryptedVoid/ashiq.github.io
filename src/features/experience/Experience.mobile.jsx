@@ -4,7 +4,7 @@ import { Calendar, MapPin, ChevronDown, ExternalLink, Award } from 'lucide-react
 import { ExperienceData } from '@data/ExperienceData';
 import MobileCaseStudyModal from './components/CaseStudyModal.mobile';
 
-const MobileExperience = () => {
+const ExperienceMobile = () => {
   const [expandedId, setExpandedId] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -181,4 +181,4 @@ const MobileExperience = () => {
   );
 };
 
-export default MobileExperience;
+export default ExperienceMobile;

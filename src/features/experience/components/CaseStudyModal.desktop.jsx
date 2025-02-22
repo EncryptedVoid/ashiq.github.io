@@ -1,5 +1,3 @@
-// src/components/sections/Experience/components/CaseStudyModal.jsx
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   X,
@@ -10,7 +8,7 @@ import {
   Target,
   Code
 } from 'lucide-react';
-import TechnologyTag from './TechnologyTag.desktop';
+import { TechnologyTag } from '@/features/experience/components';
 
 const CaseStudyModal = ({ isOpen, onClose, experience }) => {
   if (!isOpen || !experience) return null;

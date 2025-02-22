@@ -1,22 +1,14 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import {
-  Building2,
-  Calendar,
-  MapPin,
-  ExternalLink,
-  ChevronDown,
-  Award,
-  Briefcase,
-  Target
-} from 'lucide-react';
-import { TypewriterText } from '@styles/TypewriterText';
-import ExperienceCard from './components/ExperienceCard.desktop';
-import CaseStudyModal from './components/CaseStudyModal.desktop';
-// Import the ExperienceData directly to ensure it's available
-import { ExperienceData } from '@data/ExperienceData';
+  ExperienceCard,
+  CaseStudyModal,
+  AchievementStats
+} from '@/features/experience/components';
+import { useMedia } from '@/hooks';
+import { ExperienceData } from '@/data';
 
-const Experience = ({ experienceData = ExperienceData }) => {
+const ExperienceDesktop = ({ experienceData = ExperienceData }) => {
   const [activeId, setActiveId] = useState(null);
   const [caseStudyData, setCaseStudyData] = useState(null);
 
@@ -37,12 +29,6 @@ const Experience = ({ experienceData = ExperienceData }) => {
       <div className="max-w-7xl mx-auto space-y-12">
         {/* Header */}
         <div className="text-center space-y-4">
-          <TypewriterText
-            text="Professional Experience"
-            size={3}
-            typingSpeed={100}
-            delayBeforeRestart={60000}
-          />
           <motion.p
             className="text-lg text-white/60 max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
@@ -53,7 +39,7 @@ const Experience = ({ experienceData = ExperienceData }) => {
           </motion.p>
         </div>
 
-        {/* Experience Cards */}
+        {/* ExperienceDesktop Cards */}
         <div className="grid grid-cols-1 gap-6">
           {experienceData && experienceData.length > 0 ? (
             experienceData.map((experience, index) => (
@@ -86,4 +72,4 @@ const Experience = ({ experienceData = ExperienceData }) => {
   );
 };
 
-export default Experience;
+export default ExperienceDesktop;

@@ -1,12 +1,9 @@
-// src/features/hero/Hero.desktop.jsx
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { TypewriterText } from '@styles/TypewriterText';
-import { useMousePosition } from '@hooks/useAnimation';
-import { HeroData } from '@data/HeroData';
-import GlassCard from '@components/common/GlassCard';
-import ParticleField from '@styles/ParticleField';
+import { TypewriterText, GlassCard, ParticleField } from '@/components/ui';
+import { useMousePosition } from '@/hooks';
+import { HeroData } from '@/data';
 
 const HeroDesktop = () => {
   const {
@@ -99,7 +96,7 @@ const HeroDesktop = () => {
                   </div>
 
 
-                    href={`/assets/${status.resumeLink}`}
+                  <a  href={`/assets/${status.resumeLink}`}
                     className="group flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20
                             border border-blue-500/20 hover:border-blue-500/30 rounded-full
                             transition-all duration-300 text-blue-400"

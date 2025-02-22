@@ -1,11 +1,10 @@
-// src/features/goals/index.js
-import { useIsMobile } from '@hooks/useIsMobile';
-import GoalsDesktop from './Goals.desktop';
-import GoalsMobile from './Goals.mobile';
+import { useMedia } from '@/hooks';
+import { GoalsDesktop } from './Goals.desktop';
+import { GoalsMobile } from './Goals.mobile';
 
-export function Goals() {
-  const isMobile = useIsMobile();
+export const Goals = () => {
+  const isMobile = useMedia('(max-width: 768px)');
   return isMobile ? <GoalsMobile /> : <GoalsDesktop />;
-}
+};
 
-export { GoalsDesktop, GoalsMobile };
+export * from './components';

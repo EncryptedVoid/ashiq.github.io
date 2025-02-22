@@ -1,5 +1,3 @@
-// src/components/sections/Experience/components/ExperienceCard.jsx
-import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Calendar,
@@ -10,10 +8,12 @@ import {
   Briefcase,
   Target
 } from 'lucide-react';
-import AchievementStats from './AchievementStats.desktop';
-import TechnologyTag from './TechnologyTag.desktop';
-import ProjectItem from './ProjectItem.desktop';
-import TestimonialItem from './TestimonialItem.desktop';
+import {
+  AchievementStats,
+  TechnologyTag,
+  ProjectItem,
+  TestimonialItem
+} from '@/features/experience/components';
 
 const ExperienceCard = ({ experience, isActive, onClick, onCaseStudyClick, index }) => {
   const isCurrentJob = experience.period.end === null;

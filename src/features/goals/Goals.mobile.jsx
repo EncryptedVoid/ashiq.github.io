@@ -1,9 +1,7 @@
-// src/features/goals/Goals.mobile.jsx
-import React from 'react';
-import GoalCard from '@features/goals/components/GoalCard.mobile';
-import { GoalsData } from '@data/GoalsData';
+import { GoalCard } from '@/features/goals/components';
+import { GoalsData } from '@/data';
 
-const GoalsMobile = () => {
+export const GoalsMobile = () => {
   return (
     <section className="w-full py-20 px-4">
       <div className="grid grid-cols-1 gap-6 max-w-7xl mx-auto">

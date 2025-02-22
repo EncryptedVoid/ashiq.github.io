@@ -1,3 +1,10 @@
-// src/features/contact/index.js
-export { default as ContactDesktop } from './Contact.desktop';
-export { default as ContactMobile } from './Contact.mobile';
+import { useMedia } from '@/hooks';
+import { ContactDesktop } from './Contact.desktop';
+import { ContactMobile } from './Contact.mobile';
+
+export const Contact = () => {
+  const isMobile = useMedia('(max-width: 768px)');
+  return isMobile ? <ContactMobile /> : <ContactDesktop />;
+};
+
+export * from './components';

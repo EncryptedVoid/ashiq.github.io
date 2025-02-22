@@ -53,7 +53,7 @@ const HeroMobile = () => {
             {/* Availability Badge */}
             <motion.div
               className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm"
-              whileHover={{ scale: A1.05 }}
+              whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />

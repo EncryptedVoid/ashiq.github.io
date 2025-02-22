@@ -1,3 +1,10 @@
-// src/features/certifications/index.js
-export { default as CertificationsDesktop } from './Certifications.desktop';
-export { default as CertificationsMobile } from './Certifications.mobile';
+import { useMedia } from '@/hooks';
+import { CertificationsDesktop } from './Certifications.desktop';
+import { CertificationsMobile } from './Certifications.mobile';
+
+export const Certifications = () => {
+  const isMobile = useMedia('(max-width: 768px)');
+  return isMobile ? <CertificationsMobile /> : <CertificationsDesktop />;
+};
+
+export * from './components';
