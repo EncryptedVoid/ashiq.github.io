@@ -1,6 +1,7 @@
-// src/components/sections/certifications/components/CertCard.jsx
+// src/features/certifications/components/CertCard.mobile.jsx
 import React from 'react';
-import { certStyles } from '../../../data/CertificationsData';
+import { Calendar } from 'lucide-react';
+import { certStyles } from '@data/CertificationsData';
 
 const CertCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];
@@ -8,56 +9,34 @@ const CertCard = ({ cert, onClick }) => {
   return (
     <div
       onClick={onClick}
-      className={`
-        group relative overflow-hidden
-        bg-white/[0.03] hover:bg-white/[0.06]
-        border border-white/[0.06] hover:border-white/[0.12]
-        rounded-3xl p-8
-        transition-all duration-700 ease-out
-        hover:-translate-y-2 hover:shadow-2xl ${style.shadow}
-        cursor-pointer
-      `}
-      role="button"
-      tabIndex={0}
+      className="relative w-full bg-white/[0.03] rounded-2xl overflow-hidden touch-manipulation"
     >
-      {/* Content */}
-      <div className="relative z-10 flex flex-col items-center">
-        {/* Icon Container */}
+      {/* Card Content */}
+      <div className="flex items-center gap-4 p-4">
+        {/* Icon */}
         <div className={`
-          relative w-32 h-32 mb-8
-          bg-white/[0.03]
-          border border-white/[0.06]
-          rounded-2xl
-          overflow-hidden
-          transition-all duration-700
-          group-hover:scale-110 group-hover:-rotate-3
-          group-hover:shadow-lg ${style.shadow}
+          w-16 h-16 rounded-xl ${style.iconBg}
+          flex-shrink-0 flex items-center justify-center
+          transition-transform active:scale-95
         `}>
-          <img
-            src={cert.icon}
-            alt={cert.title}
-            className="w-full h-full object-cover"
-          />
+          <img src={`/assets/logo/${cert.icon}`} alt="" className="w-10 h-10" />
         </div>
 
-        {/* Text Content */}
-        <div className="text-center space-y-4">
-          <h3 className={`
-            text-2xl font-bold
-            bg-gradient-to-r ${style.gradient}
-            bg-clip-text text-transparent
-          `}>
+        {/* Details */}
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-semibold text-white mb-1 truncate">
             {cert.title}
           </h3>
-          <p className="text-white/60">{cert.date}</p>
-          <div className="
-            inline-block
-            px-4 py-2 rounded-full
-            bg-white/[0.03] border border-white/[0.06]
-            text-sm text-white/80
-          ">
-            {cert.level}
+
+          <div className="flex items-center gap-3 text-sm text-white/60">
+            <Calendar className="w-4 h-4" />
+            <span>{cert.date}</span>
           </div>
+        </div>
+
+        {/* Level Badge */}
+        <div className="px-3 py-1 rounded-full bg-white/[0.06] text-sm">
+          {cert.level}
         </div>
       </div>
     </div>

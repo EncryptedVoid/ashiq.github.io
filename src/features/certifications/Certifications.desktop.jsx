@@ -1,12 +1,15 @@
-// src/components/sections/certifications/index.jsx
+// src/features/certifications/Certifications.desktop.jsx
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Certifications as CertificationsData, certStyles } from '@data/CertificationsData';
 import CertCard from './components/CertCard.desktop';
 import CertModal from './components/CertModal.desktop';
-import { Certifications } from '../../data/CertificationsData';
+import { useScrollAnimation } from '@hooks';
 
-const CertificationsSection = () => {
+const Certifications = () => {
   const [selectedCert, setSelectedCert] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
 
   const openModal = (cert) => {
     setSelectedCert(cert);
@@ -21,11 +24,22 @@ const CertificationsSection = () => {
   };
 
   return (
-    <section className="w-full py-20 px-4 md:px-8">
+    <section 
+      ref={ref}
+      className="w-full py-20 px-4 md:px-8"
+    >
       {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-20">
-        <p className="text-lg text-gray-400">
-          Professional Certifications and achievements in cloud technologies
+      <motion.div 
+        className="text-center max-w-3xl mx-auto mb-20"
+        initial={{ opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        transition={{ duration: 0.6 }}
+      >
+        <h2 className="tech-heading text-5xl font-bold mb-6">
+          Certifications
+        </h2>
+        <p className="tech-text text-lg text-white/70">
+          Professional certifications and achievements in software development and cloud technologies
         </p>
         {/* Decorative Line */}
         <div className="
@@ -33,19 +47,25 @@ const CertificationsSection = () => {
           bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
           rounded-full
         " />
-      </div>
+      </motion.div>
 
       {/* Grid */}
       <div className="
         grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
         gap-6 max-w-7xl mx-auto
       ">
-        {Certifications.map((cert) => (
-          <CertCard
+        {CertificationsData.map((cert, index) => (
+          <motion.div
             key={cert.id}
-            cert={cert}
-            onClick={() => openModal(cert)}
-          />
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
+          >
+            <CertCard
+              cert={cert}
+              onClick={() => openModal(cert)}
+            />
+          </motion.div>
         ))}
       </div>
 
@@ -59,4 +79,4 @@ const CertificationsSection = () => {
   );
 };
 
-export default CertificationsSection;
+export default Certifications;

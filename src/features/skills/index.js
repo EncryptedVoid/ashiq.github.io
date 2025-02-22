@@ -1,4 +1,4 @@
-import { useIsMobile } from '../../hooks/useIsMobile';
+import { useIsMobile } from '@hooks/useIsMobile';
 import SkillsDesktop from './Skills.desktop';
 import SkillsMobile from './Skills.mobile';
 

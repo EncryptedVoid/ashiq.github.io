@@ -1,6 +1,7 @@
-// src/components/sections/certifications/components/CertCard.jsx
+// src/features/certifications/components/CertCard.desktop.jsx
 import React from 'react';
-import { certStyles } from '../../../data/CertificationsData';
+import { motion } from 'framer-motion';
+import { certStyles } from '@data/CertificationsData';
 
 const CertCard = ({ cert, onClick }) => {
   const style = certStyles[cert.type];
@@ -10,9 +11,7 @@ const CertCard = ({ cert, onClick }) => {
       onClick={onClick}
       className={`
         group relative overflow-hidden
-        bg-white/[0.03] hover:bg-white/[0.06]
-        border border-white/[0.06] hover:border-white/[0.12]
-        rounded-3xl p-8
+        glass-card glass-card-hover
         transition-all duration-700 ease-out
         hover:-translate-y-2 hover:shadow-2xl ${style.shadow}
         cursor-pointer
@@ -34,7 +33,7 @@ const CertCard = ({ cert, onClick }) => {
           group-hover:shadow-lg ${style.shadow}
         `}>
           <img
-            src={cert.icon}
+            src={`/assets/logo/${cert.icon}`}
             alt={cert.title}
             className="w-full h-full object-cover"
           />

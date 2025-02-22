@@ -1,25 +1,12 @@
-// src/components/sections/Goals/index.jsx
+// src/features/goals/Goals.mobile.jsx
 import React from 'react';
-import GoalCard from './components/GoalCard';
-import SectionHeader from './components/SectionHeader';
-import { GoalsData } from '../../../data/GoalsData';
-import { TypewriterText } from '../../../styles/TypewriterText'
+import GoalCard from '@features/goals/components/GoalCard.mobile';
+import { GoalsData } from '@data/GoalsData';
 
-
-const MobileGoals = () => {
+const GoalsMobile = () => {
   return (
-    <section className="w-full py-20 px-4 md:px-8">
-      <TypewriterText
-        text="Long-term Professional Goals"
-        size={3}
-        typingSpeed={100}
-        delayBeforeRestart={60000}
-      />
-
-      <div className="
-        grid grid-cols-1 md:grid-cols-2
-        gap-6 max-w-7xl mx-auto
-      ">
+    <section className="w-full py-20 px-4">
+      <div className="grid grid-cols-1 gap-6 max-w-7xl mx-auto">
         {GoalsData.map(goal => (
           <GoalCard key={goal.id} goal={goal} />
         ))}
@@ -28,4 +15,4 @@ const MobileGoals = () => {
   );
 };
 
-export default MobileGoals;
+export default GoalsMobile;

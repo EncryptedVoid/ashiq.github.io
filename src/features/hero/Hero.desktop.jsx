@@ -1,14 +1,14 @@
-// src/components/sections/Hero/Hero.jsx
+// src/features/hero/Hero.desktop.jsx
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import GlassCard from '../../common/GlassCard';
-import ParticleField from '../../../styles/ParticleField';
-import { TypewriterText } from '../../../styles/TypewriterText';
-import { useMousePosition } from '../../../hooks/useMousePosition';
-import { HeroData } from '../../../data/HeroData';
+import { TypewriterText } from '@styles/TypewriterText';
+import { useMousePosition } from '@hooks/useAnimation';
+import { HeroData } from '@data/HeroData';
+import GlassCard from '@components/common/GlassCard';
+import ParticleField from '@styles/ParticleField';
 
-const Hero = () => {
+const HeroDesktop = () => {
   const {
     intro,
     status,
@@ -22,8 +22,8 @@ const Hero = () => {
   const y = useMotionValue(0);
 
   useEffect(() => {
-    if (mousePosition) {
-      const { x: mouseX, y: mouseY } = mousePosition;
+    if (mousePosition && mousePosition.position) {
+      const { x: mouseX, y: mouseY } = mousePosition.position;
       x.set(mouseX / -20);
       y.set(mouseY / -20);
     }
@@ -58,7 +58,7 @@ const Hero = () => {
                     <TypewriterText text={intro.terminalText} />
                   </motion.div>
 
-                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold space-y-2">
+                  <h1 className="tech-heading text-4xl md:text-5xl lg:text-6xl font-bold space-y-2">
                     {Object.entries(intro.title).map(([key, line], index) => (
                       <motion.span
                         key={key}
@@ -75,7 +75,7 @@ const Hero = () => {
 
                 {/* Description */}
                 <motion.div
-                  className="space-y-4 text-lg text-white/80"
+                  className="space-y-4 tech-text text-lg text-white/80"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: animations.textDelays.description }}
@@ -98,8 +98,8 @@ const Hero = () => {
                     <span className="text-green-400">{status.availability}</span>
                   </div>
 
-                  <a
-                    href={status.resumeLink}
+
+                    href={`/assets/${status.resumeLink}`}
                     className="group flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20
                             border border-blue-500/20 hover:border-blue-500/30 rounded-full
                             transition-all duration-300 text-blue-400"
@@ -132,7 +132,7 @@ const Hero = () => {
                               opacity-0 group-hover:opacity-75 transition-opacity duration-700"/>
                 <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-transparent"/>
                 <img
-                  src={profileImage.src}
+                  src={`/assets/${profileImage.src}`}
                   alt={profileImage.alt}
                   className="w-full h-full object-cover opacity-80 group-hover:scale-105
                           transition-transform duration-700"
@@ -144,33 +144,36 @@ const Hero = () => {
 
         {/* Quick Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
-          {quickStats.map((stat, index) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.5,
-                delay: 0.4 + (index * 0.1),
-                ease: [0.16, 1, 0.3, 1]
-              }}
-            >
-              <GlassCard className="text-center p-4 md:p-6 group">
-                <stat.icon className="w-6 h-6 mx-auto mb-3 text-white/60
+          {quickStats.map((stat, index) => {
+            const StatIcon = stat.icon;
+            return (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.4 + (index * 0.1),
+                  ease: [0.16, 1, 0.3, 1]
+                }}
+              >
+                <GlassCard className="text-center p-4 md:p-6 group">
+                  <StatIcon className="w-6 h-6 mx-auto mb-3 text-white/60
                                   group-hover:text-blue-400 transition-colors duration-300"/>
-                <div className="text-2xl md:text-3xl font-bold mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-sm text-white/60">
-                  {stat.label}
-                </div>
-              </GlassCard>
-            </motion.div>
-          ))}
+                  <div className="text-2xl md:text-3xl font-bold mb-1">
+                    {stat.value}
+                  </div>
+                  <div className="text-sm text-white/60">
+                    {stat.label}
+                  </div>
+                </GlassCard>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </div>
   );
 };
 
-export default Hero;
+export default HeroDesktop;

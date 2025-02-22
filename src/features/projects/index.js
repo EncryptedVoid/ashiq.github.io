@@ -1,4 +1,4 @@
-import { useIsMobile } from '../../hooks/useIsMobile';
+import { useIsMobile } from '@hooks/useIsMobile';
 import ProjectsDesktop from './Projects.desktop';
 import ProjectsMobile from './Projects.mobile';
 

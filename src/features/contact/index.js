@@ -1,8 +1,3 @@
-import { useIsMobile } from '../../hooks/useIsMobile';
-import ContactDesktop from './Contact.desktop';
-import ContactMobile from './Contact.mobile';
-
-export default function Contact() {
-  const isMobile = useIsMobile();
-  return isMobile ? <ContactMobile /> : <ContactDesktop />;
-}
+// src/features/contact/index.js
+export { default as ContactDesktop } from './Contact.desktop';
+export { default as ContactMobile } from './Contact.mobile';

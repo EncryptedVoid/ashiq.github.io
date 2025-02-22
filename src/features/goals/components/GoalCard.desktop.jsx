@@ -1,7 +1,7 @@
-// src/components/sections/Goals/components/GoalCard.jsx
+// src/features/goals/components/GoalCard.desktop.jsx
 import React, { useEffect, useRef } from 'react';
-import TimelineItem from './TimelineItem';
-import { gradientStyles } from '../../../styles/styles';
+import TimelineItem from '@features/goals/components/TimelineItem.desktop';
+import { gradientStyles } from '@styles/styles';
 
 const GoalCard = ({ goal }) => {
   const cardRef = useRef(null);

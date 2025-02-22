@@ -1,4 +1,3 @@
-// src/components/sections/Experience/Experience.jsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -11,11 +10,11 @@ import {
   Briefcase,
   Target
 } from 'lucide-react';
-import { TypewriterText } from '../../../styles/TypewriterText';
-import ExperienceCard from './components/ExperienceCard';
-import CaseStudyModal from './components/CaseStudyModal';
+import { TypewriterText } from '@styles/TypewriterText';
+import ExperienceCard from './components/ExperienceCard.desktop';
+import CaseStudyModal from './components/CaseStudyModal.desktop';
 // Import the ExperienceData directly to ensure it's available
-import { ExperienceData } from '../../../data/ExperienceData';
+import { ExperienceData } from '@data/ExperienceData';
 
 const Experience = ({ experienceData = ExperienceData }) => {
   const [activeId, setActiveId] = useState(null);

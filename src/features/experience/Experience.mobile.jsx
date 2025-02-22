@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, MapPin, ChevronDown, ExternalLink, Award } from 'lucide-react';
-import { ExperienceData } from '../../../data/ExperienceData';
-import MobileCaseStudyModal from './MobileCaseStudyModal';
+import { ExperienceData } from '@data/ExperienceData';
+import MobileCaseStudyModal from './components/CaseStudyModal.mobile';
 
 const MobileExperience = () => {
   const [expandedId, setExpandedId] = useState(null);

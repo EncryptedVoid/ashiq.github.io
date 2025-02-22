@@ -1,11 +1,13 @@
+// src/features/hero/Hero.mobile.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
-import ParticleField from '../../../styles/ParticleField';
-import { TypewriterText } from '../../../styles/TypewriterText';
-import { HeroData } from '../../../data/HeroData';
+import ParticleField from '@styles/ParticleField';
+import { TypewriterText } from '@styles/TypewriterText';
+import { HeroData } from '@data/HeroData';
+import { getAssetPath } from '@utils/utils';
 
-const MobileHero = () => {
+const HeroMobile = () => {
   const { intro, status, profileImage, quickStats, booking } = HeroData;
 
   // Unified animations config
@@ -38,7 +40,7 @@ const MobileHero = () => {
   };
 
   return (
-    <div className="relative min-h-screen  pb-16">
+    <div className="relative min-h-screen pb-16">
       <ParticleField />
 
       {/* Status Bar */}
@@ -46,12 +48,12 @@ const MobileHero = () => {
         className="relative z-10 w-full"
         {...animations.fadeIn}
       >
-        <div className="px-4 py-3 /80 backdrop-blur-xl border-b border-white/5">
+        <div className="px-4 py-3 backdrop-blur-xl border-b border-white/5">
           <div className="flex flex-col gap-2 items-center">
             {/* Availability Badge */}
             <motion.div
               className="flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 backdrop-blur-sm"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: A1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
@@ -99,7 +101,7 @@ const MobileHero = () => {
               />
               <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 backdrop-blur-sm">
                 <img
-                  src={profileImage.src}
+                  src={`/assets/${profileImage.src}`}
                   alt={profileImage.alt}
                   className="w-full h-full object-cover"
                 />
@@ -110,7 +112,7 @@ const MobileHero = () => {
           {/* Title Section */}
           <div className="space-y-4">
             <motion.div
-              className="text-sm font-mono"
+              className="text-sm terminal-text"
               {...animations.fadeIn}
             >
               <TypewriterText
@@ -124,14 +126,14 @@ const MobileHero = () => {
             </motion.div>
 
             <motion.h1
-              className="text-2xl font-bold text-white"
+              className="tech-heading text-2xl font-bold text-white"
               {...animations.slideUp}
             >
               {Object.values(intro.title).join(' ')}
             </motion.h1>
 
             <motion.p
-              className="text-sm text-white/60 leading-relaxed max-w-md mx-auto"
+              className="tech-text text-sm text-white/60 leading-relaxed max-w-md mx-auto"
               {...animations.slideUp}
             >
               {intro.description[0]}
@@ -169,7 +171,7 @@ const MobileHero = () => {
             {
               icon: ArrowRight,
               text: 'View Resume',
-              href: status.resumeLink,
+              href: `/assets/${status.resumeLink}`,
               primary: true
             },
             {
@@ -178,13 +180,13 @@ const MobileHero = () => {
               onClick: scrollToContact,
               primary: false
             },
-            {
+            booking && {
               icon: Calendar,
               text: booking.text,
               href: booking.link,
               primary: true
             }
-          ].map((button, index) => (
+          ].filter(Boolean).map((button, index) => (
             <motion.div
               key={button.text}
               initial={{ opacity: 0, x: -20 }}
@@ -234,4 +236,4 @@ const MobileHero = () => {
   );
 };
 
-export default MobileHero;
+export default HeroMobile;

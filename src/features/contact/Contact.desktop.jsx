@@ -1,7 +1,7 @@
 // src/components/sections/Socials/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { SocialsData } from '../../data/SocialsData';
+import { SocialsData } from '@data/SocialsData';
 import { ExternalLink } from 'lucide-react';
 
 const Socials = () => {

@@ -1,8 +1,11 @@
-import { useIsMobile } from '../../hooks/useIsMobile';
+// src/features/hero/index.js
+import { useIsMobile } from '@hooks/useMedia';
 import HeroDesktop from './Hero.desktop';
 import HeroMobile from './Hero.mobile';
 
-export default function Hero() {
+export function Hero() {
   const isMobile = useIsMobile();
   return isMobile ? <HeroMobile /> : <HeroDesktop />;
 }
+
+export { HeroDesktop, HeroMobile };
