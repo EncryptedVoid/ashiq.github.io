@@ -1,8 +1,15 @@
-import { useIsMobile } from '../../hooks/useIsMobile';
-import CertificationsDesktop from './Certifications.desktop';
-import CertificationsMobile from './Certifications.mobile';
+// src/index.js
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './styles/global.css';
+import Portfolio from './Portfolio';
+import { ThemeProvider } from './hooks/useTheme';
 
-export default function Certifications() {
-  const isMobile = useIsMobile();
-  return isMobile ? <CertificationsMobile /> : <CertificationsDesktop />;
-}
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <ThemeProvider>
+      <Portfolio />
+    </ThemeProvider>
+  </React.StrictMode>
+);
