@@ -1,5 +1,5 @@
 // tailwind.config.js
-const { colors, spacing, typography, effects } = require('./src/styles/theme');
+const theme = require('./src/styles/theme');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -9,19 +9,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Add your custom colors
-        glass: colors.glass,
-        primary: colors.primary,
-        // ... other colors
+        glass: theme.colors.glass,
+        primary: theme.colors.primary,
+        brand: theme.colors.brand,
+        surface: theme.colors.surface,
       },
       spacing: {
-        ...spacing,
-        'golden': spacing.golden
+        ...theme.spacing,
       },
       fontFamily: {
-        sans: typography.fonts.sans.split(', '),
-        display: typography.fonts.display.split(', '),
-        mono: typography.fonts.mono.split(', ')
+        sans: theme.typography.fonts.sans.split(', '),
+        display: theme.typography.fonts.display.split(', '),
+        mono: theme.typography.fonts.mono.split(', ')
       },
       animation: {
         'gradient-x': 'gradient-x 15s ease infinite',
@@ -72,18 +71,18 @@ module.exports = {
         }
       },
       transitionTimingFunction: {
-        'default': `cubic-bezier(${animation.easings.default.join(', ')})`,
-        'bounce': `cubic-bezier(${animation.easings.bounce.join(', ')})`,
-        'soft': `cubic-bezier(${animation.easings.soft.join(', ')})`
+        'default': `cubic-bezier(${theme.animation.easings.default.join(', ')})`,
+        'bounce': `cubic-bezier(${theme.animation.easings.bounce.join(', ')})`,
+        'soft': `cubic-bezier(${theme.animation.easings.soft.join(', ')})`
       },
       boxShadow: {
-        'glow-sm': effects.glow.sm,
-        'glow': effects.glow.DEFAULT,
-        'glow-lg': effects.glow.lg,
-        'glow-xl': effects.glow.xl,
+        'glow-sm': theme.effects.glow.sm,
+        'glow': theme.effects.glow.DEFAULT,
+        'glow-lg': theme.effects.glow.lg,
+        'glow-xl': theme.effects.glow.xl,
       },
       backdropBlur: {
-        'xs': effects.blur.sm,
+        'xs': theme.effects.blur.sm,
       }
     }
   },
