@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIsMobile } from './hooks';
-import Navigation from './components/Navigation';
+import Navigation from './components/navigation';
 
 // Import features using dynamic imports
 const Hero = React.lazy(() => import('./features/hero'));
