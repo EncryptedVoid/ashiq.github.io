@@ -16,7 +16,9 @@
   :root {
     /* Font family variables */
     --font-display: "Orbitron", "Chakra Petch", sans-serif;
-    --font-primary: "Exo 2", "Space Grotesk", system-ui;
+    --font-primary: "Exo 2", "Space Grotesk", system-ui, -apple-system,
+      BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+      "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-mono: "JetBrains Mono", monospace;
 
     /* Font size variables using a modular scale */
@@ -39,8 +41,31 @@
     --leading-loose: 2;
   }
 
-  /* Global typography reset */
-  html {
+  /* Reset and base styles */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Root element containment */
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+
+    /* Smooth scrolling */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+
+    /* Typography settings */
     font-family: var(--font-primary);
     font-feature-settings: "ss01" 1, "ss02" 1, "ss03" 1;
     -webkit-font-smoothing: antialiased;
@@ -48,10 +73,30 @@
     text-rendering: optimizeLegibility;
   }
 
+  /* Root app container */
+  #root {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Basic styling */
   body {
     @apply bg-black text-white;
-    font-family: var(--font-primary);
+    min-height: 100vh;
     line-height: var(--leading-normal);
+    background-color: rgb(17, 24, 39); /* dark gray-900 */
+  }
+
+  /* Hide scrollbars but keep functionality */
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
   }
 
   /* Heading styles */
@@ -64,6 +109,20 @@
     font-family: var(--font-display);
     font-weight: 700;
     line-height: var(--leading-tight);
+    margin: 0;
+  }
+
+  /* Paragraph styles */
+  p {
+    margin: 0;
+    line-height: var(--leading-normal);
+  }
+
+  /* Image handling */
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
   }
 
   /* Monospace elements */
@@ -73,16 +132,51 @@
     font-family: var(--font-mono);
     font-feature-settings: "liga" 0;
   }
+}
+
+/* Component styles */
+@layer components {
+  /* Container styles */
+  .container {
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
 
   /* Terminal-style text */
   .terminal-text {
     font-family: var(--font-mono);
     font-weight: 400;
   }
+
+  /* Mobile safe area utilities */
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 20px);
+  }
+
+  /* Glass card styles */
+  .glass-card {
+    @apply relative overflow-hidden bg-white/[0.03] border border-white/[0.08] backdrop-blur-2xl rounded-3xl p-6;
+  }
+
+  .glass-card-hover {
+    @apply transition-all duration-500 ease-out hover:bg-white/[0.06] hover:border-white/[0.12] hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-500/10;
+  }
+
+  /* Button styles */
+  .primary-button {
+    @apply flex items-center gap-2 px-4 py-2 bg-blue-500/20 hover:bg-blue-500/30 border border-blue-500/30 rounded-lg text-white transition-all duration-300 hover:-translate-y-1;
+  }
+
+  .secondary-button {
+    @apply flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg text-white/80 transition-all duration-300 hover:-translate-y-1;
+  }
 }
 
-/* Typography utility classes */
+/* Utility classes */
 @layer utilities {
+  /* Typography utility classes */
   .tech-heading {
     font-family: var(--font-display);
     font-weight: 700;
@@ -98,20 +192,20 @@
     font-family: var(--font-mono);
     font-feature-settings: "liga" 0;
   }
-}
 
-/* Animation for text elements */
-@keyframes text-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+  /* Animation utilities */
+  @keyframes text-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.animate-text-in {
-  animation: text-in 0.5s ease-out forwards;
+  .animate-text-in {
+    animation: text-in 0.5s ease-out forwards;
+  }
 }

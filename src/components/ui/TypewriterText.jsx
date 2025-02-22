@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useIsMobile from '../hooks/useIsMobile'; // Adjust the import path as necessary
+import useIsMobile from '../../hooks/useIsMobile'; // Adjust the import path as necessary
 
 export const TypewriterText = ({
   text,
