@@ -1,47 +1,26 @@
-import { useEffect, useRef } from 'react';
-import { TimelineItem } from '@/features/goals/components';
-import { gradientStyles } from '@/styles';
+// src/features/goals/components/GoalCard.desktop.jsx
+import React from 'react';
+import { gradientStyles, cardStyles } from '@/styles/styles';
+import TimelineItem from './TimelineItem.desktop'
 
 const GoalCard = ({ goal }) => {
-  const cardRef = useRef(null);
+  // Move all hooks above any conditional returns
+  if (!goal || !goal.type) {
+    return null;
+  }
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
+  const gradient = gradientStyles[goal.type] || 'from-gray-500/20 to-gray-500/20';
+  const cardStyle = cardStyles[goal.type] || cardStyles.default;
 
   return (
-    <div
-      ref={cardRef}
-      className={`
-        relative
-        bg-white/[0.03] hover:bg-white/[0.06]
-        backdrop-blur-xl
-        border border-white/[0.06]
-        rounded-2xl p-10
-        opacity-0 translate-y-10
-        transition-all duration-700 ease-out
-        hover:-translate-y-3 hover:scale-[1.02]
-        hover:shadow-xl hover:shadow-purple-500/10
-        cursor-pointer
-        overflow-hidden
-      `}
-    >
+    <div className={`
+      relative overflow-hidden
+      glass-card glass-card-hover
+      transition-all duration-700 ease-out
+      hover:-translate-y-2 ${cardStyle?.shadow}
+      cursor-pointer
+      bg-gradient-to-br ${gradient}
+    `}>
       {/* Gradient Background */}
       <div className={`
         absolute inset-0 opacity-0 transition-opacity duration-700

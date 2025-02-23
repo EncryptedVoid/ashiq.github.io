@@ -23,19 +23,6 @@ export const TestimonialsDesktop = () => {
 
     return (
         <section className="w-full py-20 min-h-[600px]">
-            {/* Header */}
-            <div className="text-center mb-16 space-y-4">
-                <TypewriterText
-                    text="So What Do People Say About Me?"
-                    size={2.5}
-                    typingSpeed={100}
-                    delayBeforeRestart={60000}
-                />
-                <p className="text-lg text-gray-400">
-                    Know who you are hiring with industry professionals' testimony
-                </p>
-            </div>
-
             {/* Testimonials Slider */}
             <div className="relative max-w-6xl mx-auto px-4">
                 {/* Navigation Buttons */}

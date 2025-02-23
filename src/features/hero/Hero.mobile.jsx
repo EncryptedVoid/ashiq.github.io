@@ -2,8 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
-import { ParticleField } from '@/components/ParticleField';
-import { TypewriterText } from '@/components/TypewriterText';
+import { ParticleField, TypewriterText } from '@/components';
 import { HeroData } from '@/data/HeroData';
 import { getAssetPath } from '@/utils/assetUtils';
 

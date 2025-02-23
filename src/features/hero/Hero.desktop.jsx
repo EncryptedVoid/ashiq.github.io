@@ -4,9 +4,7 @@ import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useMousePosition } from '@/hooks';
 import { HeroData } from '@/data/HeroData';
-import { ParticleField } from '@/components/ParticleField';
-import { TypewriterText } from '@/components/TypewriterText';
-import { GlassCard } from '@/components/GlassCard';
+import { ParticleField, TypewriterText, GlassCard } from '@/components';
 
 const HeroDesktop = () => {
   const {

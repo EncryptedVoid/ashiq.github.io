@@ -1,14 +1,12 @@
-import { useState, useEffect } from 'react';
+// src/features/navigation/Navigation.desktop.jsx
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Home, Code, Briefcase, FolderGit2, GraduationCap, Mail } from 'lucide-react';
-import { useMedia } from '@/hooks';
 import { NAV_ITEMS } from './navigation.constants';
 
 export const NavigationDesktop = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const isMobile = useMedia('(max-width: 768px)');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,20 +14,24 @@ export const NavigationDesktop = () => {
       setIsScrollingUp(currentScrollY < lastScrollY || currentScrollY < 100);
       setLastScrollY(currentScrollY);
 
-      const scrollPosition = window.scrollY + (isMobile ? 200 : 100);
+      // Add buffer for header height
+      const scrollPosition = window.scrollY + window.innerHeight / 4;
 
-      for (let i = NAV_ITEMS.length - 1; i >= 0; i--) {
-        const section = document.getElementById(`section-${NAV_ITEMS[i].id}`);
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(NAV_ITEMS[i].id);
-          break;
+      // Find the last section that has been scrolled past
+      let currentSection = 'hero';
+      NAV_ITEMS.forEach(({ id }) => {
+        const element = document.getElementById(`section-${id}`);
+        if (element && element.offsetTop <= scrollPosition) {
+          currentSection = id;
         }
-      }
+      });
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, isMobile]);
+  }, [lastScrollY]);
 
   return (
     <motion.div
@@ -41,12 +43,17 @@ export const NavigationDesktop = () => {
       <div className="max-w-6xl mx-auto">
         <div className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-full p-2">
           <div className="flex justify-center items-center gap-2">
-            {navItems.map((item) => {
+            {NAV_ITEMS.map((item) => {
               const Icon = item.icon;
               return (
                 <button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => {
+                    const element = document.getElementById(`section-${item.id}`);
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
                   className={`
                     px-4 py-2 rounded-full
                     flex items-center gap-2

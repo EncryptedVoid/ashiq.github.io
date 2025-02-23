@@ -1,4 +1,5 @@
 import React, { Suspense } from 'react';
+import { useMedia } from '@/hooks';  // Changed from useIsMobile to useMedia
 import {
   Hero,
   Skills,
@@ -19,22 +20,24 @@ const LoadingSpinner = () => (
 );
 
 function App() {
-  const isMobile = useIsMobile();
+  const isMobile = useMedia('(max-width: 768px)');
+console.log('Hero isMobile:', isMobile);
 
   const sections = [
     { id: 'hero', Component: Hero },
     { id: 'skills', Component: Skills },
     { id: 'experience', Component: Experience },
     { id: 'projects', Component: Projects },
-    { id: 'testimonials', Component: Testimonials },
+    { id: 'testimonials', Component: Testimonials, mobileHidden: true },
     { id: 'education', Component: Education },
     { id: 'certifications', Component: Certifications, mobileHidden: true },
     { id: 'contact', Component: Contact },
     { id: 'goals', Component: Goals, mobileHidden: true }
   ];
 
-  const visibleSections = sections.filter(
-    section => !section.mobileHidden || !isMobile
+  // Only show non-mobile-hidden sections on mobile
+  const visibleSections = sections.filter(section =>
+    !isMobile || !section.mobileHidden
   );
 
   return (
@@ -42,25 +45,16 @@ function App() {
       <Navigation />
 
       <Suspense fallback={<LoadingSpinner />}>
-        <main
-          className="relative w-full"
-          style={{
-            paddingTop: isMobile ? '0' : '6rem',
-            paddingBottom: isMobile ? '5rem' : '0'
-          }}
-        >
+        <main className="relative w-full" style={{
+          paddingTop: isMobile ? '0' : '6rem',
+          paddingBottom: isMobile ? '5rem' : '0'
+        }}>
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            <div className="relative w-full space-y-20">
-              {visibleSections.map(({ id, Component }) => (
-                <section
-                  key={id}
-                  id={`section-${id}`}
-                  className="relative w-full"
-                >
-                  <Component />
-                </section>
-              ))}
-            </div>
+            {visibleSections.map(({ id, Component }) => (
+              <section key={id} id={`section-${id}`} className="relative w-full">
+                <Component />
+              </section>
+            ))}
           </div>
         </main>
       </Suspense>
