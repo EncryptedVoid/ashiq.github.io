@@ -27,27 +27,6 @@ const Certifications = () => {
       ref={ref}
       className="w-full py-20 px-4 md:px-8"
     >
-      {/* Header */}
-      <motion.div 
-        className="text-center max-w-3xl mx-auto mb-20"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.6 }}
-      >
-        <h2 className="tech-heading text-5xl font-bold mb-6">
-          Certifications
-        </h2>
-        <p className="tech-text text-lg text-white/70">
-          Professional certifications and achievements in software development and cloud technologies
-        </p>
-        {/* Decorative Line */}
-        <div className="
-          w-24 h-1 mx-auto mt-8
-          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-          rounded-full
-        " />
-      </motion.div>
-
       {/* Grid */}
       <div className="
         grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3

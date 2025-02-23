@@ -49,18 +49,6 @@ export const TestimonialsMobile = () => {
 
   return (
     <section className="w-full py-8 px-4">
-      <div className="text-center mb-4 space-y-2">
-        <TypewriterText
-          text="What People Say"
-          size={1.5}
-          typingSpeed={100}
-          delayBeforeRestart={60000}
-        />
-        <p className="text-sm text-white/60">
-          Swipe to explore testimonials
-        </p>
-      </div>
-
       <div
         className="relative touch-pan-x"
         onTouchStart={onTouchStart}

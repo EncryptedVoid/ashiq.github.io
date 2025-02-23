@@ -3,7 +3,6 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import ProjectsData from '@/data/ProjectsData';
 import { ProjectCard, ProjectModal }  from './components/';
-import { TypewriterText } from '@/components/TypewriterText';
 import { Filter, LayoutGrid, LayoutList } from 'lucide-react';
 
 const Projects = () => {
@@ -39,24 +38,6 @@ const Projects = () => {
 
   return (
     <div className="py-20 px-4 md:px-6 lg:px-8">
-      {/* Header */}
-      <motion.div
-        className="text-center max-w-3xl mx-auto mb-12 space-y-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <TypewriterText
-          text="PROJECTS SHOWCASE"
-          size={3}
-          typingSpeed={100}
-          delayBeforeRestart={60000}
-        />
-        <p className="text-lg text-white/60">
-          A curated collection of my technical work, from professional projects to personal experiments
-        </p>
-      </motion.div>
-
       {/* Filters and View Controls */}
       <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto mb-8 gap-4">
         {/* View Mode Selector */}

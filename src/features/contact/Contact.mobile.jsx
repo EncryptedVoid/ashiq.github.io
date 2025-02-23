@@ -97,14 +97,6 @@ const ContactMobile = () => {
   return (
     <section className="py-12 px-4">
       <div className="max-w-md mx-auto">
-        {/* Header */}
-        <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-white mb-2">Let's Connect</h2>
-          <p className="text-white/60">
-            Get in touch for opportunities, collaborations, or just to say hello
-          </p>
-        </div>
-
         {/* Primary Buttons */}
         <div className="space-y-4 mb-8">
           <ContactButton {...SocialsData.email} delay={0.1} />

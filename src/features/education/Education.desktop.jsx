@@ -212,18 +212,6 @@ const EducationDesktop = () => {
   return (
     <section ref={ref} className="py-20">
       <div className="max-w-7xl mx-auto px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
-        >
-          <h2 className="tech-heading text-4xl font-bold mb-4">Education</h2>
-          <p className="tech-text text-lg text-white/70 max-w-2xl mx-auto">
-            Academic journey, courses, and achievements
-          </p>
-        </motion.div>
-
         <EducationHeader university={university} />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

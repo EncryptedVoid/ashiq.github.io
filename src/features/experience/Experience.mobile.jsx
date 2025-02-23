@@ -24,15 +24,6 @@ const ExperienceMobile = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Header matching other sections */}
-      <div className="px-4 py-8 mb-6 text-center">
-        <h1 className="text-xl font-bold text-center bg-gradient-to-r from-rose-400
-                      to-red-500 bg-clip-text text-transparent mb-1">
-          Professional Experience
-        </h1>
-        <p className="text-sm text-white/60">Career journey and achievements</p>
-      </div>
-
       {/* Experience Cards */}
       <div className="px-4 space-y-6">
         {ExperienceData.map((job) => (

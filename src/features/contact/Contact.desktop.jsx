@@ -137,20 +137,7 @@ const ContactDesktop = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <section className="w-full py-24 px-8 bg-gradient-to-b from-gray-900 to-black">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <p className="text-lg text-gray-300 mt-4">
-          Explore my work, contributions, and professional journey across different platforms
-        </p>
-        {/* Decorative Line */}
-        <div className="
-          w-32 h-1 mx-auto mt-8
-          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-          rounded-full
-        " />
-      </div>
-
+    <section className="w-full py-24 px-8">
       {/* Main Layout */}
       <div className="max-w-7xl mx-auto">
         {/* Featured Row (Email and Calendly) */}

@@ -27,18 +27,6 @@ const ExperienceDesktop = ({ experienceData = ExperienceData }) => {
   return (
     <section className="min-h-screen py-20 px-6 md:px-12">
       <div className="max-w-7xl mx-auto space-y-12">
-        {/* Header */}
-        <div className="text-center space-y-4">
-          <motion.p
-            className="text-lg text-white/60 max-w-2xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-          >
-            A journey through impactful roles and transformative projects
-          </motion.p>
-        </div>
-
         {/* ExperienceDesktop Cards */}
         <div className="grid grid-cols-1 gap-6">
           {experienceData && experienceData.length > 0 ? (

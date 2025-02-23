@@ -32,25 +32,6 @@ const Skills = () => {
 
   return (
     <div className="py-20">
-      {/* Header */}
-      <motion.div
-        className="text-center max-w-3xl mx-auto mb-16"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        <TypewriterText
-          text="Skills & Expertise"
-          size={3}
-          typingSpeed={100}
-          delayBeforeRestart={60000}
-        />
-        <p className="text-lg text-white/60">
-          A comprehensive overview of my technical capabilities and professional experience
-          across different domains.
-        </p>
-      </motion.div>
-
       {/* Filter Tags */}
       <div className="max-w-7xl mx-auto mb-12">
         <GlassCard className="p-6">
