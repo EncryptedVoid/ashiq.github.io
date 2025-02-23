@@ -3,8 +3,7 @@ import { GoalsDesktop } from './Goals.desktop';
 import { GoalsMobile } from './Goals.mobile';
 
 export const Goals = () => {
-  const isMobile = useMedia('(max-width: 768px)');
+  const { isMobile } = useMedia();
   return isMobile ? <GoalsMobile /> : <GoalsDesktop />;
 };
 
-export * from './components';

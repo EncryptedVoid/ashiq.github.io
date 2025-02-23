@@ -1,67 +1,8 @@
-// src/components/sections/Socials/index.jsx
+// src/components/sections/ContactDesktop/index.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SocialsData } from '@data/SocialsData';
 import { ExternalLink } from 'lucide-react';
-
-const Socials = () => {
-  const [hoveredCard, setHoveredCard] = useState(null);
-
-  return (
-    <section className="w-full py-24 px-8 bg-gradient-to-b from-gray-900 to-black">
-      {/* Header */}
-      <div className="text-center max-w-3xl mx-auto mb-16">
-        <p className="text-lg text-gray-300 mt-4">
-          Explore my work, contributions, and professional journey across different platforms
-        </p>
-        {/* Decorative Line */}
-        <div className="
-          w-32 h-1 mx-auto mt-8
-          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
-          rounded-full
-        " />
-      </div>
-
-      {/* Main Layout */}
-      <div className="max-w-7xl mx-auto">
-        {/* Featured Row (Email and Calendly) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {/* Email Card */}
-          <FeaturedSocialCard
-            data={SocialsData.email}
-            isHovered={hoveredCard === 'email'}
-            onHover={() => setHoveredCard('email')}
-            onLeave={() => setHoveredCard(null)}
-          />
-
-          {/* Calendly Card */}
-          <FeaturedSocialCard
-            data={SocialsData.calendly}
-            isHovered={hoveredCard === 'calendly'}
-            onHover={() => setHoveredCard('calendly')}
-            onLeave={() => setHoveredCard(null)}
-          />
-        </div>
-
-        {/* Platform Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {Object.entries(SocialsData)
-            .filter(([key]) => key !== 'email' && key !== 'calendly')
-            .map(([key, data], index) => (
-              <PlatformCard
-                key={key}
-                data={data}
-                index={index}
-                isHovered={hoveredCard === key}
-                onHover={() => setHoveredCard(key)}
-                onLeave={() => setHoveredCard(null)}
-              />
-            ))}
-        </div>
-      </div>
-    </section>
-  );
-};
 
 // Featured Social Card (Email and Calendly)
 const FeaturedSocialCard = ({ data, isHovered, onHover, onLeave }) => {
@@ -192,4 +133,63 @@ const PlatformCard = ({ data, index, isHovered, onHover, onLeave }) => {
   );
 };
 
-export default Socials;
+const ContactDesktop = () => {
+  const [hoveredCard, setHoveredCard] = useState(null);
+
+  return (
+    <section className="w-full py-24 px-8 bg-gradient-to-b from-gray-900 to-black">
+      {/* Header */}
+      <div className="text-center max-w-3xl mx-auto mb-16">
+        <p className="text-lg text-gray-300 mt-4">
+          Explore my work, contributions, and professional journey across different platforms
+        </p>
+        {/* Decorative Line */}
+        <div className="
+          w-32 h-1 mx-auto mt-8
+          bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500
+          rounded-full
+        " />
+      </div>
+
+      {/* Main Layout */}
+      <div className="max-w-7xl mx-auto">
+        {/* Featured Row (Email and Calendly) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          {/* Email Card */}
+          <FeaturedSocialCard
+            data={SocialsData.email}
+            isHovered={hoveredCard === 'email'}
+            onHover={() => setHoveredCard('email')}
+            onLeave={() => setHoveredCard(null)}
+          />
+
+          {/* Calendly Card */}
+          <FeaturedSocialCard
+            data={SocialsData.calendly}
+            isHovered={hoveredCard === 'calendly'}
+            onHover={() => setHoveredCard('calendly')}
+            onLeave={() => setHoveredCard(null)}
+          />
+        </div>
+
+        {/* Platform Grid */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+          {Object.entries(SocialsData)
+            .filter(([key]) => key !== 'email' && key !== 'calendly')
+            .map(([key, data], index) => (
+              <PlatformCard
+                key={key}
+                data={data}
+                index={index}
+                isHovered={hoveredCard === key}
+                onHover={() => setHoveredCard(key)}
+                onLeave={() => setHoveredCard(null)}
+              />
+            ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ContactDesktop;

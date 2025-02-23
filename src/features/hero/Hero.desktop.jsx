@@ -1,9 +1,12 @@
+// src/features/hero/Hero.desktop.jsx
 import { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import { TypewriterText, GlassCard, ParticleField } from '@/components/ui';
 import { useMousePosition } from '@/hooks';
-import { HeroData } from '@/data';
+import { HeroData } from '@/data/HeroData';
+import { ParticleField } from '@/components/ParticleField';
+import { TypewriterText } from '@/components/TypewriterText';
+import { GlassCard } from '@/components/GlassCard';
 
 const HeroDesktop = () => {
   const {

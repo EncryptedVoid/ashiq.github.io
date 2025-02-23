@@ -1,5 +1,4 @@
 export { default as ExperienceCard } from './ExperienceCard.desktop';
-export { default as ExperienceCardMobile } from './ExperienceCard.mobile';
 export { default as CaseStudyModal } from './CaseStudyModal.desktop';
 export { default as CaseStudyModalMobile } from './CaseStudyModal.mobile';
 export { default as AchievementStats } from './AchievementStats.desktop';

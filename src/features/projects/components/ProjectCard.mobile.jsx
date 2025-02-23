@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink, Github, Clock, Activity } from 'lucide-react';
-import GlassCard from '../../../common/GlassCard';
+import GlassCard from '@/components/GlassCard';
 
 const MetricItem = ({ label, value }) => (
 <div className="text-center">

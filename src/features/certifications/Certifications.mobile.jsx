@@ -2,8 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Certifications as CertificationsData } from '@data/CertificationsData';
-import CertCard from './components/CertCard.mobile';
-import CertModal from './components/CertModal.mobile';
+import { CertCardMobile as CertCard, CertModalMobile as CertModal } from './components';
 import { useScrollAnimation } from '@hooks';
 
 const MobileCertifications = () => {

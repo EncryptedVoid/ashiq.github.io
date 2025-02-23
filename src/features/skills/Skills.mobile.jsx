@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Clock, Code, Activity, Sparkles } from 'lucide-react';
-import { skillsData } from '../../../data/SkillsData';
+import { skillsData } from '@/data/SkillsData';
 
 const MobileSkills = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);

@@ -93,7 +93,7 @@ const ContactButton = ({
   );
 };
 
-const MobileContactSection = () => {
+const ContactMobile = () => {
   return (
     <section className="py-12 px-4">
       <div className="max-w-md mx-auto">
@@ -124,4 +124,4 @@ const MobileContactSection = () => {
   );
 };
 
-export default MobileContactSection;
+export default ContactMobile;

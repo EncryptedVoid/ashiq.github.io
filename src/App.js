@@ -1,9 +1,4 @@
-// src/App.js
 import React, { Suspense } from 'react';
-import { useIsMobile } from '@/hooks';
-import { Navigation } from '@/features';
-
-// Import all features through the barrel file
 import {
   Hero,
   Skills,
@@ -13,7 +8,8 @@ import {
   Education,
   Certifications,
   Contact,
-  Goals
+  Goals,
+  Navigation
 } from '@/features';
 
 const LoadingSpinner = () => (

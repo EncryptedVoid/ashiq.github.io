@@ -1,7 +1,6 @@
 // src/features/testimonials/Testimonials.mobile.jsx
 import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { TypewriterText } from '@/components/ui';
 import { TestimonialData } from '@/data';
 import { TestimonialCardMobile } from './components';
 

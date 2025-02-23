@@ -1,10 +1,9 @@
-import { useIsMobile } from '@/hooks/useMedia';
+import { useMedia } from '@/hooks';
 import ProjectsDesktop from './Projects.desktop';
 import ProjectsMobile from './Projects.mobile';
 
-export default function Projects() {
-  const isMobile = useIsMobile();
+export const Projects = () => {
+  const { isMobile } = useMedia();
   return isMobile ? <ProjectsMobile /> : <ProjectsDesktop />;
-}
+};
 
-export * from './components';

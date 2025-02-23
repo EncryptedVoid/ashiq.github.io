@@ -2,7 +2,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Code, GitBranch, Boxes } from 'lucide-react';
-import GlassCard from '../../../common/GlassCard';
+import GlassCard from '@/components/GlassCard';
 
 const MetricItem = ({ icon: Icon, value, label }) => (
   <div className="flex items-center gap-2 text-sm">

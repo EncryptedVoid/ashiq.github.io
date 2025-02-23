@@ -1,5 +1,5 @@
 // src/data/CertificationsData.js
-import { getAssetPath } from '../utils/assetUtils';
+import { getAssetPath, getCertificationPath } from '@utils/assetUtils';
 
 export const Certifications = [
   {

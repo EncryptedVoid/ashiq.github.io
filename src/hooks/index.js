@@ -2,23 +2,21 @@
 
 // Media hooks
 export {
-    useMediaQuery,
-    useIsMobile,
-    usePrefersDarkMode,
-    usePrefersReducedMotion
-  } from './useMedia';
+  useMediaQuery,
+  useIsMobile as useMedia,  // This will fix the useMedia imports while maintaining the original function
+  usePrefersDarkMode,
+  usePrefersReducedMotion
+} from './useMedia';
 
-  // Animation hooks
-  export {
-    useStaggeredAnimation,
-    useScrollAnimation,
-    useMousePosition
-  } from './useAnimation';
+// Animation hooks
+export {
+  useStaggeredAnimation,
+  useScrollAnimation,
+  useMousePosition
+} from './useAnimation';
 
-  // Theme hooks
-  export {
-    useTheme,
-    ThemeProvider
-  } from './useTheme';
-
-  // Add any additional hooks here...
+// Theme hooks
+export {
+  useTheme,
+  ThemeProvider
+} from './useTheme';

@@ -1,11 +1,9 @@
-import { useIsMobile } from '@/hooks/useMedia';
-
+import { useMedia } from '@/hooks';
 import SkillsDesktop from './Skills.desktop';
 import SkillsMobile from './Skills.mobile';
 
-export default function Skills() {
-  const isMobile = useIsMobile();
+export const Skills = () => {
+  const { isMobile } = useMedia();
   return isMobile ? <SkillsMobile /> : <SkillsDesktop />;
-}
+};
 
-export * from './components';

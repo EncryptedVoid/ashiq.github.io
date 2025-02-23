@@ -2,8 +2,8 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Minus } from 'lucide-react';
-import GlassCard from '../../../common/GlassCard';
-import SkillCard from './SkillCard';
+import GlassCard from '@/components/GlassCard';
+import SkillCard from './SkillCard.desktop';
 
 const SkillCategory = ({ category, isExpanded, onToggle }) => {
   return (

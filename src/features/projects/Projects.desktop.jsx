@@ -1,10 +1,9 @@
 // src/components/sections/Projects/index.jsx
 import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
-import ProjectsData from '../../../data/ProjectsData';
-import ProjectCard from './components/ProjectCard';
-import ProjectModal from './components/ProjectModal';
-import { TypewriterText } from '../../../styles/TypewriterText';
+import ProjectsData from '@/data/ProjectsData';
+import { ProjectCard, ProjectModal }  from './components/';
+import { TypewriterText } from '@/components/TypewriterText';
 import { Filter, LayoutGrid, LayoutList } from 'lucide-react';
 
 const Projects = () => {

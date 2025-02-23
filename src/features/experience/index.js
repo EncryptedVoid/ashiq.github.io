@@ -1,3 +1,8 @@
-// src/features/experience/index.js
-export { default as ExperienceDesktop } from './Experience.desktop';
-export { default as ExperienceMobile } from './Experience.mobile';
+import { useMedia } from '@/hooks';
+import ExperienceDesktop from './Experience.desktop';
+import ExperienceMobile from './Experience.mobile';
+
+export const Experience = () => {
+  const { isMobile } = useMedia();
+  return isMobile ? <ExperienceMobile /> : <ExperienceDesktop />;
+};

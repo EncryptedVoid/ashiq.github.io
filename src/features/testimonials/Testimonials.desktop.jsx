@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { TypewriterText } from '@/components/ui';
 import { TestimonialCard } from './components';
 import { TestimonialData } from '@/data';
 

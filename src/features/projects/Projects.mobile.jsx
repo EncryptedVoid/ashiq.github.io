@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, Youtube, Book, FileText, Star, Calendar, Clock, ArrowUpRight, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
-import ProjectsData from '../../../data/ProjectsData';
+import ProjectsData from '@/data/ProjectsData';
 
 // Custom Section Header Component
 const SectionHeader = ({ title, subtitle }) => (

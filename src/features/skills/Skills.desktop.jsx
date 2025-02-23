@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import GlassCard from '../../common/GlassCard';
-import SkillCategory from './components/SkillCategory';
+import GlassCard from '@/components/GlassCard';
+import { SkillCategory } from './components';
 import { Search, X, Clock, Code, GitBranch, Users, Activity, Folder, Tag } from 'lucide-react';
-import { skillsData } from '../../../data/SkillsData';
-import { TypewriterText } from '../../../styles/TypewriterText'
+import { skillsData } from '@/data/SkillsData';
+import { TypewriterText } from '@/components/TypewriterText'
 
 
 const Skills = () => {

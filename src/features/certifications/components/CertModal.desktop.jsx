@@ -60,7 +60,7 @@ const CertModal = ({ isOpen, onClose, cert }) => {
 
               {/* Download Button */}
               {cert.document && (
-
+                <a
                   href={`/assets/certifications/${cert.document}`}
                   download
                   className="
