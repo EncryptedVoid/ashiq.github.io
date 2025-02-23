@@ -1,0 +1,10 @@
+export { default as Skills } from './skills';
+export { default as Projects } from './projects';
+export { default as Experience } from './experience';
+export { default as Education } from './education';
+export { default as Contact } from './contact';
+export { default as Hero } from './hero';
+export { default as Navigation } from './navigation';
+export { default as Goals } from './goals';
+export { default as Certifications } from './certifications';
+export { default as Testimonials } from './testimonials';
