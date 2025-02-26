@@ -1,4 +1,4 @@
-import { useMedia } from '@/hooks';
+import { useMedia } from '@/context/MediaContext'
 import ExperienceDesktop from './Experience.desktop';
 import ExperienceMobile from './Experience.mobile';
 

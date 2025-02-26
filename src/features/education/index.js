@@ -1,4 +1,4 @@
-import { useMedia } from '@/hooks';
+import { useMedia } from '@/context/MediaContext'
 import EducationDesktop from './Education.desktop';
 import EducationMobile from './Education.mobile';
 

@@ -5,7 +5,7 @@ import { NAV_ITEMS } from './navigation.constants';
 import { ChevronDown, Plus } from 'lucide-react';
 
 // Maximum number of visible items before overflow
-const MAX_VISIBLE_ITEMS = 5;
+const MAX_VISIBLE_ITEMS = 8;
 
 export const NavigationDesktop = () => {
   const [activeSection, setActiveSection] = useState('hero');

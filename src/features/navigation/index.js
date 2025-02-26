@@ -1,4 +1,4 @@
-import { useMedia } from '@/hooks';
+import { useMedia } from '@/context/MediaContext'
 import { NavigationDesktop } from './Navigation.desktop';
 import { NavigationMobile } from './Navigation.mobile';
 

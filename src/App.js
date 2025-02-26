@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { useMedia } from '@/hooks';  // Changed from useIsMobile to useMedia
+import { useMedia } from '@/context/MediaContext'
 import {
   Hero,
   Skills,
@@ -21,18 +21,18 @@ const LoadingSpinner = () => (
 
 function App() {
   const isMobile = useMedia('(max-width: 768px)');
-console.log('Hero isMobile:', isMobile);
+  console.log('Hero isMobile:', isMobile);
 
   const sections = [
     { id: 'hero', Component: Hero },
-    { id: 'skills', Component: Skills },
-    { id: 'experience', Component: Experience },
-    { id: 'projects', Component: Projects },
     { id: 'testimonials', Component: Testimonials, mobileHidden: true },
+    { id: 'experience', Component: Experience },
+    { id: 'skills', Component: Skills },
+    { id: 'projects', Component: Projects },
     { id: 'education', Component: Education },
     { id: 'certifications', Component: Certifications, mobileHidden: true },
     { id: 'contact', Component: Contact },
-    { id: 'goals', Component: Goals, mobileHidden: true }
+    { id: 'goals', Component: Goals, mobileHidden: true },
   ];
 
   // Only show non-mobile-hidden sections on mobile
