@@ -1,29 +1,21 @@
 // src/utils/assetUtils.js
-export const getAssetPath = (path) => {
-  if (typeof window !== 'undefined') {
-    // Get the base URL from the window location
-    const baseUrl = window.location.pathname.includes('/ashiq.github.io')
-      ? '/ashiq.github.io'
-      : '';
+export const getAssetPath = (filename) => {
+  // Use process.env.PUBLIC_URL for production builds
+  const baseUrl = process.env.PUBLIC_URL || '';
+  return `${baseUrl}/assets/${filename}`.replace(/\/+/g, '/');
+};
 
-    // Clean the path
-    const cleanPath = path.startsWith('/') ? path.slice(1) : path;
+export const getCertificationPath = (filename) => {
+  const baseUrl = process.env.PUBLIC_URL || '';
+  return `${baseUrl}/assets/certifications/${filename}`.replace(/\/+/g, '/');
+};
 
-    // Combine baseUrl and cleanPath
-    const finalPath = `${baseUrl}/${cleanPath}`;
+export const getProjectPath = (filename) => {
+  return `/assets/projects/${filename}`;
+};
 
-    console.log({
-      isProduction: process.env.NODE_ENV === 'production',
-      baseUrl,
-      originalPath: path,
-      cleanPath,
-      finalPath,
-      windowLocation: window.location.pathname
-    });
-
-    return finalPath;
-  }
-
-  // Fallback for SSR
-  return path;
+export default {
+  getAssetPath,
+  getCertificationPath,
+  getProjectPath
 };
