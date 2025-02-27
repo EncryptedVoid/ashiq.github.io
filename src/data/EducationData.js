@@ -81,7 +81,7 @@ export const EducationData = {
       image: getAssetPath("course-thumbnails/year1/digital-systems-thumbnail.webp"),
       skills: ["Digital Logic", "Circuit Design", "Hardware Fundamentals"],
       description: "Introduction to digital systems and logic design fundamentals",
-      status: "Current",
+     status: "Completed",
       grade: "A+",
       professor: "School of Electrical Engineering and Computer Science",
       term: "Winter 2024"
@@ -93,7 +93,7 @@ export const EducationData = {
       image: getAssetPath("course-thumbnails/year1/computing-2-thumbnail.jpg"),
       skills: ["Java", "Object-Oriented Programming", "Data Structures"],
       description: "Advanced programming concepts and introduction to object-oriented programming",
-      status: "Current",
+     status: "Completed",
       grade: "A+",
       professor: "School of Electrical Engineering and Computer Science",
       term: "Winter 2024"
@@ -105,7 +105,7 @@ export const EducationData = {
       image: getAssetPath("course-thumbnails/year1/calculus-2-thumbnail.png"),
       skills: ["Integral Calculus", "Series", "Mathematical Analysis"],
       description: "Study of integral calculus and infinite series with engineering applications",
-      status: "Current",
+     status: "Completed",
       grade: "B+",
       professor: "Department of Mathematics and Statistics",
       term: "Winter 2024"
@@ -117,7 +117,7 @@ export const EducationData = {
       image: getAssetPath("course-thumbnails/year1/discrete-math-thumbnail.jpg"),
       skills: ["Logic", "Set Theory", "Graph Theory", "Combinatorics"],
       description: "Mathematical foundations of computer science and software engineering",
-      status: "Current",
+     status: "Completed",
       grade: "B+",
       professor: "Department of Mathematics and Statistics",
       term: "Winter 2024"
@@ -129,7 +129,7 @@ export const EducationData = {
       image: getAssetPath("course-thumbnails/year1/physics-2-thumbnail.jpg"),
       skills: ["Electromagnetism", "Waves", "Modern Physics"],
       description: "Advanced physics principles including electromagnetism and waves",
-      status: "Current",
+     status: "Completed",
       grade: "B+",
       professor: "Department of Physics",
       term: "Winter 2024"
