@@ -148,17 +148,6 @@ const MobileSkills = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Header */}
-      <div className="py-6 px-4">
-        <h1 className="text-xl font-bold text-center bg-gradient-to-r from-rose-400
-                     to-red-500 bg-clip-text text-transparent mb-1">
-          Skills & Expertise
-        </h1>
-        <p className="text-xs text-white/60 text-center">
-          Tap a category to explore skills
-        </p>
-      </div>
-
       {/* Categories */}
       <div className="px-4 space-y-2">
         {skillsData.map((category, index) => (

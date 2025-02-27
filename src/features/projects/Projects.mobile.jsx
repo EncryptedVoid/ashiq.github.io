@@ -456,12 +456,6 @@ const MobileProjects = () => {
 
   return (
     <div className="py-12">
-      {/* Custom Section Header */}
-      <SectionHeader
-        title="PROJECT SHOWCASE"
-        subtitle={getFilterDescription()}
-      />
-
       {/* Filter Toggle */}
       <FilterToggle
         filters={filters}

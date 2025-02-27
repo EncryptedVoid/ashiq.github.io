@@ -255,18 +255,6 @@ const EducationMobile = () => {
 
   return (
     <section ref={ref} className="pb-20">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-8 px-4"
-      >
-        <h2 className="tech-heading text-3xl font-bold mb-2">Education</h2>
-        <p className="tech-text text-sm text-white/70">
-          Academic journey and achievements
-        </p>
-      </motion.div>
-
       {/* Section Tabs */}
       <div className="px-4 mb-5">
         <div className="flex bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/10">
