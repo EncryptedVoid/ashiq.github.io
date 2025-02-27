@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useMedia } from '@/context/MediaContext'
+import { useMedia } from '@/context/MediaContext';
 
 export const TypewriterText = ({
   text,

@@ -1,4 +1,4 @@
-import { useMedia } from '@/context/MediaContext'
+import { useMedia } from '@/context/MediaContext';
 import ContactDesktop from './Contact.desktop';
 import ContactMobile from './Contact.mobile';
 

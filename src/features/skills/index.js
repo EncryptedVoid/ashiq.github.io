@@ -1,4 +1,4 @@
-import { useMedia } from '@/context/MediaContext'
+import { useMedia } from '@/context/MediaContext';
 import SkillsDesktop from './Skills.desktop';
 import SkillsMobile from './Skills.mobile';
 

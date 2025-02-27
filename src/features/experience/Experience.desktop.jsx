@@ -5,7 +5,7 @@ import {
   CaseStudyModal,
   AchievementStats
 } from '@/features/experience/components';
-import { useMedia } from '@/context/MediaContext'
+import { useMedia } from '@/context/MediaContext';;
 import { ExperienceData } from '@/data';
 
 const ExperienceDesktop = ({ experienceData = ExperienceData }) => {

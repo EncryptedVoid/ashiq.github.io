@@ -1,4 +1,4 @@
-import { useMedia } from '@/context/MediaContext'
+import { useMedia } from '@/context/MediaContext';
 import CertificationsDesktop from './Certifications.desktop';
 import CertificationsMobile from './Certifications.mobile';
 
