@@ -130,7 +130,7 @@ const HeroDesktop = () => {
                               opacity-0 group-hover:opacity-75 transition-opacity duration-700"/>
                 <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-transparent"/>
                 <img
-                  src={`/assets/${profileImage.src}`}
+                  src={`${profileImage.src}`}
                   alt={profileImage.alt}
                   className="w-full h-full object-cover opacity-80 group-hover:scale-105
                           transition-transform duration-700"

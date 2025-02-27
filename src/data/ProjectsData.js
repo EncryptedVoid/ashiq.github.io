@@ -1,5 +1,5 @@
 // src/data/ProjectsData.js
-import { getAssetPath } from '../utils/assetUtils';
+import { getAssetPath } from '@utils/assetUtils';
 
 const ProjectsData = [
   {

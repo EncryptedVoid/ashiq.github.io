@@ -33,8 +33,7 @@ const CertCard = ({ cert, onClick }) => {
           group-hover:shadow-lg ${style.shadow}
         `}>
           <img
-            src={`/assets/logo/${cert.icon}`}
-            alt={cert.title}
+            src={cert.icon} alt={cert.title}
             className="w-full h-full object-cover"
           />
         </div>

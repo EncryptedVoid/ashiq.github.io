@@ -10,7 +10,7 @@ export const Certifications = [
     length: '4.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/udemy-logo.webp'),
-    document: getAssetPath('certifications/DOCKER-FOR-BEGINNERS.pdf')
+    document: getAssetPath('/certifications/DOCKER-FOR-BEGINNERS.pdf')
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ export const Certifications = [
     length: '10.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/jenkins-logo.webp'),
-    document: getAssetPath('certifications/JENKINS-FOR-BEGINNERS.pdf')
+    document: getAssetPath('/certifications/JENKINS-FOR-BEGINNERS.pdf')
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ export const Certifications = [
     length: '5.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/gitlab-logo.webp'),
-    document: getAssetPath('certifications/GITLAB-CI-CD.pdf')
+    document: getAssetPath('/certifications/GITLAB-CI-CD.pdf')
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ export const Certifications = [
     length: '4.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/udemy-logo.webp'),
-    document: getAssetPath('certifications/COMPUTER-NETWORKING.pdf')
+    document: getAssetPath('/certifications/COMPUTER-NETWORKING.pdf')
   },
   {
     id: 5,
@@ -50,7 +50,7 @@ export const Certifications = [
     length: '2 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/udemy-logo.webp'),
-    document: getAssetPath('certifications/PERFORMANCE-TESTING.pdf')
+    document: getAssetPath('/certifications/PERFORMANCE-TESTING.pdf')
   },
   {
     id: 6,
@@ -60,7 +60,7 @@ export const Certifications = [
     length: '21.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/udemy-logo.webp'),
-    document: getAssetPath('certifications/OPERATING-SYSTEMS.pdf')
+    document: getAssetPath('/certifications/OPERATING-SYSTEMS.pdf')
   },
   {
     id: 7,
@@ -70,7 +70,7 @@ export const Certifications = [
     length: '7 hours',
     level: 'Intermediate',
     icon: getAssetPath('logo/python-logo.webp'),
-    document: getAssetPath('certifications/PYTEST-AUTOMATION.pdf')
+    document: getAssetPath('/certifications/PYTEST-AUTOMATION.pdf')
   },
   {
     id: 8,
@@ -80,7 +80,7 @@ export const Certifications = [
     length: '2.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/python-logo.webp'),
-    document: getAssetPath('certifications/PYTHON-OOP.pdf')
+    document: getAssetPath('/certifications/PYTHON-OOP.pdf')
   },
   {
     id: 9,
@@ -90,7 +90,7 @@ export const Certifications = [
     length: '43 mins',
     level: 'Beginner',
     icon: getAssetPath('logo/udemy-logo.webp'),
-    document: getAssetPath('certifications/REST-API.pdf')
+    document: getAssetPath('/certifications/REST-API.pdf')
   },
   {
     id: 10,
@@ -100,7 +100,7 @@ export const Certifications = [
     length: '5.5 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/bash-logo.webp'),
-    document: getAssetPath('certifications/BASH-SCRIPTING.pdf')
+    document: getAssetPath('/certifications/BASH-SCRIPTING.pdf')
   },
   {
     id: 11,
@@ -110,7 +110,7 @@ export const Certifications = [
     length: '9 hours',
     level: 'Beginner',
     icon: getAssetPath('logo/docker-logo.webp'),
-    document: getAssetPath('certifications/DOCKER-DEVOPS.pdf')
+    document: getAssetPath('/certifications/DOCKER-DEVOPS.pdf')
   }
 ];
 

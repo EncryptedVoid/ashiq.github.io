@@ -12,6 +12,8 @@ import {
   Goals,
   Navigation
 } from '@/features';
+// In App.js
+import AssetTester from './AssetTester'; // adjust path as needed
 
 const LoadingSpinner = () => (
   <div className="min-h-screen w-full flex items-center justify-center">
@@ -43,6 +45,7 @@ function App() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-black">
       <Navigation />
+      {/* <AssetTester /> */}
 
       <Suspense fallback={<LoadingSpinner />}>
         <main className="relative w-full" style={{

@@ -1,6 +1,6 @@
 // src/data/HeroData.js
 import { Code, GraduationCap, Terminal, FileCode } from 'lucide-react';
-import { getAssetPath } from '../utils/assetUtils';
+import { getAssetPath } from '@utils/assetUtils';
 
 export const HeroData = {
   intro: {

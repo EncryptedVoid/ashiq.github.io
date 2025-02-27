@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Mail, MapPin, Calendar } from 'lucide-react';
 import { ParticleField, TypewriterText } from '@/components';
 import { HeroData } from '@/data/HeroData';
-import { getAssetPath } from '@/utils/assetUtils';
+import { getAssetPath } from '@utils/assetUtils';
 
 const HeroMobile = () => {
   const { intro, status, profileImage, quickStats, booking } = HeroData;

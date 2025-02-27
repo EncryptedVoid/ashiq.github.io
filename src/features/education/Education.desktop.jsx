@@ -24,7 +24,7 @@ const EducationHeader = ({ university }) => {
         rounded-2xl flex justify-center items-center font-semibold
         transition-transform duration-500 ease-out hover:scale-105 hover:-rotate-3
         hover:border-white/[0.08] md:mx-auto">
-        <img src={`/assets/logo/${university.logo}`} alt={`${university.name} logo`} className="w-full h-full object-cover rounded-2xl" />
+        <img src={`${university.logo}`} alt={`${university.name} logo`} className="w-full h-full object-cover rounded-2xl" />
       </div>
       <div className="text-white/90">
         <h2 className="tech-heading text-4xl font-bold mb-3 bg-gradient-to-r from-red-500 via-orange-500 to-green-500
@@ -60,7 +60,7 @@ const CourseCard = ({ course, index }) => {
         hover:shadow-xl hover:shadow-black/20"
     >
       <div className="relative w-full h-48 bg-white/[0.04] rounded-2xl mb-5 overflow-hidden">
-        <img src={`/assets/course-thumbnails/year1/${course.image}`} alt={`${course.name} course`}
+        <img src={`${course.image}`} alt={`${course.name} course`}
           className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>

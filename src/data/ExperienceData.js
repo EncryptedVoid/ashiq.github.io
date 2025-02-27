@@ -1,5 +1,5 @@
 // src/data/experienceData.js
-import { getAssetPath } from '../utils/assetUtils';
+import { getAssetPath } from '@utils/assetUtils';
 
 
 export const ExperienceData = [

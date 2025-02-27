@@ -1,21 +1,20 @@
+// Updated assetUtils.js
+// src/utils/assetUtils.js
 // src/utils/assetUtils.js
 export const getAssetPath = (filename) => {
-  // Use process.env.PUBLIC_URL for production builds
-  const baseUrl = process.env.PUBLIC_URL || '';
-  return `${baseUrl}${filename}`.replace(/\/+/g, '/');
-};
-
-export const getCertificationPath = (filename) => {
-  const baseUrl = process.env.PUBLIC_URL || '';
-  return `${baseUrl}/assets/certifications/${filename}`.replace(/\/+/g, '/');
+  // Ensure consistent formatting
+  const cleanPath = filename.startsWith('/') ? filename.slice(1) : filename;
+  return `/assets/${cleanPath}`;
 };
 
 export const getProjectPath = (filename) => {
-  return `/projects/${filename}`;
+  return getAssetPath(`projects/${filename}`);
 };
 
-export default {
-  getAssetPath,
-  getCertificationPath,
-  getProjectPath
+export const getCertificationPath = (filename) => {
+  // Remove "certifications/" if already in the path
+  const cleanFilename = filename.includes('certifications/')
+    ? filename
+    : `certifications/${filename}`;
+  return getAssetPath(cleanFilename);
 };

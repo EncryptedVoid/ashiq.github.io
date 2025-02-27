@@ -58,29 +58,9 @@ const CertModal = ({ isOpen, onClose, cert }) => {
                 <X className="w-5 h-5 text-white" />
               </button>
 
-              {/* Download Button */}
-              {cert.document && (
-                <a
-                  href={`/assets/certifications/${cert.document}`}
-                  download
-                  className="
-                    absolute -top-12 right-14
-                    w-10 h-10 rounded-full
-                    bg-white/[0.03] hover:bg-white/[0.06]
-                    border border-white/[0.06]
-                    flex items-center justify-center
-                    transition-all duration-300
-                    hover:scale-110
-                  "
-                  onClick={e => e.stopPropagation()}
-                >
-                  <Download className="w-5 h-5 text-white" />
-                </a>
-              )}
-
               {/* PDF Viewer */}
               <iframe
-                src={`/assets/certifications/${cert.document}`}
+                src={`${cert.document}`}
                 title={cert.title}
                 className="w-full h-full rounded-xl"
               />
