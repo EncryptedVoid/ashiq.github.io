@@ -25,8 +25,8 @@ export const SocialsData = {
     gradient: "from-emerald-500 via-green-400 to-emerald-500",
     bgColor: "bg-emerald-950/40",
     hoverColor: "text-emerald-400",
-    onClick: () => window.open("https://calendly.com/your-calendly-link", '_blank'),
-    description: "Book a 30-minute slot to discuss collaboration opportunities"
+    onClick: () => window.open("https://calendly.com/ashiqarib/45min", '_blank'),
+    description: "Book a 45-minute slot to discuss collaboration opportunities"
   },
   github: {
     icon: Github,
@@ -34,7 +34,7 @@ export const SocialsData = {
     gradient: "from-[#2ea043] via-[#238636] to-[#2ea043]",
     bgColor: "bg-[#0d1117]",
     hoverColor: "text-[#2ea043]",
-    onClick: () => window.open("https://github.com/yourusername", '_blank'),
+    onClick: () => window.open("https://github.com/EncryptedVoid", '_blank'),
     stats: "View my code repositories",
     description: "Check out my open-source projects and contributions"
   },
@@ -44,7 +44,7 @@ export const SocialsData = {
     gradient: "from-[#0077b5] via-[#00a0dc] to-[#0077b5]",
     bgColor: "bg-[#0a66c2]/20",
     hoverColor: "text-[#0077b5]",
-    onClick: () => window.open("https://linkedin.com/in/yourusername", '_blank'),
+    onClick: () => window.open("https://www.linkedin.com/in/ashiq-gazi-090a6b213/", '_blank'),
     stats: "Connect professionally",
     description: "View my professional experience and achievements"
   },
@@ -54,7 +54,7 @@ export const SocialsData = {
     gradient: "from-[#ff0000] via-[#ff4e45] to-[#ff0000]",
     bgColor: "bg-[#282828]",
     hoverColor: "text-[#ff0000]",
-    onClick: () => window.open("https://youtube.com/c/yourchannel", '_blank'),
+    onClick: () => window.open("https://www.youtube.com/@DOCTOR-ASH", '_blank'),
     stats: "Watch my tutorials",
     description: "Technical tutorials and design system insights"
   },
@@ -64,7 +64,7 @@ export const SocialsData = {
     gradient: "from-[#ff9d00] via-[#ff0080] to-[#ff9d00]",
     bgColor: "bg-[#111827]",
     hoverColor: "text-[#ff9d00]",
-    onClick: () => window.open("https://wandb.ai/yourusername", '_blank'),
+    onClick: () => window.open("https://wandb.ai/ashiqarib", '_blank'),
     stats: "Explore ML experiments",
     description: "Machine learning experiments and research projects"
   }
