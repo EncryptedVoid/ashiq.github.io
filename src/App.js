@@ -1,5 +1,4 @@
-import React, { Suspense } from 'react';
-import { useMedia } from '@/context/MediaContext'
+import React, { Suspense, useEffect, useState } from 'react';
 import {
   Hero,
   Skills,
@@ -12,8 +11,6 @@ import {
   Goals,
   Navigation
 } from '@/features';
-// In App.js
-import AssetTester from './AssetTester'; // adjust path as needed
 
 const LoadingSpinner = () => (
   <div className="min-h-screen w-full flex items-center justify-center">
@@ -21,31 +18,144 @@ const LoadingSpinner = () => (
   </div>
 );
 
-function App() {
-  const isMobile = useMedia('(max-width: 768px)');
-  console.log('Hero isMobile:', isMobile);
+// Section Header Component
+const SectionHeader = ({ id, title, subtitle }) => {
+  // Different gradient colors for different sections
+  const gradients = {
+    hero: "from-blue-500 to-purple-500",
+    skills: "from-purple-500 to-pink-500",
+    experience: "from-green-500 to-blue-500",
+    projects: "from-orange-500 to-red-500",
+    testimonials: "from-pink-500 to-purple-500",
+    education: "from-blue-500 to-cyan-500",
+    certifications: "from-indigo-500 to-blue-500",
+    contact: "from-purple-500 to-indigo-500",
+    goals: "from-red-500 to-orange-500"
+  };
 
-  const sections = [
-    { id: 'hero', Component: Hero },
-    { id: 'testimonials', Component: Testimonials, mobileHidden: true },
-    { id: 'experience', Component: Experience },
-    { id: 'skills', Component: Skills },
-    { id: 'projects', Component: Projects },
-    { id: 'education', Component: Education },
-    { id: 'certifications', Component: Certifications, mobileHidden: true },
-    { id: 'contact', Component: Contact },
-    { id: 'goals', Component: Goals, mobileHidden: true },
+  return (
+    <div className="py-8 md:py-12 mb-6 md:mb-8 text-center">
+      <h2 className={`text-3xl md:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r ${gradients[id] || "from-white to-gray-300"} bg-clip-text text-transparent`}>
+        {title}
+      </h2>
+      {subtitle && (
+        <p className="text-white/60 text-base md:text-lg mx-auto max-w-2xl">
+          {subtitle}
+        </p>
+      )}
+    </div>
+  );
+};
+
+function App() {
+  // Directly check window width instead of using a hook
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Initial check
+    setIsMobile(window.innerWidth <= 768);
+
+    // Add resize handler
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Clean up
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Log for debugging
+  useEffect(() => {
+    console.log('Is mobile view:', isMobile);
+  }, [isMobile]);
+
+  // Define all sections and their metadata
+  const allSectionsData = {
+    hero: {
+      id: 'hero',
+      Component: Hero,
+    },
+    experience: {
+      id: 'experience',
+      Component: Experience,
+      title: "Professional Experience",
+      subtitle: "My journey and contributions in the tech industry"
+    },
+    skills: {
+      id: 'skills',
+      Component: Skills,
+      title: "Skills & Expertise",
+      subtitle: "Technical capabilities and professional competencies"
+    },
+    projects: {
+      id: 'projects',
+      Component: Projects,
+      title: "Project Showcase",
+      subtitle: "Featured work and technical implementations"
+    },
+    education: {
+      id: 'education',
+      Component: Education,
+      title: "Education",
+      subtitle: "Academic background and qualifications"
+    },
+    contact: {
+      id: 'contact',
+      Component: Contact,
+      title: "Get In Touch",
+      subtitle: "Connect with me professionally"
+    },
+    // Desktop-only sections
+    testimonials: {
+      id: 'testimonials',
+      Component: Testimonials,
+      title: "What People Say",
+      subtitle: "Feedback and testimonials from colleagues and clients",
+      desktopOnly: true
+    },
+    certifications: {
+      id: 'certifications',
+      Component: Certifications,
+      title: "Certifications",
+      subtitle: "Professional qualifications and ongoing learning",
+      desktopOnly: true
+    },
+    goals: {
+      id: 'goals',
+      Component: Goals,
+      title: "Future Goals",
+      subtitle: "Upcoming ventures and aspirations",
+      desktopOnly: true
+    }
+  };
+
+  // Define the order of sections
+  const sectionOrder = [
+    'hero',
+    'experience',
+    'skills',
+    'projects',
+    'testimonials',
+    'education',
+    'certifications',
+    'contact',
+    'goals'
   ];
 
-  // Only show non-mobile-hidden sections on mobile
-  const visibleSections = sections.filter(section =>
-    !isMobile || !section.mobileHidden
-  );
+  // Build sections based on device
+  const sectionsToRender = sectionOrder
+    .filter(sectionId => {
+      const section = allSectionsData[sectionId];
+      // Only include desktop sections if not on mobile
+      return !section.desktopOnly || !isMobile;
+    })
+    .map(sectionId => allSectionsData[sectionId]);
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-black">
       <Navigation />
-      {/* <AssetTester /> */}
 
       <Suspense fallback={<LoadingSpinner />}>
         <main className="relative w-full" style={{
@@ -53,8 +163,12 @@ function App() {
           paddingBottom: isMobile ? '5rem' : '0'
         }}>
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            {visibleSections.map(({ id, Component }) => (
-              <section key={id} id={`section-${id}`} className="relative w-full">
+            {sectionsToRender.map(({ id, Component, title, subtitle }) => (
+              <section key={id} id={`section-${id}`} className="relative w-full mb-16 md:mb-24">
+                {/* Don't show header for hero section */}
+                {id !== 'hero' && title && (
+                  <SectionHeader id={id} title={title} subtitle={subtitle} />
+                )}
                 <Component />
               </section>
             ))}
