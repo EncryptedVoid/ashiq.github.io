@@ -27,7 +27,7 @@ const CertModal = ({ cert, onClose }) => {
             {/* Content */}
             <div className="pt-12">
               <iframe
-                src={`/assets/certifications/${cert.document}`}
+                src={`${cert.document}`}
                 title={cert.title}
                 className="w-full h-[calc(100vh-100px)] rounded-xl shadow-2xl"
               />

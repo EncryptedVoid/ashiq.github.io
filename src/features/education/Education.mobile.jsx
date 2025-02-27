@@ -73,7 +73,7 @@ const EducationMobile = () => {
       <div className="flex items-center gap-3 mb-3">
         <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 border border-white/20 flex-shrink-0">
           <img
-            src={`/assets/logo/${EducationData.university.logo}`}
+            src={`${EducationData.university.logo}`}
             alt={EducationData.university.name}
             className="w-full h-full object-cover"
           />
@@ -97,7 +97,7 @@ const EducationMobile = () => {
       {/* Highlight GPA and courses */}
       <div className="mt-3 grid grid-cols-2 gap-3">
         <div className="p-4 rounded-xl bg-white/10 border border-white/20 flex flex-col items-center justify-center">
-          <div className="text-xl font-bold text-blue-300">4.0</div>
+          <div className="text-xl font-bold text-blue-300">3.6</div>
           <div className="text-xs text-white/60 mt-1">Current GPA</div>
         </div>
         <div className="p-4 rounded-xl bg-white/10 border border-white/20 flex flex-col items-center justify-center">
@@ -167,7 +167,7 @@ const EducationMobile = () => {
     >
       <div className="relative h-40">
         <img
-          src={`/assets/course-thumbnails/year1/${course.image}`}
+          src={`${course.image}`}
           alt={course.name}
           className="w-full h-full object-cover"
         />

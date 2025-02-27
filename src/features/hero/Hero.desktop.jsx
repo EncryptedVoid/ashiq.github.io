@@ -97,7 +97,7 @@ const HeroDesktop = () => {
                   </div>
 
 
-                  <a  href={`/assets/${status.resumeLink}`}
+                  <a  href={`${status.resumeLink}`}
                     className="group flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20
                             border border-blue-500/20 hover:border-blue-500/30 rounded-full
                             transition-all duration-300 text-blue-400"

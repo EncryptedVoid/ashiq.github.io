@@ -100,7 +100,7 @@ const HeroMobile = () => {
               />
               <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10 backdrop-blur-sm">
                 <img
-                  src={`/assets/${profileImage.src}`}
+                  src={`${profileImage.src}`}
                   alt={profileImage.alt}
                   className="w-full h-full object-cover"
                 />
@@ -170,7 +170,7 @@ const HeroMobile = () => {
             {
               icon: ArrowRight,
               text: 'View Resume',
-              href: `/assets/${status.resumeLink}`,
+              href: `${status.resumeLink}`,
               primary: true
             },
             {

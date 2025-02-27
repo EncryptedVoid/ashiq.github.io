@@ -19,7 +19,7 @@ const CertCard = ({ cert, onClick }) => {
           flex-shrink-0 flex items-center justify-center
           transition-transform active:scale-95
         `}>
-          <img src={`/assets/logo/${cert.icon}`} alt="" className="w-10 h-10" />
+          <img src={`${cert.icon}`} alt="" className="w-10 h-10" />
         </div>
 
         {/* Details */}
