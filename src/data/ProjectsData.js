@@ -25,10 +25,10 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/Conways-Game-Of-Life-Plus',
-      live: 'https://conway-game-of-life-plus.vercel.app/',
-      caseStudy: 'https://example.com/conways-case-study',
-      blog: 'https://medium.com/conways-game-of-life',
-      video: 'https://youtube.com/conways-game'
+      // live: 'https://conway-game-of-life-plus.vercel.app/',
+      // caseStudy: 'https://example.com/conways-case-study',
+      // blog: 'https://medium.com/conways-game-of-life',
+      // video: 'https://youtube.com/conways-game'
     }
   },
   {
@@ -53,9 +53,9 @@ const ProjectsData = [
       responsiveness: '100%'
     },
     links: {
-      github: 'https://github.com/EncryptedVoid/RussellDrivingSchool-Freelance',
-      live: 'https://russell-driving-school.vercel.app/',
-      caseStudy: 'https://example.com/russell-case-study'
+      // github: 'https://github.com/EncryptedVoid/RussellDrivingSchool-Freelance',
+      live: 'https://russelldrivingschool.com/',
+      // caseStudy: 'https://example.com/russell-case-study'
     }
   },
   {
@@ -81,7 +81,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/Harvard-CS50-Web-Development',
-      blog: 'https://medium.com/cs50-journey'
+      // blog: 'https://medium.com/cs50-journey'
     }
   },
   {
@@ -107,7 +107,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/JONOPOLY-Java-Monopoly',
-      video: 'https://youtube.com/jonopoly-gameplay'
+      // video: 'https://youtube.com/jonopoly-gameplay'
     }
   },
   {
@@ -133,7 +133,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/Weather-Dashboard-WebApp',
-      live: 'https://weather-dashboard-demo.vercel.app/'
+      // live: 'https://weather-dashboard-demo.vercel.app/'
     }
   },
   {
@@ -184,7 +184,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/Machine-Learning-Experimenting',
-      blog: 'https://medium.com/ml-experiments'
+      // blog: 'https://medium.com/ml-experiments'
     }
   },
   {
@@ -210,7 +210,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/ToDo-List-WebApp',
-      live: 'https://todo-list-webapp-demo.vercel.app/'
+      // live: 'https://todo-list-webapp-demo.vercel.app/'
     }
   },
   {
@@ -236,7 +236,7 @@ const ProjectsData = [
     },
     links: {
       github: 'https://github.com/EncryptedVoid/MANIM-PersonalExperimenting',
-      video: 'https://youtube.com/manim-animations'
+      // video: 'https://youtube.com/manim-animations'
     }
   }
 ];
