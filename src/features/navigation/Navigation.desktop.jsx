@@ -1,33 +1,26 @@
 // src/features/navigation/Navigation.desktop.jsx
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { NAV_ITEMS } from './navigation.constants';
-import { ChevronDown, Plus } from 'lucide-react';
-
-// Maximum number of visible items before overflow
-const MAX_VISIBLE_ITEMS = 8;
+import { motion } from 'framer-motion';
+import { NAV_ITEMS, THEME } from './navigation.constants';
+import { Plus } from 'lucide-react';
 
 export const NavigationDesktop = () => {
   const [activeSection, setActiveSection] = useState('hero');
-  const [isScrollingUp, setIsScrollingUp] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
 
-  // Split navigation items into visible and overflow
+  // Define visible items limit and calculate if we have overflow
+  const MAX_VISIBLE_ITEMS = 6; // Adjust as needed
   const visibleItems = NAV_ITEMS.slice(0, MAX_VISIBLE_ITEMS);
   const overflowItems = NAV_ITEMS.slice(MAX_VISIBLE_ITEMS);
   const hasOverflow = overflowItems.length > 0;
 
+  // Handle scrolling to update active section
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setIsScrollingUp(currentScrollY < lastScrollY || currentScrollY < 100);
-      setLastScrollY(currentScrollY);
-
       // Add buffer for header height
-      const scrollPosition = window.scrollY + window.innerHeight / 4;
+      const scrollPosition = window.scrollY + 100;
 
-      // Find the last section that has been scrolled past
+      // Find current section
       let currentSection = 'hero';
       NAV_ITEMS.forEach(({ id }) => {
         const element = document.getElementById(`section-${id}`);
@@ -37,169 +30,167 @@ export const NavigationDesktop = () => {
       });
 
       setActiveSection(currentSection);
-
-      // Close overflow menu on scroll
-      if (isOverflowOpen) {
-        setIsOverflowOpen(false);
-      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, isOverflowOpen]);
-
-  // Handle clicking outside to close the overflow menu
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (isOverflowOpen && !e.target.closest('.overflow-menu') && !e.target.closest('.overflow-trigger')) {
-        setIsOverflowOpen(false);
-      }
-    };
-
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isOverflowOpen]);
-
-  const scrollToSection = (itemId) => {
-    const element = document.getElementById(`section-${itemId}`);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsOverflowOpen(false);
-    }
-  };
+  }, []);
 
   return (
-    <motion.div
-      initial={{ y: -100 }}
-      animate={{ y: isScrollingUp ? 0 : -100 }}
-      transition={{
-        type: 'spring',
-        stiffness: 400,
-        damping: 40,
-        mass: 1
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 pt-safe"
+      style={{
+        background: `linear-gradient(to bottom, ${THEME.background.glass}, transparent)`,
+        borderBottom: `1px solid ${THEME.border.inactive}`,
       }}
-      className="fixed top-0 left-0 right-0 z-50 px-4 py-5"
     >
-      <div className="max-w-6xl mx-auto">
-        <div className="bg-black/60 backdrop-blur-2xl border border-teal-500/30 rounded-2xl p-2 shadow-lg shadow-teal-500/10">
-          <div className="flex justify-center items-center gap-2 relative">
-            {/* Main visible navigation items */}
-            {visibleItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = activeSection === item.id;
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <div className="flex-shrink-0 flex items-center">
+            <span className="text-xl font-bold" style={{ color: THEME.primary.main }}>
+            HEY THERE!
+            </span>
+          </div>
 
-              return (
-                <motion.button
-                  key={item.id}
-                  onClick={() => scrollToSection(item.id)}
-                  className={`
-                    relative px-5 py-2.5 rounded-xl
-                    flex items-center gap-2.5
-                    transition-colors duration-300
-                    ${isActive
-                      ? 'text-white'
-                      : 'text-white/60 hover:text-white/90'
-                    }
-                    group
-                  `}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {/* Active background element with glow */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavBackground"
-                      className="absolute inset-0 bg-gradient-to-r from-teal-500/20 to-blue-500/20 border border-teal-400/30 rounded-xl shadow-lg shadow-teal-500/20"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.2 }}
+          {/* Main navigation */}
+          <div className="hidden md:block">
+            <div className="flex space-x-4">
+              {visibleItems.map((item) => {
+                const Icon = item.icon;
+                const isActive = activeSection === item.id;
+
+                return (
+                  <motion.button
+                    key={item.id}
+                    onClick={() => {
+                      const element = document.getElementById(`section-${item.id}`);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                        setActiveSection(item.id);
+                      }
+                    }}
+                    className="px-3 py-2 rounded-md flex items-center space-x-2"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      color: isActive ? THEME.text.primary : THEME.text.secondary,
+                      background: isActive ? `${THEME.primary.main}20` : 'transparent',
+                      border: `1px solid ${isActive ? THEME.border.active : 'transparent'}`,
+                      boxShadow: isActive ? `0 0 10px ${THEME.primary.glow}40` : 'none',
+                    }}
+                  >
+                    <Icon
+                      size={18}
+                      style={{
+                        filter: isActive ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none',
+                      }}
                     />
-                  )}
+                    <span>{item.label}</span>
+                  </motion.button>
+                );
+              })}
 
-                  {/* Icon with animated glow on hover */}
-                  <div className="relative">
-                    <Icon size={18} className="relative z-10 transition-transform duration-300 group-hover:scale-110" />
-                    <motion.div
-                      className={`absolute inset-0 bg-teal-500/30 filter blur-md rounded-full scale-0 group-hover:scale-150 transition-transform duration-300 ${isActive ? 'opacity-100' : 'opacity-0'}`}
-                      animate={isActive ? { scale: [1, 1.5, 1], opacity: [0.3, 0.7, 0.3] } : {}}
-                      transition={isActive ? {
-                        repeat: Infinity,
-                        duration: 2,
-                        ease: "easeInOut"
-                      } : {}}
+              {/* Overflow menu dropdown */}
+              {hasOverflow && (
+                <div className="relative overflow-trigger" style={{ zIndex: 60 }}>
+                  <motion.button
+                    onClick={() => setIsOverflowOpen(!isOverflowOpen)}
+                    className="relative px-3 py-2.5 rounded-lg flex items-center justify-center transition-all duration-300"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    style={{
+                      background: isOverflowOpen ? `${THEME.primary.main}40` : 'transparent',
+                      color: isOverflowOpen ? THEME.text.primary : THEME.text.secondary,
+                      border: `1px solid ${isOverflowOpen ? THEME.border.active : 'transparent'}`,
+                      boxShadow: isOverflowOpen ? `0 0 10px ${THEME.primary.glow}40` : 'none'
+                    }}
+                  >
+                    <Plus
+                      size={20}
+                      className={`transition-transform duration-300 ${isOverflowOpen ? 'rotate-45' : ''}`}
+                      style={{
+                        filter: isOverflowOpen ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none'
+                      }}
                     />
-                  </div>
+                  </motion.button>
 
-                  {/* Label */}
-                  <span className="text-sm font-medium relative z-10">{item.label}</span>
-                </motion.button>
-              );
-            })}
-
-            {/* Overflow dropdown button (only shown when needed) */}
-            {hasOverflow && (
-              <div className="relative overflow-trigger">
-                <motion.button
-                  onClick={() => setIsOverflowOpen(!isOverflowOpen)}
-                  className={`
-                    relative px-3 py-2.5 rounded-xl
-                    flex items-center justify-center
-                    transition-all duration-300
-                    ${isOverflowOpen ? 'bg-teal-500/30 text-white' : 'text-white/60 hover:text-white/90'}
-                    border border-transparent hover:border-teal-500/30
-                  `}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <Plus size={20} className={`transition-transform duration-300 ${isOverflowOpen ? 'rotate-45' : ''}`} />
-                </motion.button>
-
-                {/* Overflow dropdown menu */}
-                <AnimatePresence>
+                  {/* Dropdown with fixed positioning */}
                   {isOverflowOpen && (
-                    <motion.div
-                      className="absolute right-0 top-full mt-2 py-2 overflow-menu
-                        bg-black/80 backdrop-blur-xl border border-teal-500/30
-                        rounded-xl shadow-lg shadow-teal-500/10 min-w-[180px]"
-                      initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                      transition={{ duration: 0.2, ease: "easeOut" }}
+                    <div
+                      className="fixed py-2 overflow-menu min-w-[200px]"
+                      style={{
+                        top: '60px', // Fixed position from top of viewport
+                        right: '20px', // Fixed position from right of viewport
+                        background: `linear-gradient(135deg, ${THEME.background.glass}, rgba(30, 30, 40, 0.85))`,
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderImage: `linear-gradient(135deg, ${THEME.primary.main}60, ${THEME.primary.light}20) 1`,
+                        boxShadow: `0 10px 25px -5px ${THEME.primary.main}30, 0 0 15px ${THEME.primary.glow}20`,
+                        borderRadius: '0.8rem',
+                        zIndex: 999 // Very high z-index to ensure visibility
+                      }}
                     >
                       {overflowItems.map((item) => {
                         const Icon = item.icon;
                         const isActive = activeSection === item.id;
 
                         return (
-                          <motion.button
+                          <button
                             key={item.id}
-                            onClick={() => scrollToSection(item.id)}
-                            className={`
-                              w-full flex items-center gap-3 px-4 py-2.5
-                              ${isActive ? 'text-teal-400' : 'text-white/70 hover:text-white'}
-                              transition-colors duration-200
-                              hover:bg-white/5
-                            `}
-                            whileHover={{ x: 3 }}
+                            onClick={() => {
+                              const element = document.getElementById(`section-${item.id}`);
+                              if (element) {
+                                element.scrollIntoView({ behavior: 'smooth' });
+                                setActiveSection(item.id);
+                              }
+                              setIsOverflowOpen(false);
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 transition-colors duration-200 hover:bg-white/5"
+                            style={{
+                              color: isActive ? THEME.primary.light : THEME.text.secondary,
+                              position: 'relative'
+                            }}
                           >
-                            <Icon size={16} />
-                            <span className="text-sm font-medium">{item.label}</span>
+                            {/* Icon */}
+                            <Icon
+                              size={18}
+                              style={{
+                                filter: isActive ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none'
+                              }}
+                            />
 
+                            {/* Label */}
+                            <span
+                              style={{
+                                textShadow: isActive ? `0 0 5px ${THEME.primary.glow}` : 'none',
+                                letterSpacing: '0.5px'
+                              }}
+                            >
+                              {item.label}
+                            </span>
+
+                            {/* Active indicator */}
                             {isActive && (
-                              <div className="ml-auto w-1.5 h-1.5 rounded-full bg-teal-400" />
+                              <div
+                                className="ml-auto w-1.5 h-5 rounded-full"
+                                style={{
+                                  background: `linear-gradient(to bottom, ${THEME.primary.light}, ${THEME.primary.main})`,
+                                  boxShadow: `0 0 8px ${THEME.primary.glow}`
+                                }}
+                              />
                             )}
-                          </motion.button>
+                          </button>
                         );
                       })}
-                    </motion.div>
+                    </div>
                   )}
-                </AnimatePresence>
-              </div>
-            )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </motion.div>
+    </nav>
   );
 };

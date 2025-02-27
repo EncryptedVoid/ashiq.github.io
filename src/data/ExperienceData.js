@@ -52,7 +52,7 @@ export const ExperienceData = [
     id: 'freelance-dev',
     title: 'Frontend Developer',
     company: 'Freelance',
-    companyLogo: getAssetPath('logo/freelance-logo.webp'),
+    companyLogo: getAssetPath('/logo/freelance-logo.webp'),
     location: 'Ottawa, Ontario, Canada',
     period: {
       start: 'Sep 2024',

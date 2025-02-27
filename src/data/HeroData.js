@@ -16,7 +16,7 @@ export const HeroData = {
   },
 
   status: {
-    location: "OTTAWA, ON, CANADA",
+    location: "Ottawa, ON, Canada",
     availability: "Open to Opportunities",
     resumeLink: getAssetPath("resume.pdf"),
   },

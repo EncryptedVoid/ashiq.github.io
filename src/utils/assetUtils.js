@@ -2,7 +2,7 @@
 export const getAssetPath = (filename) => {
   // Use process.env.PUBLIC_URL for production builds
   const baseUrl = process.env.PUBLIC_URL || '';
-  return `${baseUrl}/assets/${filename}`.replace(/\/+/g, '/');
+  return `${baseUrl}${filename}`.replace(/\/+/g, '/');
 };
 
 export const getCertificationPath = (filename) => {
@@ -11,7 +11,7 @@ export const getCertificationPath = (filename) => {
 };
 
 export const getProjectPath = (filename) => {
-  return `/assets/projects/${filename}`;
+  return `/projects/${filename}`;
 };
 
 export default {
