@@ -2,7 +2,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { EducationData } from '@data/EducationData';
 import { useEffect, useRef, useState } from 'react';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ChevronDown, ChevronUp, ChevronRight, ChevronLeft, Briefcase } from 'lucide-react';
 import { useScrollAnimation } from '@hooks/useAnimation';
 
 // Header subcomponent
@@ -15,7 +15,7 @@ const EducationHeader = ({ university }) => {
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
       transition={{ duration: 0.7 }}
-      className="grid grid-cols-[140px,1fr,auto] gap-10 items-center mb-12 p-8
+      className="grid grid-cols-[140px,1fr,auto] gap-10 items-center mb-8 p-8
         bg-white/[0.03] border border-white/[0.06] rounded-3xl backdrop-blur-xl
         transition-all duration-500 ease-out hover:bg-white/[0.04] hover:border-white/[0.08]
         md:grid-cols-1 md:text-center md:gap-4"
@@ -42,7 +42,7 @@ const EducationHeader = ({ university }) => {
 };
 
 // Course Card subcomponent
-const CourseCard = ({ course, index }) => {
+const CourseCard = ({ course }) => {
   const { ref, isInView } = useScrollAnimation({
     threshold: 0.1,
     rootMargin: '0px 0px 100px 0px'
@@ -53,24 +53,24 @@ const CourseCard = ({ course, index }) => {
       ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
+      transition={{ duration: 0.5 }}
       className="bg-white/[0.03] border border-white/[0.06] rounded-3xl p-6
-        transition-all duration-500 ease-out
+        transition-all duration-500 ease-out flex-shrink-0
         hover:-translate-y-2 hover:bg-white/[0.08] hover:border-white/[0.12]
-        hover:shadow-xl hover:shadow-black/20"
+        hover:shadow-xl hover:shadow-black/20 h-full flex flex-col"
     >
-      <div className="relative w-full h-48 bg-white/[0.04] rounded-2xl mb-5 overflow-hidden">
+      <div className="relative w-full h-48 bg-white/[0.04] rounded-2xl mb-5 overflow-hidden flex-shrink-0">
         <img src={`${course.image}`} alt={`${course.name} course`}
           className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
       </div>
       <div className="text-xl font-semibold text-white/90 mb-3">{course.name}</div>
-      <div className="text-white/60 text-sm leading-relaxed">
+      <div className="text-white/60 text-sm leading-relaxed mb-4">
         {course.skills.join(' • ')}
       </div>
-      <div className="mt-4 space-y-3">
-        <p className="text-white/70">{course.description}</p>
-        <div className="flex justify-between items-center text-sm text-white/60">
+      <div className="mt-auto space-y-3 flex-grow">
+        <p className="text-white/70 line-clamp-3">{course.description}</p>
+        <div className="flex justify-between items-center text-sm text-white/60 pt-3 mt-auto">
           <span>Grade: {course.grade}</span>
           <span>Prof: {course.professor}</span>
         </div>
@@ -78,6 +78,125 @@ const CourseCard = ({ course, index }) => {
     </motion.div>
   );
 };
+
+// Carousel Component for Courses
+  const CourseCarousel = ({ courses }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const cardsPerPage = 3;
+  const maxIndex = Math.max(0, Math.ceil(courses.length / cardsPerPage) - 1);
+  // Calculate how many courses to show on the last page
+  const remainingCourses = courses.length % cardsPerPage;
+  const lastPageCourses = remainingCourses === 0 ? cardsPerPage : remainingCourses;
+
+  const handlePrev = () => {
+    setCurrentIndex(prev => Math.max(0, prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex(prev => Math.min(maxIndex, prev + 1));
+  };
+
+  return (
+    <div className="relative py-6">
+      {/* Carousel Container */}
+      <div className="overflow-hidden">
+        <div
+          className="flex transition-transform duration-500 ease-in-out gap-8"
+          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+        >
+          {Array.from({ length: maxIndex + 1 }).map((_, pageIndex) => {
+              // Determine if this is the last page
+              const isLastPage = pageIndex === maxIndex;
+              // Number of cards to show on this page
+              const cardsCount = isLastPage ? lastPageCourses : cardsPerPage;
+
+              return (
+                <div key={pageIndex} className="flex gap-8 w-full flex-shrink-0">
+                  {courses
+                    .slice(pageIndex * cardsPerPage, pageIndex * cardsPerPage + cardsCount)
+                    .map(course => (
+                      <div key={course.id} className="w-1/3 h-full">
+                        <CourseCard course={course} />
+                      </div>
+                    ))}
+                    {/* Add empty spacer divs if needed on last page */}
+                    {isLastPage && lastPageCourses < cardsPerPage &&
+                      Array.from({ length: cardsPerPage - lastPageCourses }).map((_, i) => (
+                        <div key={`spacer-${i}`} className="w-1/3" />
+                      ))
+                    }
+                </div>
+              );
+            })}
+        </div>
+      </div>
+
+      {/* Pagination Indicators with Navigation Buttons */}
+      <div className="flex justify-center items-center gap-4 mt-8">
+        {currentIndex > 0 && (
+          <button
+            onClick={handlePrev}
+            className="w-10 h-10 rounded-full bg-white/5 border border-white/10
+            flex items-center justify-center hover:bg-white/10 transition-all"
+            aria-label="Previous courses"
+          >
+            <ChevronLeft className="w-5 h-5 text-white/70" />
+          </button>
+        )}
+
+        {/* Pagination dots */}
+        <div className="flex gap-2">
+          {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
+            <button
+              key={idx}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                idx === currentIndex
+                  ? 'w-8 bg-gradient-to-r from-blue-500 to-purple-500'
+                  : 'bg-white/20'
+              }`}
+              onClick={() => setCurrentIndex(idx)}
+              aria-label={`Go to page ${idx + 1}`}
+            />
+          ))}
+        </div>
+
+        {currentIndex < maxIndex && (
+          <button
+            onClick={handleNext}
+            className="w-10 h-10 rounded-full bg-white/5 border border-white/10
+            flex items-center justify-center hover:bg-white/10 transition-all"
+            aria-label="Next courses"
+          >
+            <ChevronRight className="w-5 h-5 text-white/70" />
+          </button>
+        )}
+      </div>
+
+
+    </div>
+  );
+};
+
+// Current Status Component
+const CurrentStatus = () => (
+  <div className="bg-white/[0.03] border border-white/[0.06] rounded-3xl p-8
+    transition-all duration-500 hover:bg-white/[0.08] hover:border-white/[0.12]
+    mb-6">
+    <div className="flex items-start gap-6">
+      <div className="p-4 rounded-xl bg-blue-500/10 flex-shrink-0">
+        <Briefcase className="w-8 h-8 text-blue-400" />
+      </div>
+      <div>
+        <h3 className="text-xl font-semibold text-white mb-2">Currently on Internship</h3>
+        <p className="text-lg text-blue-400 mb-4">Software Testing Specialist at BlackBerry QNX</p>
+        <p className="text-white/70">
+          Developing automation testing framework for the QNX Everywhere project
+          and improving testing efficiency while providing quality assurance support.
+        </p>
+      </div>
+    </div>
+  </div>
+);
 
 // Collapsible Section Component
 const CollapsibleSection = ({ title, gradientColors, children, defaultOpen = false }) => {
@@ -210,27 +329,37 @@ const EducationDesktop = () => {
   }
 
   return (
-    <section ref={ref} className="py-20">
+    <section ref={ref} className="pb-8">
       <div className="max-w-7xl mx-auto px-8">
         <EducationHeader university={university} />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {courses.map((course, index) => (
-            <CourseCard key={course.id} course={course} index={index} />
-          ))}
-        </div>
+        {/* Current Status (Internship) */}
+        <CurrentStatus />
 
+        {/* Collapsible Courses Carousel */}
+        <CollapsibleSection
+          title="Course History"
+          gradientColors="from-blue-500 to-cyan-500"
+          defaultOpen={false}
+        >
+          <CourseCarousel courses={courses} />
+        </CollapsibleSection>
+
+        {/* Academic Achievements */}
         <CollapsibleSection
           title="Academic Achievements"
           gradientColors="from-purple-500 to-blue-500"
+          defaultOpen={false}
         >
           <Achievements achievements={achievements} />
         </CollapsibleSection>
 
-        {researchWork && ( // Only render if researchWork exists
+        {/* Research Work - if exists */}
+        {researchWork && (
           <CollapsibleSection
             title="Research Work"
             gradientColors="from-blue-500 to-cyan-500"
+            defaultOpen={false}
           >
             <ResearchWork research={researchWork} />
           </CollapsibleSection>

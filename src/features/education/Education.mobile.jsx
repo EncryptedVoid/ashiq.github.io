@@ -9,7 +9,8 @@ import {
   Filter,
   ChevronLeft,
   ChevronRight,
-  Star
+  Star,
+  Briefcase
 } from 'lucide-react';
 import { EducationData } from '@data/EducationData';
 import { useScrollAnimation } from '@hooks/useAnimation';
@@ -22,6 +23,7 @@ const EducationMobile = () => {
   const [topicFilter, setTopicFilter] = useState('All');
   const [filteredCourses, setFilteredCourses] = useState(EducationData.courses);
   const carouselRef = useRef(null);
+  const touchStartX = useRef(null);
   const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
 
   // Extract unique years and topics for filters
@@ -48,17 +50,33 @@ const EducationMobile = () => {
     setCurrentIndex(0); // Reset to first course when filters change
   }, [yearFilter, topicFilter]);
 
-  // Navigation for carousel
-  const nextCourse = () => {
-    if (currentIndex < filteredCourses.length - 1) {
-      setCurrentIndex(prev => prev + 1);
-    }
+  // Touch handlers for swiping
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
   };
 
-  const prevCourse = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(prev => prev - 1);
+  const handleTouchEnd = (e) => {
+    if (!touchStartX.current) return;
+
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX.current - touchEndX;
+
+    // Swipe threshold of 50px
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        // Swipe left, go to next course
+        if (currentIndex < filteredCourses.length - 1) {
+          setCurrentIndex(prev => prev + 1);
+        }
+      } else {
+        // Swipe right, go to previous course
+        if (currentIndex > 0) {
+          setCurrentIndex(prev => prev - 1);
+        }
+      }
     }
+
+    touchStartX.current = null;
   };
 
   // Component for University Overview
@@ -102,31 +120,29 @@ const EducationMobile = () => {
         </div>
         <div className="p-4 rounded-xl bg-white/10 border border-white/20 flex flex-col items-center justify-center">
           <div className="text-xl font-bold text-blue-300">10</div>
-          <div className="text-xs text-white/60 mt-1">Current Courses</div>
+          <div className="text-xs text-white/60 mt-1">Total Courses</div>
         </div>
       </div>
 
-      {/* Highlight current courses */}
+      {/* Current Internship Status */}
       <div className="mt-5">
-        <h4 className="text-sm font-medium text-white/80 mb-3">Current Courses</h4>
+        <h4 className="text-sm font-medium text-white/80 mb-3">Current Status</h4>
         <div className="p-3 rounded-xl bg-black/30 border border-white/10">
-          <div className="grid grid-cols-2 gap-2">
-            {EducationData.courses
-              .filter(course => course.status === 'Current')
-              .slice(0, 4)
-              .map(course => (
-                <div key={course.id} className="text-xs">
-                  <span className="text-blue-300">{course.code}</span>
-                  <div className="text-white/80 truncate">{course.name}</div>
-                </div>
-              ))}
+          <div className="flex items-center gap-3 mb-2">
+            <div className="p-2 rounded-lg bg-blue-500/20">
+              <Briefcase className="w-4 h-4 text-blue-400" />
+            </div>
+            <div>
+              <div className="text-white text-sm font-medium">Currently on Internship</div>
+              <div className="text-white/60 text-xs">Software Testing Specialist at BlackBerry QNX</div>
+            </div>
           </div>
-          <div
-            className="mt-3 pt-2 text-center text-xs text-blue-300 border-t border-white/10 cursor-pointer"
+          <button
+            className="mt-3 pt-2 w-full text-center text-xs text-blue-300 border-t border-white/10 cursor-pointer"
             onClick={() => setActiveSection('courses')}
           >
-            View all courses
-          </div>
+            See Previous Courses
+          </button>
         </div>
       </div>
 
@@ -175,12 +191,7 @@ const EducationMobile = () => {
 
         <div className="absolute bottom-3 left-3 right-3">
           <div className="flex items-center justify-between">
-            <span className={`
-              px-2 py-0.5 rounded-full text-xs
-              ${course.status === 'Current'
-                ? 'bg-white/10 text-blue-300 border border-white/20'
-                : 'bg-green-500/10 text-green-300 border border-green-500/20'}
-            `}>
+            <span className="bg-green-500/10 text-green-300 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
               {course.status}
             </span>
             <div className="flex items-center gap-1">
@@ -254,7 +265,7 @@ const EducationMobile = () => {
   ];
 
   return (
-    <section ref={ref} className="pb-20">
+    <section ref={ref} className="pb-8">
       {/* Section Tabs */}
       <div className="px-4 mb-5">
         <div className="flex bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/10">
@@ -322,31 +333,21 @@ const EducationMobile = () => {
                 </div>
               </div>
 
-              {/* Carousel */}
-              <div ref={carouselRef} className="relative">
+              {/* Swipeable Carousel */}
+              <div
+                ref={carouselRef}
+                className="relative"
+                onTouchStart={handleTouchStart}
+                onTouchEnd={handleTouchEnd}
+              >
                 {filteredCourses.length > 0 ? (
                   <>
-                    <CourseCard course={filteredCourses[currentIndex]} />
-
-                    {/* Navigation arrows */}
-                    <div className="flex justify-between absolute inset-0 pointer-events-none">
-                      {currentIndex > 0 && (
-                        <button
-                          onClick={prevCourse}
-                          className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white pointer-events-auto self-center ml-2"
-                        >
-                          <ChevronLeft className="w-5 h-5" />
-                        </button>
-                      )}
-                      {currentIndex < filteredCourses.length - 1 && (
-                        <button
-                          onClick={nextCourse}
-                          className="w-10 h-10 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white pointer-events-auto self-center mr-2"
-                        >
-                          <ChevronRight className="w-5 h-5" />
-                        </button>
-                      )}
+                    <div className="text-center mt-3">
+                      <div className="text-xs text-blue-300/60 italic">
+                        Swipe to navigate
+                      </div>
                     </div>
+                    <CourseCard course={filteredCourses[currentIndex]} />
 
                     {/* Progress indicator */}
                     <div className="flex justify-center gap-1.5 mt-4">
@@ -365,9 +366,11 @@ const EducationMobile = () => {
                       ))}
                     </div>
 
-                    {/* Counter */}
-                    <div className="text-center text-xs text-white/60 mt-2">
-                      {currentIndex + 1} of {filteredCourses.length}
+                    {/* Counter and swipe hint */}
+                    <div className="text-center mt-3">
+                      <div className="text-xs text-white/60 mb-1">
+                        {currentIndex + 1} of {filteredCourses.length}
+                      </div>
                     </div>
                   </>
                 ) : (

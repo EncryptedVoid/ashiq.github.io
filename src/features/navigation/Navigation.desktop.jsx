@@ -9,7 +9,7 @@ export const NavigationDesktop = () => {
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
 
   // Define visible items limit and calculate if we have overflow
-  const MAX_VISIBLE_ITEMS = 7; // Adjust as needed
+  const MAX_VISIBLE_ITEMS = 6; // Adjust as needed
   const visibleItems = NAV_ITEMS.slice(0, MAX_VISIBLE_ITEMS);
   const overflowItems = NAV_ITEMS.slice(MAX_VISIBLE_ITEMS);
   const hasOverflow = overflowItems.length > 0;

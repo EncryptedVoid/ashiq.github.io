@@ -113,21 +113,21 @@ function App() {
       Component: Testimonials,
       title: "What People Say",
       subtitle: "Feedback and testimonials from colleagues and clients",
-      desktopOnly: true
+      // desktopOnly: true
     },
     certifications: {
       id: 'certifications',
       Component: Certifications,
       title: "Certifications",
       subtitle: "Professional qualifications and ongoing learning",
-      desktopOnly: true
+      // desktopOnly: true
     },
     goals: {
       id: 'goals',
       Component: Goals,
       title: "Future Goals",
       subtitle: "Upcoming ventures and aspirations",
-      desktopOnly: true
+      // desktopOnly: true
     }
   };
 

@@ -1,31 +1,14 @@
 // src/features/navigation/Navigation.mobile.jsx
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { NAV_ITEMS, THEME } from './navigation.constants';
-import { ChevronUp, Menu, X, Eye, EyeOff } from 'lucide-react';
-
-// Maximum number of items to show in the bottom bar
-const MAX_VISIBLE_ITEMS = 4;
-
-// Configuration for hidden sections in mobile view
-const HIDDEN_SECTIONS = ['testimonials', 'certifications', 'goals'];
+import { NAV_ITEMS, CATEGORIES, THEME } from './navigation.constants';
+import { Menu, X, ChevronRight } from 'lucide-react';
 
 export const NavigationMobile = () => {
-  const [active, setActive] = useState('hero');
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [activeSection, setActiveSection] = useState('hero');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState(null);
   const [lastScrollY, setLastScrollY] = useState(0);
-
-  // Filter out hidden sections for mobile view
-  const visibleNavItems = NAV_ITEMS.filter(item => !HIDDEN_SECTIONS.includes(item.id));
-
-  // Split navigation items
-  const primaryItems = visibleNavItems.slice(0, MAX_VISIBLE_ITEMS);
-  const secondaryItems = visibleNavItems.slice(MAX_VISIBLE_ITEMS);
-  const hasMoreItems = secondaryItems.length > 0;
-
-  // Toggle visibility panel state
-  const [showHiddenItems, setShowHiddenItems] = useState(false);
-  const hiddenItems = NAV_ITEMS.filter(item => HIDDEN_SECTIONS.includes(item.id));
 
   // Handle scrolling to update active section
   useEffect(() => {
@@ -45,290 +28,283 @@ export const NavigationMobile = () => {
         }
       });
 
-      setActive(currentSection);
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  // Handle navigation click
   const handleNavClick = (itemId) => {
     const element = document.getElementById(`section-${itemId}`);
     if (element) {
+      // Close menu after navigation
+      setIsMenuOpen(false);
+      setExpandedCategory(null);
+
+      // Smooth scroll to section
       element.scrollIntoView({ behavior: 'smooth' });
-      setActive(itemId);
+      setActiveSection(itemId);
     }
   };
 
+  // Toggle category expansion
+  const toggleCategory = (categoryId) => {
+    setExpandedCategory(expandedCategory === categoryId ? null : categoryId);
+  };
+
+  // Get items for mobile bottom bar (prioritize root items + most used)
+  const getBottomBarItems = () => {
+    const priority = ['hero', 'experience', 'skills', 'contact'];
+    return NAV_ITEMS
+      .filter(item => priority.includes(item.id))
+      .slice(0, 4); // Maximum 4 items
+  };
+
+  // Organize menu items by category
+  const organizeMenuItems = () => {
+    // Root items (no category)
+    const rootItems = NAV_ITEMS.filter(item => !item.category);
+
+    // Items organized by category
+    const categorizedItems = CATEGORIES.map(category => ({
+      ...category,
+      items: NAV_ITEMS.filter(item => item.category === category.id)
+    }));
+
+    return { rootItems, categorizedItems };
+  };
+
+  const { rootItems, categorizedItems } = organizeMenuItems();
+  const bottomBarItems = getBottomBarItems();
+
   return (
     <>
-      {/* Main Bottom Navigation Bar */}
+      {/* Fixed bottom navigation bar */}
       <div
         className="fixed bottom-0 left-0 right-0 z-50 pb-safe"
         style={{
-          background: `linear-gradient(to top, ${THEME.background.glass}, ${THEME.background.main})`,
-          borderTop: `1px solid ${THEME.border.active}`,
-          boxShadow: `0 -5px 20px 0 rgba(0, 0, 0, 0.3), 0 -2px 10px ${THEME.primary.glow}20`,
-          borderTopLeftRadius: '1rem',
-          borderTopRightRadius: '1rem'
+          background: THEME.background.glass,
+          backdropFilter: 'blur(12px)',
+          borderTop: `1px solid ${THEME.border.inactive}`,
+          boxShadow: `0 -4px 10px rgba(0, 0, 0, 0.1)`
         }}
       >
-        <div className="max-w-lg mx-auto flex justify-around items-center">
-          {primaryItems.map((item) => {
+        <div className="flex justify-between px-2">
+          {/* Bottom bar items */}
+          {bottomBarItems.map(item => {
             const Icon = item.icon;
-            const isActive = active === item.id;
+            const isActive = activeSection === item.id;
 
             return (
-              <motion.button
+              <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className="flex flex-col items-center py-3 px-2 relative w-1/5"
-                whileTap={{ scale: 0.9 }}
+                className="flex flex-col items-center py-3 px-2 relative flex-1"
               >
-                {/* Active indicator line */}
+                {/* Active indicator */}
                 {isActive && (
                   <motion.div
                     layoutId="activeNavIndicator"
-                    className="absolute top-0 w-12 h-1 rounded-b-full"
+                    className="absolute top-0 w-10 h-1 rounded-b-full"
                     style={{
-                      background: `linear-gradient(to right, ${THEME.primary.dark}, ${THEME.primary.main})`,
-                      boxShadow: `0 0 10px ${THEME.primary.glow}`
+                      background: THEME.primary.main,
+                      boxShadow: `0 0 8px ${THEME.primary.main}`
                     }}
                     transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
                 )}
 
-                {/* Icon with pulse animation when active */}
-                <div className="relative">
-                  <Icon
-                    size={24}
-                    className="z-10 relative"
-                    color={isActive ? THEME.primary.light : THEME.text.secondary}
-                    style={{
-                      filter: isActive ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none'
-                    }}
-                  />
-
-                  {isActive && (
-                    <motion.div
-                      className="absolute inset-0 rounded-full filter blur-sm"
-                      style={{ backgroundColor: THEME.primary.main }}
-                      animate={{
-                        scale: [1, 1.8, 1],
-                        opacity: [0.3, 0.1, 0.3]
-                      }}
-                      transition={{
-                        repeat: Infinity,
-                        duration: 2,
-                        ease: "easeInOut"
-                      }}
-                    />
-                  )}
-                </div>
-
-                {/* Label */}
+                <Icon
+                  className="w-5 h-5 mb-1"
+                  color={isActive ? THEME.primary.main : THEME.text.secondary}
+                />
                 <span
-                  className="text-[10px] mt-1 font-medium"
+                  className="text-[10px] font-medium"
                   style={{
-                    color: isActive ? THEME.primary.light : THEME.text.secondary,
-                    textShadow: isActive ? `0 0 5px ${THEME.primary.glow}` : 'none',
-                    letterSpacing: '0.5px'
+                    color: isActive ? THEME.primary.main : THEME.text.secondary
                   }}
                 >
                   {item.label}
                 </span>
-              </motion.button>
+              </button>
             );
           })}
 
-          {/* "More" button for overflow sections */}
-          {hasMoreItems && (
-            <motion.button
-              onClick={() => setIsExpanded(!isExpanded)}
-              className="flex flex-col items-center py-3 px-2 relative w-1/5"
-              whileTap={{ scale: 0.9 }}
+          {/* Menu button */}
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="flex flex-col items-center py-3 px-2 relative flex-1"
+          >
+            <Menu
+              className="w-5 h-5 mb-1"
+              color={THEME.text.secondary}
+            />
+            <span
+              className="text-[10px] font-medium"
+              style={{ color: THEME.text.secondary }}
             >
-              <div className="relative">
-                <Menu
-                  size={24}
-                  className="relative z-10"
-                  color={isExpanded ? THEME.primary.light : THEME.text.secondary}
-                  style={{
-                    filter: isExpanded ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none'
-                  }}
-                />
-
-                {isExpanded && (
-                  <motion.div
-                    className="absolute inset-0 rounded-full filter blur-sm"
-                    style={{ backgroundColor: THEME.primary.main }}
-                    animate={{
-                      scale: [1, 1.8, 1],
-                      opacity: [0.3, 0.1, 0.3]
-                    }}
-                    transition={{
-                      repeat: Infinity,
-                      duration: 2,
-                      ease: "easeInOut"
-                    }}
-                  />
-                )}
-              </div>
-
-              <span
-                className="text-[10px] mt-1 font-medium"
-                style={{
-                  color: isExpanded ? THEME.primary.light : THEME.text.secondary,
-                  textShadow: isExpanded ? `0 0 5px ${THEME.primary.glow}` : 'none',
-                  letterSpacing: '0.5px'
-                }}
-              >
-                More
-              </span>
-            </motion.button>
-          )}
+              Menu
+            </span>
+          </button>
         </div>
       </div>
 
-      {/* Expandable Panel for Additional Navigation Items - Revamped */}
+      {/* Full-screen menu */}
       <AnimatePresence>
-        {isExpanded && hasMoreItems && (
-          <>
-            {/* Backdrop for panel */}
-            <motion.div
-              className="fixed inset-0 z-30 bg-black/70"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsExpanded(false)}
-            />
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex flex-col bg-black/95 pt-safe"
+            style={{ backdropFilter: 'blur(8px)' }}
+          >
+            {/* Menu header */}
+            <div className="flex justify-between items-center px-6 py-4 border-b border-gray-800">
+              <h2 className="text-xl font-bold" style={{ color: THEME.primary.main }}>
+                Menu
+              </h2>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setExpandedCategory(null);
+                }}
+                className="p-2 rounded-full"
+                style={{ background: `${THEME.primary.main}20` }}
+              >
+                <X className="w-5 h-5" color={THEME.primary.light} />
+              </button>
+            </div>
 
-            {/* Panel Content */}
-            <motion.div
-              className="fixed bottom-16 left-4 right-4 z-40 overflow-hidden max-h-[65vh]"
-              initial={{ y: 100, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: 50, opacity: 0 }}
-              transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              style={{
-                background: `linear-gradient(135deg, ${THEME.background.glass}, rgba(30, 30, 40, 0.95))`,
-                borderWidth: '1px',
-                borderStyle: 'solid',
-                borderImage: `linear-gradient(135deg, ${THEME.primary.main}60, ${THEME.primary.light}20) 1`,
-                boxShadow: `0 10px 30px rgba(0, 0, 0, 0.4), 0 0 15px ${THEME.primary.glow}30`,
-                borderRadius: '1rem' // Consistent rounded corners
-              }}
-            >
-              {/* Only close button in the top right */}
-              <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-                <div className="flex items-center gap-2">
-                  <h3
-                    className="font-bold text-white text-lg"
-                    style={{ textShadow: `0 0 5px ${THEME.primary.glow}40` }}
-                  >
-                    Menu
-                  </h3>
-                </div>
-
-                <motion.button
-                  onClick={() => setIsExpanded(false)}
-                  className="rounded-full p-1.5"
-                  whileHover={{ scale: 1.1, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
-                  whileTap={{ scale: 0.9 }}
-                  style={{
-                    boxShadow: `0 0 10px ${THEME.primary.glow}30`,
-                    background: `${THEME.primary.main}20`,
-                    border: `1px solid ${THEME.primary.main}30`
-                  }}
-                >
-                  <X size={20} color={THEME.primary.light} />
-                </motion.button>
-              </div>
-
-              {/* Scrollable content area */}
-              <div className="p-4 overflow-y-auto max-h-[calc(65vh-60px)]">
-                <div className="grid grid-cols-2 gap-3">
-                  {secondaryItems.map((item) => {
+            {/* Menu content - scrollable */}
+            <div className="flex-1 overflow-y-auto px-6 py-4">
+              {/* Root menu items */}
+              {rootItems.length > 0 && (
+                <div className="mb-6">
+                  {rootItems.map(item => {
                     const Icon = item.icon;
-                    const isActive = active === item.id;
+                    const isActive = activeSection === item.id;
 
                     return (
-                      <motion.button
+                      <button
                         key={item.id}
-                        onClick={() => {
-                          handleNavClick(item.id);
-                          setIsExpanded(false);
-                        }}
-                        className="flex flex-col items-center justify-center p-4 transition-all duration-200 relative overflow-hidden group"
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
+                        onClick={() => handleNavClick(item.id)}
+                        className="w-full flex items-center gap-3 py-3.5 px-4 rounded-lg mb-2"
                         style={{
-                          background: isActive
-                            ? `linear-gradient(135deg, ${THEME.primary.main}30, ${THEME.primary.dark}10)`
-                            : 'rgba(255, 255, 255, 0.03)',
+                          background: isActive ? `${THEME.primary.main}10` : 'transparent',
                           borderWidth: '1px',
                           borderStyle: 'solid',
-                          borderColor: isActive ? THEME.border.active : 'rgba(255, 255, 255, 0.1)',
-                          boxShadow: isActive ? `0 0 15px ${THEME.primary.glow}30` : 'none',
-                          borderRadius: '0.8rem' // Consistent rounded corners
+                          borderColor: isActive ? THEME.border.active : 'transparent'
                         }}
                       >
-                        {/* Background animation on hover */}
-                        <motion.div
-                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                          style={{
-                            background: `radial-gradient(circle at center, ${THEME.primary.main}20 0%, transparent 70%)`,
-                            borderRadius: '0.8rem'
-                          }}
-                          animate={{ scale: [0.9, 1.1, 0.9] }}
-                          transition={{
-                            repeat: Infinity,
-                            duration: 3,
-                            ease: "easeInOut"
-                          }}
-                        />
-
-                        {/* Icon */}
                         <Icon
-                          size={26}
-                          color={isActive ? THEME.primary.light : THEME.text.secondary}
-                          style={{
-                            filter: isActive ? `drop-shadow(0 0 2px ${THEME.primary.glow})` : 'none'
-                          }}
+                          className="w-5 h-5"
+                          color={isActive ? THEME.primary.main : THEME.text.secondary}
                         />
-
-                        {/* Label */}
                         <span
-                          className="text-sm mt-3 font-medium"
+                          className="font-medium"
                           style={{
-                            color: isActive ? THEME.primary.light : THEME.text.secondary,
-                            textShadow: isActive ? `0 0 5px ${THEME.primary.glow}` : 'none'
+                            color: isActive ? THEME.primary.main : THEME.text.primary
                           }}
                         >
                           {item.label}
                         </span>
-
-                        {/* Active indicator dot */}
-                        {isActive && (
-                          <motion.div
-                            className="absolute top-2 right-2 w-2 h-2 rounded-full"
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            style={{
-                              background: THEME.primary.light,
-                              boxShadow: `0 0 5px ${THEME.primary.glow}`
-                            }}
-                          />
-                        )}
-                      </motion.button>
+                      </button>
                     );
                   })}
                 </div>
-              </div>
+              )}
 
-              {/* Remove the toggle for hidden sections - we don't need it */}
-            </motion.div>
-          </>
+              {/* Categorized menu items */}
+              {categorizedItems.map(category => {
+                const Icon = category.icon;
+                const isExpanded = expandedCategory === category.id;
+                const hasActiveItem = category.items.some(item => item.id === activeSection);
+
+                return (
+                  <div key={category.id} className="mb-4">
+                    {/* Category header */}
+                    <button
+                      onClick={() => toggleCategory(category.id)}
+                      className="w-full flex items-center justify-between px-4 py-3 rounded-lg mb-1"
+                      style={{
+                        background: (isExpanded || hasActiveItem) ? `${THEME.primary.main}10` : 'transparent',
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: (isExpanded || hasActiveItem) ? THEME.border.active : 'transparent'
+                      }}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon
+                          className="w-5 h-5"
+                          color={(isExpanded || hasActiveItem) ? THEME.primary.main : THEME.text.secondary}
+                        />
+                        <span
+                          className="font-medium"
+                          style={{
+                            color: (isExpanded || hasActiveItem) ? THEME.primary.main : THEME.text.primary
+                          }}
+                        >
+                          {category.label}
+                        </span>
+                      </div>
+
+                      <ChevronRight
+                        className={`transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`}
+                        color={THEME.text.secondary}
+                      />
+                    </button>
+
+                    {/* Category items */}
+                    <AnimatePresence>
+                      {isExpanded && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pl-12 space-y-1 py-1">
+                            {category.items.map(item => {
+                              const SubIcon = item.icon;
+                              const isActive = activeSection === item.id;
+
+                              return (
+                                <button
+                                  key={item.id}
+                                  onClick={() => handleNavClick(item.id)}
+                                  className="w-full flex items-center gap-3 py-3 px-4 rounded-lg"
+                                  style={{
+                                    background: isActive ? `${THEME.primary.main}10` : 'transparent'
+                                  }}
+                                >
+                                  <SubIcon
+                                    className="w-4 h-4"
+                                    color={isActive ? THEME.primary.main : THEME.text.secondary}
+                                  />
+                                  <span
+                                    style={{
+                                      color: isActive ? THEME.primary.main : THEME.text.secondary
+                                    }}
+                                  >
+                                    {item.label}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

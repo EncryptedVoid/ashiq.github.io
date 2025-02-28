@@ -3,19 +3,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, Youtube, Book, FileText, Star, Calendar, Clock, ArrowUpRight, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
 import ProjectsData from '@/data/ProjectsData';
 
-// Custom Section Header Component
-const SectionHeader = ({ title, subtitle }) => (
-  <div className="px-4 mb-6">
-    <h2 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
-      {title}
-    </h2>
-    {subtitle && <p className="text-white/60 mt-1 text-sm">{subtitle}</p>}
-  </div>
-);
-
 // Filter Toggle Button Component
 const FilterToggle = ({ filters, activeFilter, onFilterChange }) => (
-  <div className="px-4 mb-6">
+  <div className="px-4 mb-4">
     <div className="flex flex-wrap items-center justify-center gap-2">
       {filters.map((filter) => (
         <button
@@ -342,7 +332,7 @@ const ProjectsContainer = ({ projects, onProjectClick }) => {
 
   if (projects.length === 0) {
     return (
-      <div className="px-4 py-10 text-center text-white/40">
+      <div className="px-4 py-4 text-center text-white/40">
         No projects match the selected filter.
       </div>
     );
@@ -455,7 +445,7 @@ const MobileProjects = () => {
   };
 
   return (
-    <div className="py-12">
+    <div className="py-6">
       {/* Filter Toggle */}
       <FilterToggle
         filters={filters}
