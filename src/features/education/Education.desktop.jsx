@@ -188,7 +188,7 @@ const CurrentStatus = () => (
       </div>
       <div>
         <h3 className="text-xl font-semibold text-white mb-2">Currently on Internship</h3>
-        <p className="text-lg text-blue-400 mb-4">Software Testing Specialist at BlackBerry QNX</p>
+        <p className="text-lg text-blue-400 mb-4">Software Testing Specialist at QNX - Embedded Solutions</p>
         <p className="text-white/70">
           Developing automation testing framework for the QNX Everywhere project
           and improving testing efficiency while providing quality assurance support.

@@ -10,7 +10,7 @@ export const HeroData = {
       line2: "Software Engineer"
     },
     description: [
-      "University of Ottawa student pursuing a double major in Mathematics and Computer Science. Currently specializing in software automation and testing at BlackBerry QNX while developing frontend solutions as a freelance developer."
+      "University of Ottawa student pursuing a double major in Mathematics and Computer Science. Currently specializing in software automation and testing at QNX - Embedded Solutions while developing frontend solutions as a freelance developer."
     ]
   },
 

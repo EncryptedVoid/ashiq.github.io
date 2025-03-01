@@ -80,7 +80,7 @@ export const GoalsData = [
         timeline: [
         {
             date: "Current",
-            content: "Software Testing Specialist at BlackBerry QNX",
+            content: "Software Testing Specialist at QNX - Embedded Solutions",
             isActive: true
         },
         {

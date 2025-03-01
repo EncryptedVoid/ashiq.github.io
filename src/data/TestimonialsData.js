@@ -4,7 +4,7 @@ export const TestimonialData = [
       id: 1,
       name: "David Wilson",
       role: "Software Testing Lead",
-      company: "BlackBerry QNX",
+      company: "QNX - Embedded Solutions",
       initials: "DW",
       quote: "Impressive work on the automation testing framework. Achieved significant improvements in testing efficiency and demonstrated strong technical capabilities.",
       linkedIn: null
@@ -39,7 +39,7 @@ export const TestimonialData = [
 ];
 
 export const TestimonialCategories = {
-  professional: ['BlackBerry QNX'],
+  professional: ['QNX - Embedded Solutions'],
   freelance: ['Russell Driving School'],
   leadership: ['Key Club International'],
   retail: ['Purdys Chocolatier']

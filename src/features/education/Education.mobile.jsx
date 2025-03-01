@@ -134,7 +134,7 @@ const EducationMobile = () => {
             </div>
             <div>
               <div className="text-white text-sm font-medium">Currently on Internship</div>
-              <div className="text-white/60 text-xs">Software Testing Specialist at BlackBerry QNX</div>
+              <div className="text-white/60 text-xs">Software Testing Specialist at QNX - Embedded Solutions</div>
             </div>
           </div>
           <button

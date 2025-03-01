@@ -38,7 +38,7 @@ export const siteConfig = {
   experience: {
     current: {
       role: 'Software Testing Specialist',
-      company: 'BlackBerry QNX',
+      company: 'QNX - Embedded Solutions',
       period: 'September 2024 - Present',
       highlights: [
         'Developed automation testing framework',

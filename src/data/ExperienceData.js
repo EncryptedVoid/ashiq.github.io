@@ -4,8 +4,8 @@ export const ExperienceData = [
   {
     id: 'blackberry-qnx',
     title: 'Software Testing Specialist',
-    company: 'BlackBerry QNX',
-    companyLogo: getAssetPath('logo/qnx-logo.webp'),
+    company: 'QNX - Embedded Solutions',
+    companyLogo: getAssetPath('logo/qnx-logo.jpg'),
     location: 'Kanata, Ontario, Canada',
     period: {
       start: 'Sep 2024',
@@ -114,10 +114,10 @@ export const ExperienceData = [
     }
   },
   {
-    id: 'freelance-dev',
-    title: 'Frontend Developer',
-    company: 'Freelance',
-    companyLogo: getAssetPath('/logo/freelance-logo.webp'),
+    id: 'russell-driving-school',
+    title: 'Front-End Developer & SEO Specialist',
+    company: 'Russell Driving School',
+    companyLogo: getAssetPath('/logo/russell-driving-school.png'),
     location: 'Ottawa, Ontario, Canada',
     period: {
       start: 'Sep 2024',

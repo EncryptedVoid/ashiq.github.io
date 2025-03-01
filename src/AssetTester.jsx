@@ -10,7 +10,7 @@ const AssetTester = () => {
     // Generate paths
     const testPaths = {
       certificate: getAssetPath('certifications/DOCKER-FOR-BEGINNERS.pdf'),
-      logo: getAssetPath('logo/qnx-logo.webp'),
+      logo: getAssetPath('logo/qnx-logo.jpg'),
       profilePic: getAssetPath('pfp.jpg'),
       resume: getAssetPath('resume.pdf'),
       courseBanner: getAssetPath('course-thumbnails/year1/computing-1-thumbnail.webp')
