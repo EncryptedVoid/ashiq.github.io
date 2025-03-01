@@ -67,7 +67,7 @@ const MobileCertifications = () => {
   return (
     <section
       ref={ref}
-      className="py-12 px-4 overflow-hidden"
+      className="px-4 overflow-hidden"
     >
       {/* Header */}
       <motion.div
@@ -76,18 +76,12 @@ const MobileCertifications = () => {
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="flex justify-between items-center mb-2">
-          <h2 className="text-2xl font-bold text-white">Certifications</h2>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="p-2 rounded-lg bg-white/5 border border-white/10"
-          >
-            <Filter className={`w-5 h-5 ${showFilters ? 'text-blue-400' : 'text-white/70'}`} />
-          </button>
-        </div>
-        <p className="text-sm text-white/60">
-          Professional skills & technical qualifications
-        </p>
+        <button
+          onClick={() => setShowFilters(!showFilters)}
+          className="p-2 rounded-lg bg-white/5 border border-white/10"
+        >
+          <Filter className={`w-5 h-5 ${showFilters ? 'text-blue-400' : 'text-white/70'}`} />
+        </button>
       </motion.div>
 
       {/* Filter chips - collapsible */}

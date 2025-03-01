@@ -1,4 +1,3 @@
-// src/components/sections/Experience/components/ProjectItem.jsx
 import React from 'react';
 import { TechnologyTag } from '@/features/experience/components';
 

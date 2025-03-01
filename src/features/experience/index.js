@@ -1,9 +1,12 @@
-import { useMedia } from '@/context/MediaContext';
+// src/features/experience/index.js
 import ExperienceDesktop from './Experience.desktop';
 import ExperienceMobile from './Experience.mobile';
+import { useMedia } from '@/context/MediaContext';
 
-export const Experience = () => {
+const Experience = () => {
   const isMobile = useMedia('(max-width: 768px)');
-console.log('Hero isMobile:', isMobile);
   return isMobile ? <ExperienceMobile /> : <ExperienceDesktop />;
 };
+
+export { Experience, ExperienceDesktop, ExperienceMobile };
+export default Experience;

@@ -445,7 +445,7 @@ const MobileProjects = () => {
   };
 
   return (
-    <div className="py-6">
+    <div className="py-4">
       {/* Filter Toggle */}
       <FilterToggle
         filters={filters}

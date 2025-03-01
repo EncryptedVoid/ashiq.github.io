@@ -22,7 +22,7 @@ export const TestimonialsDesktop = () => {
   }, []);
 
     return (
-        <section className="w-full py-20 min-h-[600px]">
+        <section className="w-full min-h-[600px]">
             {/* Testimonials Slider */}
             <div className="relative max-w-6xl mx-auto px-4">
                 {/* Navigation Buttons */}

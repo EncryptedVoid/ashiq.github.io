@@ -1,4 +1,4 @@
-// src/components/sections/Experience/components/AchievementStat.jsx
+// src/features/experience/components/AchievementStat.jsx
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
@@ -21,7 +21,7 @@ const AchievementStat = ({ achievement }) => {
       onMouseLeave={() => setIsHovered(false)}
       whileHover={{ scale: 1.03 }}
     >
-      <div className="text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 group-hover:scale-105 transition-transform">
+      <div className="text-base font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-rose-300 group-hover:scale-105 transition-transform">
         {achievement.stat}
       </div>
       <div className="text-xs text-white/60 group-hover:text-white/80 transition-colors">

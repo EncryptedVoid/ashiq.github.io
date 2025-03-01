@@ -59,7 +59,7 @@ const FeaturedSocialCard = ({ data, isHovered, onHover, onLeave }) => {
           ${isHovered ? data.hoverColor : 'text-gray-300'}
           transition-colors duration-300
         `}>
-          <span>Get in touch</span>
+          <span>Send me an email!</span>
           <ExternalLink size={16} className="ml-2" />
         </div>
       </div>
@@ -137,7 +137,7 @@ const ContactDesktop = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
 
   return (
-    <section className="w-full py-24 px-8">
+    <section className="w-full px-8">
       {/* Main Layout */}
       <div className="max-w-7xl mx-auto">
         {/* Featured Row (Email and Calendly) */}

@@ -95,7 +95,7 @@ const ContactButton = ({
 
 const ContactMobile = () => {
   return (
-    <section className="py-12 px-4">
+    <section className="px-4">
       <div className="max-w-md mx-auto">
         {/* Primary Buttons */}
         <div className="space-y-4 mb-8">

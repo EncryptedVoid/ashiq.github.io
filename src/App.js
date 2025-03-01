@@ -11,6 +11,12 @@ import {
   Goals,
   Navigation
 } from '@/features';
+import {
+  SECTION_ORDER,
+  SECTIONS,
+  SECTION_GRADIENTS,
+  validateNavStructure
+} from '@data/navigationData';
 
 const LoadingSpinner = () => (
   <div className="min-h-screen w-full flex items-center justify-center">
@@ -20,22 +26,9 @@ const LoadingSpinner = () => (
 
 // Section Header Component
 const SectionHeader = ({ id, title, subtitle }) => {
-  // Different gradient colors for different sections
-  const gradients = {
-    hero: "from-blue-500 to-purple-500",
-    skills: "from-purple-500 to-pink-500",
-    experience: "from-green-500 to-blue-500",
-    projects: "from-orange-500 to-red-500",
-    testimonials: "from-pink-500 to-purple-500",
-    education: "from-blue-500 to-cyan-500",
-    certifications: "from-indigo-500 to-blue-500",
-    contact: "from-purple-500 to-indigo-500",
-    goals: "from-red-500 to-orange-500"
-  };
-
   return (
     <div className="py-8 md:py-12 mb-6 md:mb-8 text-center">
-      <h2 className={`text-3xl md:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r ${gradients[id] || "from-white to-gray-300"} bg-clip-text text-transparent`}>
+      <h2 className={`text-3xl md:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r ${SECTION_GRADIENTS[id] || SECTION_GRADIENTS.default} bg-clip-text text-transparent`}>
         {title}
       </h2>
       {subtitle && (
@@ -47,8 +40,21 @@ const SectionHeader = ({ id, title, subtitle }) => {
   );
 };
 
+// Map of component imports
+const COMPONENTS = {
+  hero: Hero,
+  experience: Experience,
+  skills: Skills,
+  projects: Projects,
+  testimonials: Testimonials,
+  education: Education,
+  certifications: Certifications,
+  goals: Goals,
+  contact: Contact
+};
+
 function App() {
-  // Directly check window width instead of using a hook
+  // State for mobile detection
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -62,96 +68,30 @@ function App() {
 
     window.addEventListener('resize', handleResize);
 
+    // Validate navigation structure
+    validateNavStructure();
+
     // Clean up
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Log for debugging
-  useEffect(() => {
-    console.log('Is mobile view:', isMobile);
-  }, [isMobile]);
-
-  // Define all sections and their metadata
-  const allSectionsData = {
-    hero: {
-      id: 'hero',
-      Component: Hero,
-    },
-    experience: {
-      id: 'experience',
-      Component: Experience,
-      title: "Professional Experience",
-      subtitle: "My journey and contributions in the tech industry"
-    },
-    skills: {
-      id: 'skills',
-      Component: Skills,
-      title: "Skills & Expertise",
-      subtitle: "Technical capabilities and professional competencies"
-    },
-    projects: {
-      id: 'projects',
-      Component: Projects,
-      title: "Project Showcase",
-      subtitle: "Featured work and technical implementations"
-    },
-    education: {
-      id: 'education',
-      Component: Education,
-      title: "Education",
-      subtitle: "Academic background and qualifications"
-    },
-    contact: {
-      id: 'contact',
-      Component: Contact,
-      title: "Get In Touch",
-      subtitle: "Connect with me professionally"
-    },
-    // Desktop-only sections
-    testimonials: {
-      id: 'testimonials',
-      Component: Testimonials,
-      title: "What People Say",
-      subtitle: "Feedback and testimonials from colleagues and clients",
-      // desktopOnly: true
-    },
-    certifications: {
-      id: 'certifications',
-      Component: Certifications,
-      title: "Certifications",
-      subtitle: "Professional qualifications and ongoing learning",
-      // desktopOnly: true
-    },
-    goals: {
-      id: 'goals',
-      Component: Goals,
-      title: "Future Goals",
-      subtitle: "Upcoming ventures and aspirations",
-      // desktopOnly: true
-    }
-  };
-
-  // Define the order of sections
-  const sectionOrder = [
-    'hero',
-    'experience',
-    'skills',
-    'projects',
-    'testimonials',
-    'education',
-    'certifications',
-    'contact',
-    'goals'
-  ];
-
-  // Build sections based on device
-  const sectionsToRender = sectionOrder
+  // Get sections to render based on the SECTION_ORDER
+  const sectionsToRender = SECTION_ORDER
     .filter(sectionId => {
-      const section = allSectionsData[sectionId];
-      // Only include desktop sections if not on mobile
-      return !section.desktopOnly || !isMobile;
+      const section = SECTIONS[sectionId];
+      // Skip desktop-only sections on mobile if needed
+      return section && (!section.desktopOnly || !isMobile);
     })
-    .map(sectionId => allSectionsData[sectionId]);
+    .map(sectionId => {
+      const section = SECTIONS[sectionId];
+      return {
+        id: sectionId,
+        Component: COMPONENTS[sectionId],
+        title: section.title,
+        subtitle: section.subtitle,
+        showHeader: section.showHeader !== false, // Default to true if not specified
+      };
+    });
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-gradient-to-br from-gray-900 to-black">
@@ -163,10 +103,10 @@ function App() {
           paddingBottom: isMobile ? '5rem' : '0'
         }}>
           <div className="relative w-full max-w-7xl mx-auto px-4">
-            {sectionsToRender.map(({ id, Component, title, subtitle }) => (
+            {sectionsToRender.map(({ id, Component, title, subtitle, showHeader }) => (
               <section key={id} id={`section-${id}`} className="relative w-full mb-16 md:mb-24">
-                {/* Don't show header for hero section */}
-                {id !== 'hero' && title && (
+                {/* Only show header if showHeader is true */}
+                {showHeader && title && (
                   <SectionHeader id={id} title={title} subtitle={subtitle} />
                 )}
                 <Component />

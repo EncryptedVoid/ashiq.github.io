@@ -13,6 +13,19 @@ module.exports = {
         primary: theme.colors.primary,
         brand: theme.colors.brand,
         surface: theme.colors.surface,
+        // Add salmon color palette
+        salmon: {
+          50: '#fff5f5',
+          100: '#ffe0e0',
+          200: '#ffc5c5',
+          300: '#ff9e9e',
+          400: '#fa8072', // Classic salmon
+          500: '#f25b5b',
+          600: '#e63e3e',
+          700: '#d32f2f',
+          800: '#ab2424',
+          900: '#8b1e1e',
+        }
       },
       spacing: {
         ...theme.spacing,

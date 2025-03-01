@@ -31,17 +31,17 @@ const Skills = () => {
   })).filter(category => category.skills.length > 0);
 
   return (
-    <div className="py-20">
+    <div className="">
       {/* Filter Tags */}
       <div className="max-w-7xl mx-auto mb-12">
-        <GlassCard className="p-6">
+        <GlassCard className="p-4">
           <div className="flex flex-wrap gap-3">
             {allTags.map((tag, index) => (
               <button
                 key={tag}
                 onClick={() => setSelectedTag(selectedTag === tag ? null : tag)}
                 className={`
-                  px-4 py-2
+                  px-2 py-2
                   rounded-xl
                   text-sm
                   font-medium

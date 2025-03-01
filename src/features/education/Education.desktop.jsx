@@ -97,7 +97,7 @@ const CourseCard = ({ course }) => {
   };
 
   return (
-    <div className="relative py-6">
+    <div className="relative py-4">
       {/* Carousel Container */}
       <div className="overflow-hidden">
         <div
