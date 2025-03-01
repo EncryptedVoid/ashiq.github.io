@@ -265,7 +265,7 @@ const EducationMobile = () => {
   ];
 
   return (
-    <section ref={ref} className="pb-8">
+    <section ref={ref} className="pb-5">
       {/* Section Tabs */}
       <div className="px-4 mb-5">
         <div className="flex bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/10">

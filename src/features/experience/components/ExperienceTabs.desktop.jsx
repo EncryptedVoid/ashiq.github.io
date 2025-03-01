@@ -19,7 +19,7 @@ const ExperienceTabs = ({ experienceData }) => {
 
   return (
     <section
-      className="min-h-screen md:px-8 lg:px-12"
+      className="py-16 md:px-8 lg:px-12"
       style={{
         backgroundImage: texturePattern,
         backgroundSize: '40px 40px',

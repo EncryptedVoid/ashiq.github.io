@@ -31,7 +31,7 @@ const CaseStudyModal = ({ isOpen, onClose, experience }) => {
             className="relative max-w-6xl mx-auto bg-gradient-to-b from-gray-900/50 to-black/50 rounded-3xl border border-white/10 overflow-hidden"
           >
             {/* Header Section */}
-            <div className="relative px-8 pt-12 pb-8 border-b border-white/10">
+            <div className="relative px-8 pt-12 pb-6 border-b border-white/10">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-red-500/10" />
 
               <div className="relative flex items-start gap-8">

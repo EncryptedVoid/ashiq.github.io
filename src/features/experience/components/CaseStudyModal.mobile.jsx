@@ -43,7 +43,7 @@ const MobileCaseStudyModal = ({ isOpen, onClose, experience }) => {
         </button>
 
         {/* Content */}
-        <div className="h-full overflow-y-auto pt-20 pb-12">
+        <div className="h-full overflow-y-auto pt-20 pb-6">
           {/* Header */}
           <div className="px-6 mb-8">
             <h2 className="text-2xl font-bold text-white mb-3">

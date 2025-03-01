@@ -193,7 +193,7 @@ const Projects = () => {
   return (
     <div className="py-1 px-4 md:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto mb-8">
-        {/* Top Projects Section Header */}
+        {/* Top Projects Section Header
         {!showAllProjects && (
           <div className="mb-8">
             <motion.div
@@ -214,7 +214,7 @@ const Projects = () => {
               Showcasing my top projects based on technical complexity, time investment, and recency
             </motion.p>
           </div>
-        )}
+        )} */}
 
         {/* Filter Tags - Only visible when showAllProjects is true */}
         <AnimatePresence>
@@ -439,7 +439,7 @@ const Projects = () => {
             {/* Projects Carousel */}
             <div
               ref={carouselRef}
-              className="flex overflow-x-auto pb-8 pt-4 gap-8 pl-4 pr-8 scrollbar-hide"
+              className="flex overflow-x-auto pb-6 pt-4 gap-8 pl-4 pr-8 scrollbar-hide"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
               onScroll={checkArrows}
             >

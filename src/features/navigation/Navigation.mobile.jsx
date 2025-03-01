@@ -35,21 +35,23 @@ export const NavigationMobile = () => {
       // Find the active section by checking which one is in view
       let activeFound = false;
 
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
+      for (let i = 0; i < sectionElements.length; i++) {
         const { id, element } = sectionElements[i];
         const rect = element.getBoundingClientRect();
 
-        // Check if the section is in view (top half of viewport)
-        if (rect.top <= (viewportHeight / 2)) {
+        // Consider a section active if it occupies the middle of the viewport
+        // or if it's the first one and we're at the top
+        if ((rect.top <= viewportHeight * 0.5 && rect.bottom >= viewportHeight * 0.5) ||
+            (i === 0 && rect.top > -rect.height * 0.5)) {
           setActiveSection(id);
           activeFound = true;
           break;
         }
       }
 
-      // If no section is in view (we're at the top), default to first section
-      if (!activeFound && scrollPosition < 100) {
-        setActiveSection(SECTION_ORDER[0]);
+      // If no section is in view (rare case), default to first section
+      if (!activeFound && sectionElements.length > 0) {
+        setActiveSection(sectionElements[0].id);
       }
     };
 
@@ -83,10 +85,10 @@ export const NavigationMobile = () => {
         clearTimeout(scrollTimeoutRef.current);
       }
 
-      // Reset the flag after scrolling animation is likely complete
+      // Reset the flag after scrolling animation is likely complete - shorter timeout
       scrollTimeoutRef.current = setTimeout(() => {
         isScrollingRef.current = false;
-      }, 1000);
+      }, 800); // Slightly shorter timeout (800ms instead of 1000ms)
     }
   };
 

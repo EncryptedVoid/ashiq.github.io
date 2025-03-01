@@ -39,7 +39,7 @@ const HeroMobile = () => {
   };
 
   return (
-    <div className="relative min-h-screen pb-16">
+    <div className="relative min-h-screen pb-6">
       <ParticleField />
 
       {/* Status Bar */}

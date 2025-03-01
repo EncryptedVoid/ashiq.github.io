@@ -33,7 +33,7 @@ const LoadingSpinner = () => (
 // Section Header Component
 const SectionHeader = ({ id, title, subtitle }) => {
   return (
-    <div className="py-8 md:py-12 mb-6 md:mb-8 text-center">
+    <div className="py-4 md:py-6 mb-6 md:mb-8 text-center">
       <h2 className={`text-3xl md:text-4xl font-bold mb-2 md:mb-3 bg-gradient-to-r ${SECTION_GRADIENTS[id] || SECTION_GRADIENTS.default} bg-clip-text text-transparent`}>
         {title}
       </h2>

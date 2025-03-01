@@ -329,7 +329,7 @@ const EducationDesktop = () => {
   }
 
   return (
-    <section ref={ref} className="pb-8">
+    <section ref={ref} className="pb-5">
       <div className="max-w-7xl mx-auto px-8">
         <EducationHeader university={university} />
 

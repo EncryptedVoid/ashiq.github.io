@@ -11,13 +11,13 @@ import {
 import { ChevronDown, Plus } from 'lucide-react';
 
 export const NavigationDesktop = () => {
+  console.log("NavigationDesktop component rendering");
+
   const [activeSection, setActiveSection] = useState('hero');
   const [isOverflowOpen, setIsOverflowOpen] = useState(false);
   const [openCategoryId, setOpenCategoryId] = useState(null);
 
-  // Refs for click outside detection
-  const categoryDropdownRefs = useRef({});
-  const overflowMenuRef = useRef(null);
+  console.log("Current active section:", activeSection);
 
   // Organize nav items based on SECTION_ORDER
   const standaloneItems = NAV_ITEMS.filter(item => item.category === null);
@@ -60,44 +60,107 @@ export const NavigationDesktop = () => {
   const overflowItems = mainNavItems.slice(CONFIG.maxVisibleItems);
   const hasOverflow = overflowItems.length > 0;
 
-  // Handle scrolling to update active section
+  // Use IntersectionObserver to track section visibility
   useEffect(() => {
-    const handleScroll = () => {
-      // Get the viewport height
-      const viewportHeight = window.innerHeight;
-      const scrollPosition = window.scrollY;
+    console.log("Setting up IntersectionObserver");
 
-      // Get all section elements in section order for proper tracking
-      const sectionElements = SECTION_ORDER
-        .map(id => ({ id, element: document.getElementById(`section-${id}`) }))
-        .filter(item => item.element !== null);
+    // Keep track of section visibility percentages
+    const sectionVisibility = {};
+    SECTION_ORDER.forEach(id => {
+      sectionVisibility[id] = 0;
+    });
 
-      // Find the active section by checking which one is in view
-      let activeFound = false;
+    // Options for the observer
+    const options = {
+      root: null, // Use viewport as root
+      rootMargin: '0px',
+      threshold: buildThresholdList(20) // Create multiple thresholds for more accurate tracking
+    };
 
-      for (let i = sectionElements.length - 1; i >= 0; i--) {
-        const { id, element } = sectionElements[i];
-        const rect = element.getBoundingClientRect();
+    const updateSectionVisibility = () => {
+      console.log("Section visibility:", sectionVisibility);
 
-        // Check if the section is in view (top half of viewport)
-        if (rect.top <= (viewportHeight / 2)) {
-          setActiveSection(id);
-          activeFound = true;
-          break;
+      // Find the section with highest visibility
+      let maxVisibility = 0;
+      let mostVisibleSection = null;
+
+      Object.entries(sectionVisibility).forEach(([id, visibility]) => {
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility;
+          mostVisibleSection = id;
         }
-      }
+      });
 
-      // If no section is in view (we're at the top), default to first section
-      if (!activeFound && scrollPosition < 100) {
-        setActiveSection(SECTION_ORDER[0]);
+      // If we have a section that's visible, set it as active
+      if (mostVisibleSection && maxVisibility > 0) {
+        console.log(`Setting active section to: ${mostVisibleSection} (visibility: ${maxVisibility.toFixed(2)})`);
+        setActiveSection(mostVisibleSection);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    // Observer callback
+    const observerCallback = (entries) => {
+      let needsUpdate = false;
 
-    return () => window.removeEventListener('scroll', handleScroll);
+      entries.forEach(entry => {
+        // Extract section ID from the element ID
+        const sectionId = entry.target.id.replace('section-', '');
+
+        // Update the visibility ratio
+        const oldVisibility = sectionVisibility[sectionId] || 0;
+        const newVisibility = entry.intersectionRatio;
+
+        // Only update if visibility has changed significantly
+        if (Math.abs(oldVisibility - newVisibility) > 0.05) {
+          sectionVisibility[sectionId] = newVisibility;
+          needsUpdate = true;
+          console.log(`Section ${sectionId} visibility changed to ${newVisibility.toFixed(2)}`);
+        }
+      });
+
+      if (needsUpdate) {
+        updateSectionVisibility();
+      }
+    };
+
+    // Create observer
+    const observer = new IntersectionObserver(observerCallback, options);
+
+    // Observe each section
+    const observedSections = [];
+    SECTION_ORDER.forEach(id => {
+      const element = document.getElementById(`section-${id}`);
+      if (element) {
+        observer.observe(element);
+        observedSections.push(element);
+        console.log(`Observing section-${id}`);
+      } else {
+        console.warn(`Could not find section-${id} to observe`);
+      }
+    });
+
+    // Clean up
+    return () => {
+      console.log("Cleaning up observer");
+      observedSections.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
   }, []);
+
+  // Helper function to create threshold list for smoother intersection detection
+  function buildThresholdList(numSteps) {
+    const thresholds = [];
+    for (let i = 0; i <= numSteps; i++) {
+      const ratio = i / numSteps;
+      thresholds.push(ratio);
+    }
+    return thresholds;
+  }
+
+  // Refs for click outside detection
+  const categoryDropdownRefs = useRef({});
+  const overflowMenuRef = useRef(null);
 
   // Handle click outside to close dropdowns
   useEffect(() => {
@@ -119,10 +182,17 @@ export const NavigationDesktop = () => {
 
   // Scroll to section handler
   const scrollToSection = (sectionId) => {
+    console.log(`scrollToSection called with ID: ${sectionId}`);
     const element = document.getElementById(`section-${sectionId}`);
+
     if (element) {
+      console.log(`Found element with ID section-${sectionId}, scrolling to it`);
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      console.log(`Setting active section to: ${sectionId}`);
       setActiveSection(sectionId);
+    } else {
+      console.error(`Element with ID section-${sectionId} not found!`);
     }
   };
 
