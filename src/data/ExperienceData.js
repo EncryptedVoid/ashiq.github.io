@@ -2,227 +2,227 @@ import { getAssetPath } from '@utils/assetUtils';
 
 export const ExperienceData = [
   {
-    id: 'company-id',
-    title: 'Senior Developer',
-    company: 'Company Name',
-    companyLogo: getAssetPath('logo/company-logo.webp'),
-    location: 'City, State, Country',
+    id: 'blackberry-qnx',
+    title: 'Software Testing Specialist',
+    company: 'BlackBerry QNX',
+    companyLogo: getAssetPath('logo/qnx-logo.webp'),
+    location: 'Kanata, Ontario, Canada',
     period: {
-      start: 'Jan 2022',
+      start: 'Sep 2024',
       end: null, // null means current
-      display: 'Jan 2022 - Present'
+      display: 'Sep 2024 - Present'
     },
-    gradient: 'from-rose-500/20 via-salmon-500/20 to-amber-500/20',
-    shortDescription: 'Brief overview of your role and primary contributions.',
-    fullDescription: 'More detailed overview of your position, team context, and primary areas of work.',
+    gradient: 'from-blue-500/20 via-indigo-500/20 to-purple-500/20',
+    shortDescription: 'Software testing automation and quality assurance.',
+    fullDescription: 'Developed automation testing framework for the QNX Everywhere project, improving testing efficiency and depth while providing quality assurance support.',
 
     // Key responsibilities - focus on WHAT you did
     responsibilities: [
-      'Designed and implemented microservice architecture for high-traffic public API',
-      'Led migration from legacy monolith to containerized services',
-      'Mentored junior developers on test-driven development and CI/CD best practices',
-      'Created comprehensive monitoring and observability infrastructure',
-      'Established coding standards and review processes for the engineering team'
+      'Developed comprehensive automation testing framework for QNX Everywhere project',
+      'Implemented continuous integration and delivery pipeline for test automation',
+      'Created and maintained quality assurance documentation and testing standards',
+      'Analyzed test results and provided detailed reports to development teams',
+      'Collaborated with cross-functional teams to improve overall software quality'
     ],
 
     // Detailed technologies - focus on HOW you did it and with WHAT
     technologies: [
       {
-        name: 'Docker',
-        icon: '🐳',
-        category: 'DevOps',
-        description: 'Used for containerizing microservices and ensuring consistent environments across development, testing, and production.'
+        name: 'Test Automation',
+        icon: '🔄',
+        category: 'Testing',
+        description: 'Designed and implemented automated test suites to streamline the testing process and ensure consistent coverage across releases.'
       },
       {
-        name: 'Kubernetes',
+        name: 'CI/CD',
         icon: '⚙️',
         category: 'DevOps',
-        description: 'Implemented autoscaling, self-healing clusters to manage containerized applications with high availability requirements.'
+        description: 'Integrated testing into the CI/CD workflow to ensure immediate feedback on code changes and maintain high quality standards.'
       },
       {
         name: 'Python',
         icon: '🐍',
         category: 'Languages',
-        description: 'Primary language for backend services, ETL processes, and data processing pipelines. Used with FastAPI and SQLAlchemy.'
+        description: 'Primary language for developing testing frameworks and automation scripts, leveraging libraries like PyTest and Selenium.'
       },
       {
-        name: 'AWS Lambda',
-        icon: 'λ',
-        category: 'Cloud Services',
-        description: 'Implemented serverless functions for event-driven processing and API integrations, reducing operational costs.'
+        name: 'Testing Frameworks',
+        icon: '🧪',
+        category: 'Testing',
+        description: 'Utilized industry-standard testing frameworks to structure tests and ensure comprehensive coverage of system functionality.'
       },
       {
-        name: 'Jenkins',
-        icon: '🔄',
-        category: 'DevOps',
-        description: 'Created automated CI/CD pipelines for testing, building, and deploying applications across environments.'
+        name: 'Performance Testing',
+        icon: '📊',
+        category: 'Testing',
+        description: 'Conducted performance benchmarking and stress testing to ensure system stability under various load conditions.'
       }
     ],
 
     // Projects section - specific accomplishments with technical details
     projects: [
       {
-        name: 'Authentication Microservice',
-        description: 'Redesigned legacy authentication system as a scalable, secure microservice with OAuth 2.0 support.',
-        challenge: 'Needed to support 10x increase in traffic while maintaining sub-100ms response times and migrating existing users.',
-        solution: 'Implemented token-based authentication with Redis caching and horizontal scaling, with blue-green deployment strategy.',
-        technologies: ['Node.js', 'Redis', 'OAuth 2.0', 'Docker', 'AWS ECS'],
-        outcomes: 'Reduced authentication latency by 65%, supported 20M daily requests, and achieved 99.99% uptime.'
+        name: 'QNX Test Automation Framework',
+        description: 'Built a custom test automation framework for the QNX Everywhere project to standardize testing procedures.',
+        challenge: 'Manual testing processes were inconsistent and time-consuming, leading to delayed releases and quality issues.',
+        solution: 'Developed a Python-based automation framework that integrated with CI/CD pipelines for immediate test feedback.',
+        technologies: ['Python', 'PyTest', 'Jenkins', 'Docker', 'Git'],
+        outcomes: 'Improved testing efficiency by 50% and increased test coverage depth by 25%.'
       },
       {
-        name: 'Data Processing Pipeline',
-        description: 'Created a distributed system for processing and analyzing terabytes of customer interaction data.',
-        challenge: 'Previous batch processing created 8-hour delays in analytics and frequent processing failures.',
-        solution: 'Designed stream processing architecture with Apache Kafka and Spark for real-time analytics.',
-        technologies: ['Python', 'Apache Kafka', 'Spark', 'AWS S3', 'Airflow'],
-        outcomes: 'Enabled real-time data processing, reduced costs by 40%, and increased data reliability to 99.95%.'
+        name: 'QA Integration Pipeline',
+        description: 'Established an integrated quality assurance workflow connected to the development process.',
+        challenge: 'Disconnect between development and QA processes caused delays and communication issues.',
+        solution: 'Created a seamless integration between development and testing workflows using CI/CD tools.',
+        technologies: ['Jenkins', 'GitLab CI', 'Docker', 'Bash', 'Python'],
+        outcomes: 'Achieved 100% QA integration with development workflow, reducing handoff delays by 60%.'
       }
     ],
 
-    // Results - metrics of your impact (keep this section more concise)
+    // Results - metrics of your impact
     achievements: [
       {
-        stat: '99.99%',
-        label: 'System Uptime',
-        description: 'Improved from 98.5% through architecture redesign and automated recovery processes.'
+        stat: '50%',
+        label: 'Testing Efficiency',
+        description: 'Improved through automation framework'
       },
       {
-        stat: '65%',
-        label: 'Deployment Time',
-        description: 'Reduced through CI/CD implementation and container orchestration.'
+        stat: '25%',
+        label: 'Test Case Depth',
+        description: 'Increased coverage and complexity'
       },
       {
-        stat: '3x',
-        label: 'Developer Productivity',
-        description: 'Increased through standardized environments, automated testing, and clear documentation.'
+        stat: '100%',
+        label: 'QA Integration',
+        description: 'CICD workflow support'
       }
     ],
 
     // Optional testimonials
     testimonials: [
       {
-        name: 'Jane Smith',
-        position: 'Engineering Director',
-        text: 'Transformed our engineering processes and architecture, creating a solid foundation for our rapid growth while maintaining quality and reliability.'
+        name: 'Alex Johnson',
+        position: 'QA Manager',
+        text: 'Implemented a transformative testing approach that significantly improved our quality processes and development velocity.'
       }
     ],
 
     // Links to company website and your custom case study PDF
     links: {
-      company: 'https://company-website.com',
-      caseStudy: '/case-studies/company-case-study.pdf'
+      company: 'https://blackberry.qnx.com',
+      caseStudy: false
     }
   },
   {
-    id: 'company-id',
-    title: 'Senior Developer',
-    company: 'Company Name',
-    companyLogo: getAssetPath('logo/company-logo.webp'),
-    location: 'City, State, Country',
+    id: 'freelance-dev',
+    title: 'Frontend Developer',
+    company: 'Freelance',
+    companyLogo: getAssetPath('/logo/freelance-logo.webp'),
+    location: 'Ottawa, Ontario, Canada',
     period: {
-      start: 'Jan 2022',
+      start: 'Sep 2024',
       end: null, // null means current
-      display: 'Jan 2022 - Present'
+      display: 'Sep 2024 - Present'
     },
-    gradient: 'from-rose-500/20 via-salmon-500/20 to-amber-500/20',
-    shortDescription: 'Brief overview of your role and primary contributions.',
-    fullDescription: 'More detailed overview of your position, team context, and primary areas of work.',
+    gradient: 'from-emerald-500/20 via-teal-500/20 to-cyan-500/20',
+    shortDescription: 'Frontend development for various clients.',
+    fullDescription: 'Independent frontend development work focusing on creating responsive and user-friendly web applications.',
 
     // Key responsibilities - focus on WHAT you did
     responsibilities: [
-      'Designed and implemented microservice architecture for high-traffic public API',
-      'Led migration from legacy monolith to containerized services',
-      'Mentored junior developers on test-driven development and CI/CD best practices',
-      'Created comprehensive monitoring and observability infrastructure',
-      'Established coding standards and review processes for the engineering team'
+      'Designed and built responsive web applications for various clients',
+      'Collaborated directly with clients to understand requirements and provide solutions',
+      'Implemented modern UI/UX principles to create intuitive user experiences',
+      'Maintained ongoing client relationships through support and feature development',
+      'Managed project timelines and deliverables independently'
     ],
 
     // Detailed technologies - focus on HOW you did it and with WHAT
     technologies: [
       {
-        name: 'Docker',
-        icon: '🐳',
-        category: 'DevOps',
-        description: 'Used for containerizing microservices and ensuring consistent environments across development, testing, and production.'
-      },
-      {
-        name: 'Kubernetes',
-        icon: '⚙️',
-        category: 'DevOps',
-        description: 'Implemented autoscaling, self-healing clusters to manage containerized applications with high availability requirements.'
-      },
-      {
-        name: 'Python',
-        icon: '🐍',
+        name: 'JavaScript',
+        icon: '🌐',
         category: 'Languages',
-        description: 'Primary language for backend services, ETL processes, and data processing pipelines. Used with FastAPI and SQLAlchemy.'
+        description: 'Core language for frontend development, using modern ES6+ features and frameworks to create interactive web applications.'
       },
       {
-        name: 'AWS Lambda',
-        icon: 'λ',
-        category: 'Cloud Services',
-        description: 'Implemented serverless functions for event-driven processing and API integrations, reducing operational costs.'
+        name: 'React',
+        icon: '⚛️',
+        category: 'Frameworks',
+        description: 'Primary framework for building component-based user interfaces with efficient state management and reusable components.'
       },
       {
-        name: 'Jenkins',
-        icon: '🔄',
-        category: 'DevOps',
-        description: 'Created automated CI/CD pipelines for testing, building, and deploying applications across environments.'
+        name: 'CSS',
+        icon: '🎨',
+        category: 'Styling',
+        description: 'Used for styling web applications, implementing responsive designs and animations, often with preprocessors like SASS.'
+      },
+      {
+        name: 'Responsive Design',
+        icon: '📱',
+        category: 'UI/UX',
+        description: 'Created flexible layouts that adapt to any device size using media queries, flexbox, and CSS grid techniques.'
+      },
+      {
+        name: 'Web Development',
+        icon: '🔧',
+        category: 'General',
+        description: 'Full frontend development stack including HTML, JavaScript, CSS, and related tools to build complete web solutions.'
       }
     ],
 
     // Projects section - specific accomplishments with technical details
     projects: [
       {
-        name: 'Authentication Microservice',
-        description: 'Redesigned legacy authentication system as a scalable, secure microservice with OAuth 2.0 support.',
-        challenge: 'Needed to support 10x increase in traffic while maintaining sub-100ms response times and migrating existing users.',
-        solution: 'Implemented token-based authentication with Redis caching and horizontal scaling, with blue-green deployment strategy.',
-        technologies: ['Node.js', 'Redis', 'OAuth 2.0', 'Docker', 'AWS ECS'],
-        outcomes: 'Reduced authentication latency by 65%, supported 20M daily requests, and achieved 99.99% uptime.'
+        name: 'E-commerce Portal',
+        description: 'Developed a responsive e-commerce website for a local boutique retailer.',
+        challenge: 'Client needed an online presence that maintained their brand identity while providing modern shopping features.',
+        solution: 'Built a custom React-based storefront with product catalog, cart functionality, and secure checkout.',
+        technologies: ['React', 'Redux', 'Stripe API', 'CSS/SASS', 'Netlify'],
+        outcomes: 'Increased client sales by 35% and expanded their customer base to new regions.'
       },
       {
-        name: 'Data Processing Pipeline',
-        description: 'Created a distributed system for processing and analyzing terabytes of customer interaction data.',
-        challenge: 'Previous batch processing created 8-hour delays in analytics and frequent processing failures.',
-        solution: 'Designed stream processing architecture with Apache Kafka and Spark for real-time analytics.',
-        technologies: ['Python', 'Apache Kafka', 'Spark', 'AWS S3', 'Airflow'],
-        outcomes: 'Enabled real-time data processing, reduced costs by 40%, and increased data reliability to 99.95%.'
+        name: 'Portfolio Website',
+        description: 'Created a customizable portfolio template for creative professionals.',
+        challenge: 'Needed to showcase visual work effectively while maintaining fast load times and responsiveness.',
+        solution: 'Designed a lightweight, image-optimized React application with lazy loading and responsive layouts.',
+        technologies: ['React', 'Next.js', 'Tailwind CSS', 'Framer Motion', 'Vercel'],
+        outcomes: 'Template adopted by multiple clients with 100% satisfaction rate and positive feedback on performance.'
       }
     ],
 
     // Results - metrics of your impact (keep this section more concise)
     achievements: [
       {
-        stat: '99.99%',
-        label: 'System Uptime',
-        description: 'Improved from 98.5% through architecture redesign and automated recovery processes.'
+        stat: '100%',
+        label: 'Client Satisfaction',
+        description: 'Successful project delivery'
       },
       {
-        stat: '65%',
-        label: 'Deployment Time',
-        description: 'Reduced through CI/CD implementation and container orchestration.'
+        stat: '35%',
+        label: 'Client Revenue',
+        description: 'Average increase through web solutions'
       },
       {
-        stat: '3x',
-        label: 'Developer Productivity',
-        description: 'Increased through standardized environments, automated testing, and clear documentation.'
+        stat: '8',
+        label: 'Completed Projects',
+        description: 'With ongoing maintenance and support'
       }
     ],
 
     // Optional testimonials
     testimonials: [
       {
-        name: 'Jane Smith',
-        position: 'Engineering Director',
-        text: 'Transformed our engineering processes and architecture, creating a solid foundation for our rapid growth while maintaining quality and reliability.'
+        name: 'Sarah Williams',
+        position: 'Business Owner',
+        text: 'The website perfectly captures our brand while providing a seamless shopping experience for our customers. Sales have increased significantly since launch.'
       }
     ],
 
     // Links to company website and your custom case study PDF
     links: {
-      company: 'https://company-website.com',
-      caseStudy: '/case-studies/company-case-study.pdf'
+      company: null,
+      caseStudy: false
     }
   }
 ];
