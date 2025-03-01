@@ -11,64 +11,127 @@ import {
 import { Menu, X, ChevronRight } from 'lucide-react';
 
 export const NavigationMobile = () => {
+  console.log("NavigationMobile component rendering");
+
   const [activeSection, setActiveSection] = useState('hero');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [expandedCategory, setExpandedCategory] = useState(null);
-  const isScrollingRef = useRef(false);
-  const scrollTimeoutRef = useRef(null);
+  const programmaticScrollRef = useRef(false);
 
-  // Handle scrolling to update active section with improved accuracy
+  console.log("Current active section (mobile):", activeSection);
+
+  // Use IntersectionObserver to track section visibility
   useEffect(() => {
-    const handleScroll = () => {
-      // Skip if scrolling was triggered by clicking a navigation item
-      if (isScrollingRef.current) return;
+    console.log("Setting up IntersectionObserver (mobile)");
 
-      // Get the viewport height for calculations
-      const viewportHeight = window.innerHeight;
-      const scrollPosition = window.scrollY;
+    // Keep track of section visibility percentages
+    const sectionVisibility = {};
+    SECTION_ORDER.forEach(id => {
+      sectionVisibility[id] = 0;
+    });
 
-      // Get all section elements in section order for proper tracking
-      const sectionElements = SECTION_ORDER
-        .map(id => ({ id, element: document.getElementById(`section-${id}`) }))
-        .filter(item => item.element !== null);
+    // Options for the observer
+    const options = {
+      root: null, // Use viewport as root
+      rootMargin: '0px',
+      threshold: buildThresholdList(20) // Create multiple thresholds for more accurate tracking
+    };
 
-      // Find the active section by checking which one is in view
-      let activeFound = false;
-
-      for (let i = 0; i < sectionElements.length; i++) {
-        const { id, element } = sectionElements[i];
-        const rect = element.getBoundingClientRect();
-
-        // Consider a section active if it occupies the middle of the viewport
-        // or if it's the first one and we're at the top
-        if ((rect.top <= viewportHeight * 0.5 && rect.bottom >= viewportHeight * 0.5) ||
-            (i === 0 && rect.top > -rect.height * 0.5)) {
-          setActiveSection(id);
-          activeFound = true;
-          break;
-        }
+    const updateSectionVisibility = () => {
+      // Skip updates during programmatic scrolling
+      if (programmaticScrollRef.current) {
+        console.log("Skipping visibility update during programmatic scroll");
+        return;
       }
 
-      // If no section is in view (rare case), default to first section
-      if (!activeFound && sectionElements.length > 0) {
-        setActiveSection(sectionElements[0].id);
+      console.log("Section visibility (mobile):", sectionVisibility);
+
+      // Find the section with highest visibility
+      let maxVisibility = 0;
+      let mostVisibleSection = null;
+
+      Object.entries(sectionVisibility).forEach(([id, visibility]) => {
+        if (visibility > maxVisibility) {
+          maxVisibility = visibility;
+          mostVisibleSection = id;
+        }
+      });
+
+      // If we have a section that's visible, set it as active
+      if (mostVisibleSection && maxVisibility > 0) {
+        console.log(`Setting active section to: ${mostVisibleSection} (visibility: ${maxVisibility.toFixed(2)})`);
+        setActiveSection(mostVisibleSection);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Observer callback
+    const observerCallback = (entries) => {
+      let needsUpdate = false;
 
-    // Initial call to set the active section on load
-    handleScroll();
+      entries.forEach(entry => {
+        // Extract section ID from the element ID
+        const sectionId = entry.target.id.replace('section-', '');
 
-    return () => window.removeEventListener('scroll', handleScroll);
+        // Update the visibility ratio
+        const oldVisibility = sectionVisibility[sectionId] || 0;
+        const newVisibility = entry.intersectionRatio;
+
+        // Only update if visibility has changed significantly
+        if (Math.abs(oldVisibility - newVisibility) > 0.05) {
+          sectionVisibility[sectionId] = newVisibility;
+          needsUpdate = true;
+          console.log(`Section ${sectionId} visibility changed to ${newVisibility.toFixed(2)}`);
+        }
+      });
+
+      if (needsUpdate) {
+        updateSectionVisibility();
+      }
+    };
+
+    // Create observer
+    const observer = new IntersectionObserver(observerCallback, options);
+
+    // Observe each section
+    const observedSections = [];
+    SECTION_ORDER.forEach(id => {
+      const element = document.getElementById(`section-${id}`);
+      if (element) {
+        observer.observe(element);
+        observedSections.push(element);
+        console.log(`Observing section-${id} (mobile)`);
+      } else {
+        console.warn(`Could not find section-${id} to observe (mobile)`);
+      }
+    });
+
+    // Clean up
+    return () => {
+      console.log("Cleaning up observer (mobile)");
+      observedSections.forEach(element => {
+        observer.unobserve(element);
+      });
+    };
   }, []);
+
+  // Helper function to create threshold list for smoother intersection detection
+  function buildThresholdList(numSteps) {
+    const thresholds = [];
+    for (let i = 0; i <= numSteps; i++) {
+      const ratio = i / numSteps;
+      thresholds.push(ratio);
+    }
+    return thresholds;
+  }
 
   // Handle navigation click
   const handleNavClick = (itemId) => {
+    console.log(`Navigation clicked for section: ${itemId} (mobile)`);
+
     const element = document.getElementById(`section-${itemId}`);
     if (element) {
-      // Set flag to prevent scroll handler from changing active section
-      isScrollingRef.current = true;
+      // Set flag to prevent observer from changing active section during programmatic scroll
+      programmaticScrollRef.current = true;
 
       // Close menu after navigation
       setIsMenuOpen(false);
@@ -80,15 +143,13 @@ export const NavigationMobile = () => {
       // Smooth scroll to section
       element.scrollIntoView({ behavior: 'smooth' });
 
-      // Clear any existing timeout
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-
-      // Reset the flag after scrolling animation is likely complete - shorter timeout
-      scrollTimeoutRef.current = setTimeout(() => {
-        isScrollingRef.current = false;
-      }, 800); // Slightly shorter timeout (800ms instead of 1000ms)
+      // Reset the flag after scrolling animation is likely complete
+      setTimeout(() => {
+        programmaticScrollRef.current = false;
+        console.log("Programmatic scroll complete, resuming observer updates");
+      }, 800);
+    } else {
+      console.error(`Element with ID section-${itemId} not found (mobile)!`);
     }
   };
 
@@ -111,68 +172,71 @@ export const NavigationMobile = () => {
 
   const ActiveIcon = getCurrentSectionIcon();
 
-  // Create correctly ordered menu structure
-  // This follows the exact order in SECTION_ORDER
-  const createOrderedMenu = () => {
-    // First, set up the exact order we want from SECTION_ORDER
-    const menuOrder = [...SECTION_ORDER]; // Use SECTION_ORDER directly
+  // Build the menu structure following SECTION_ORDER exactly
+  const buildMenuStructure = () => {
+    // Track processed categories to avoid duplicates
+    const processedCategoryIds = new Set();
 
-    // Create lookup maps
-    const navItemMap = NAV_ITEMS.reduce((acc, item) => {
-      acc[item.id] = item;
-      return acc;
-    }, {});
+    // Create placeholder for menu items
+    const menuItems = [];
 
-    const categoryMap = CATEGORIES.reduce((acc, cat) => {
-      acc[cat.id] = {
-        ...cat,
+    // Create a map of categories
+    const categoryMap = {};
+    CATEGORIES.forEach(category => {
+      categoryMap[category.id] = {
+        ...category,
         isCategory: true,
         items: []
       };
-      return acc;
-    }, {});
+    });
 
-    // First pass: collect items into categories
+    // First pass: collect items into their categories
     NAV_ITEMS.forEach(item => {
       if (item.category && categoryMap[item.category]) {
         categoryMap[item.category].items.push(item);
       }
     });
 
-    // Sort items within each category according to SECTION_ORDER
+    // Sort each category's items according to SECTION_ORDER
     Object.values(categoryMap).forEach(category => {
       category.items.sort((a, b) =>
-        menuOrder.indexOf(a.id) - menuOrder.indexOf(b.id)
+        SECTION_ORDER.indexOf(a.id) - SECTION_ORDER.indexOf(b.id)
       );
     });
 
-    // Create final menu structure
-    const rootItems = [];
-    const categories = [];
-    const addedCategoryIds = new Set();
+    // Second pass: add items to the menu in SECTION_ORDER
+    SECTION_ORDER.forEach(sectionId => {
+      const item = NAV_ITEMS.find(item => item.id === sectionId);
+      if (!item) return;
 
-    // Follow menuOrder exactly
-    menuOrder.forEach(sectionId => {
-      const item = navItemMap[sectionId];
-      if (!item) return; // Skip if not found
-
-      if (!item.category) {
-        // It's a standalone item
-        rootItems.push(item);
-      } else if (!addedCategoryIds.has(item.category)) {
-        // It's the first item from a category we haven't added yet
-        addedCategoryIds.add(item.category);
-        if (categoryMap[item.category]) {
-          categories.push(categoryMap[item.category]);
+      if (item.category) {
+        // This is a categorized item - add its category if not already processed
+        const categoryId = item.category;
+        if (!processedCategoryIds.has(categoryId) && categoryMap[categoryId]) {
+          menuItems.push(categoryMap[categoryId]);
+          processedCategoryIds.add(categoryId);
         }
+      } else {
+        // This is a standalone item
+        menuItems.push(item);
       }
     });
+
+    // Filter out standalone items (non-categories)
+    const rootItems = menuItems.filter(item => !item.isCategory);
+    // Get only categories
+    const categories = menuItems.filter(item => item.isCategory);
 
     return { rootItems, categories };
   };
 
   // Get the properly ordered menu structure
-  const { rootItems, categories } = createOrderedMenu();
+  const { rootItems, categories } = buildMenuStructure();
+
+  console.log("Mobile menu structure:", {
+    rootItems: rootItems.map(item => item.label),
+    categories: categories.map(cat => cat.label)
+  });
 
   return (
     <>
