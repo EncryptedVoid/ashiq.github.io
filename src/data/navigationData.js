@@ -34,7 +34,7 @@ import {
     },
     {
       id: 'education',
-      label: 'Education',
+      label: 'Training',
       icon: GraduationCap,
       description: 'Academic qualifications and skills'
     }
@@ -175,7 +175,7 @@ import {
     // Maximum number of items visible before overflow
     maxVisibleItems: 5,
     // Logo text to display
-    logoText: "MY PORTFOLIO"
+    logoText: "NICE TO MEET YOU!"
   };
 
   // Configuration for mobile navigation
