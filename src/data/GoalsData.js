@@ -28,7 +28,7 @@ export const GoalsData = [
         type: "frontend",
         title: "Frontend Development Path",
         icon: "fas fa-code",
-        progress: 35,
+        progress: 45,
         timeline: [
         {
             date: "Current - Q2 2024",
@@ -100,7 +100,7 @@ export const GoalsData = [
         type: "technical",
         title: "Technical Advancement",
         icon: "fas fa-laptop-code",
-        progress: 40,
+        progress: 30,
         timeline: [
         {
             date: "Current",
