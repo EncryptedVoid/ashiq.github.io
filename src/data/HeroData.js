@@ -33,8 +33,8 @@ export const HeroData = {
   quickStats: [
     {
       icon: Code,
-      label: "Projects Completed",
-      value: "25+"
+      label: "Skills",
+      value: "20+"
     },
     {
       icon: GraduationCap,
