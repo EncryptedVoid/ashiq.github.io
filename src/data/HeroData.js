@@ -49,7 +49,7 @@ export const HeroData = {
     {
       icon: FileCode,
       label: "GitHub Repos",
-      value: "26+"
+      value: "20+"
     }
   ],
 
