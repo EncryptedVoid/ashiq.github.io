@@ -1,183 +1,285 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Clock, Code, Activity, Sparkles } from 'lucide-react';
+import { Search, X, Filter, ArrowLeft, ArrowRight, Zap, Code, GitBranch } from 'lucide-react';
 import { skillsData } from '@/data/SkillsData';
+import { TypewriterText } from '@/components/TypewriterText';
 
-const MobileSkills = () => {
+const SkillsMobile = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [skillIndex, setSkillIndex] = useState(0);
+  const [selectedSkill, setSelectedSkill] = useState(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const searchInputRef = useRef(null);
 
-  // Category Card Component
-  const CategoryCard = ({ category, onClick, index }) => (
-    <motion.button
-      onClick={onClick}
-      className="w-full group"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-    >
-      <div className="relative w-full rounded-xl bg-white/5 border border-white/10
-                    overflow-hidden group-hover:bg-white/10 transition-all duration-300">
-        <div className="p-3 flex items-start gap-3">
-          <div className="w-10 h-10 rounded-lg bg-rose-500/10 flex items-center
-                       justify-center text-xl group-hover:scale-110
-                       transition-transform duration-300 flex-shrink-0">
-            {category.icon}
-          </div>
-          <div className="flex-1 min-w-0 text-left py-1">
-            <h3 className="text-base font-semibold text-white leading-snug">
-              {category.title}
-            </h3>
-            <p className="text-xs text-white/60 mt-0.5">
-              {category.skills.length} skills • {category.experience}
-            </p>
-          </div>
-          <div className="pt-2 flex-shrink-0">
-            <ChevronRight className="w-4 h-4 text-white/40 group-hover:translate-x-1
-                                  transition-transform duration-300" />
-          </div>
-        </div>
-      </div>
-    </motion.button>
-  );
+  // All skills flattened into a single array
+  const allSkills = skillsData.flatMap(category => category.skills);
 
-  // Skill Details Modal
-  const SkillDetailsView = ({ skill, onClose, onNext, onPrev, index, total }) => (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="fixed inset-0 bg-gradient-to-br from-gray-900 to-black z-50 overflow-y-auto"
-    >
-      {/* Header */}
-      <div className="sticky top-0 bg-black/20 backdrop-blur-xl border-b border-white/10 z-10">
-        <div className="px-4 py-3 flex items-center justify-between">
-          <button
-            onClick={onClose}
-            className="flex items-center gap-2 text-white/60"
-          >
-            <ChevronLeft className="w-5 h-5" />
-            <span className="text-sm">Back</span>
-          </button>
-          <span className="text-sm text-white/60">
-            {index + 1} of {total}
-          </span>
-        </div>
-      </div>
+  // Filter skills based on search and category
+  const filteredSkills = allSkills.filter(skill => {
+    const matchesSearch = searchQuery === '' ||
+      skill.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      skill.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      skill.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-      {/* Content */}
-      <div className="px-4 py-4 space-y-6">
-        {/* Title */}
-        <div className="flex items-center gap-3">
-          <div className="p-2 rounded-lg bg-rose-500/10">
-            <Sparkles className="w-5 h-5 text-rose-400" />
-          </div>
-          <div>
-            <h2 className="text-xl font-bold text-white">{skill.name}</h2>
-            <div className="flex items-center gap-1.5 text-white/60 text-sm">
-              <Clock className="w-4 h-4" />
-              <span>Since {skill.yearStarted}</span>
-            </div>
-          </div>
-        </div>
+    const matchesCategory = !selectedCategory ||
+      skillsData.find(c => c.id === selectedCategory)?.skills.includes(skill);
 
-        {/* Description */}
-        <p className="text-base text-white/80 leading-relaxed">{skill.description}</p>
-
-        {/* Metrics */}
-        <div className="grid grid-cols-2 gap-2">
-          {Object.entries(skill.metrics).map(([key, value]) => (
-            <div key={key} className="p-3 rounded-lg bg-white/5 space-y-1">
-              <span className="text-xs text-white/40 capitalize">
-                {key.replace(/([A-Z])/g, ' $1').trim()}
-              </span>
-              <div className="text-sm font-semibold text-white">{value}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Recent Projects */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-medium text-white">Recent Work</h3>
-          <div className="grid grid-cols-2 gap-2">
-            {skill.recentProjects.map((project, i) => (
-              <div key={i} className="p-3 rounded-lg bg-white/5 space-y-0.5">
-                <div className="text-sm text-white/80">{project.name}</div>
-                <div className="text-xs text-white/40">{project.metric}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Tags */}
-        <div className="space-y-2">
-          <h3 className="text-sm font-medium text-white">Technologies</h3>
-          <div className="flex flex-wrap gap-1.5">
-            {skill.tags.map((tag, i) => (
-              <span key={i} className="px-2 py-1 rounded-lg bg-white/5 text-xs text-white/60">
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Bottom Navigation */}
-      <div className="sticky bottom-0 p-4 bg-black/20 backdrop-blur-xl border-t border-white/10">
-        <div className="flex gap-2">
-          <button
-            onClick={onPrev}
-            disabled={index === 0}
-            className="flex-1 py-2 rounded-lg bg-white/5 disabled:opacity-50
-                     text-white text-sm font-medium"
-          >
-            Previous
-          </button>
-          <button
-            onClick={onNext}
-            disabled={index === total - 1}
-            className="flex-1 py-2 rounded-lg bg-rose-500/10 text-rose-400
-                     disabled:opacity-50 text-sm font-medium"
-          >
-            Next
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
+    return matchesSearch && matchesCategory;
+  });
 
   return (
-    <div className="min-h-screen">
-      {/* Categories */}
-      <div className="px-4 space-y-2">
-        {skillsData.map((category, index) => (
-          <CategoryCard
-            key={category.id}
-            category={category}
-            index={index}
-            onClick={() => {
-              setSelectedCategory(category);
-              setSkillIndex(0);
-            }}
-          />
-        ))}
+    <div className="pb-20">
+      {/* Header with search */}
+      <div className="sticky top-0 z-30 pt-4 pb-4 bg-gradient-to-b from-gray-900 via-gray-900/95 to-transparent">
+        <div className="flex items-center gap-2 mb-3">
+          <div className="relative flex-1">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Search className="w-4 h-4 text-white/40" />
+            </div>
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search skills..."
+              className="w-full bg-white/5 border border-white/10 rounded-lg py-2 pl-9 pr-9 text-white placeholder-white/40 focus:outline-none focus:ring-1 focus:ring-blue-500/50 focus:border-blue-500/50 text-sm"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute inset-y-0 right-0 pr-3 flex items-center"
+              >
+                <X className="w-4 h-4 text-white/40" />
+              </button>
+            )}
+          </div>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`w-10 h-10 flex items-center justify-center rounded-lg border transition-colors ${
+              showFilters || selectedCategory
+                ? 'bg-blue-500/20 border-blue-500/40 text-blue-400'
+                : 'bg-white/5 border-white/10 text-white/60'
+            }`}
+          >
+            <Filter className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Category filters */}
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <div className="flex gap-2 overflow-x-auto pb-2 hide-scrollbar">
+                <button
+                  onClick={() => setSelectedCategory(null)}
+                  className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                    selectedCategory === null
+                      ? 'bg-blue-500/80 text-white'
+                      : 'bg-white/5 text-white/60'
+                  }`}
+                >
+                  All
+                </button>
+                {skillsData.map(category => (
+                  <button
+                    key={category.id}
+                    onClick={() => setSelectedCategory(
+                      selectedCategory === category.id ? null : category.id
+                    )}
+                    className={`flex-shrink-0 px-3 py-1.5 rounded-lg text-xs transition-colors ${
+                      selectedCategory === category.id
+                        ? 'bg-blue-500/80 text-white'
+                        : 'bg-white/5 text-white/60'
+                    }`}
+                  >
+                    {category.title}
+                  </button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
-      {/* Skill Details Modal */}
+      {/* Skills Grid */}
+      <div className="px-4 space-y-3">
+        {filteredSkills.map((skill, index) => (
+          <motion.div
+            key={`${skill.name}-${index}`}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.05 }}
+            onClick={() => setSelectedSkill(skill)}
+          >
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4 active:bg-white/10 transition-colors">
+              <div className="flex justify-between items-start mb-2">
+                <h3 className="text-base font-semibold text-white">{skill.name}</h3>
+                <span className="px-2 py-0.5 bg-white/10 rounded-full text-xs text-white/60">
+                  {skill.yearStarted}
+                </span>
+              </div>
+
+              <p className="text-sm text-white/60 line-clamp-2 mb-3">{skill.description}</p>
+
+              {/* Metrics preview */}
+              <div className="grid grid-cols-2 gap-2 mb-3">
+                <div className="bg-white/5 rounded-lg p-2">
+                  <div className="text-xs text-white/40 mb-0.5">Code</div>
+                  <div className="text-sm font-medium text-white">{skill.metrics.linesOfCode?.toLocaleString()}+</div>
+                </div>
+                <div className="bg-white/5 rounded-lg p-2">
+                  <div className="text-xs text-white/40 mb-0.5">Projects</div>
+                  <div className="text-sm font-medium text-white">{skill.metrics.projectsCompleted}</div>
+                </div>
+              </div>
+
+              {/* Tags */}
+              <div className="flex flex-wrap gap-1.5">
+                {skill.tags.slice(0, 2).map((tag, i) => (
+                  <span key={i} className="px-2 py-0.5 bg-white/5 rounded-lg text-xs text-white/60">
+                    {tag}
+                  </span>
+                ))}
+                {skill.tags.length > 2 && (
+                  <span className="px-2 py-0.5 bg-white/5 rounded-lg text-xs text-white/60">
+                    +{skill.tags.length - 2}
+                  </span>
+                )}
+              </div>
+            </div>
+          </motion.div>
+        ))}
+
+        {/* No results message */}
+        {filteredSkills.length === 0 && (
+          <div className="text-center py-12">
+            <div className="text-4xl mb-3">🔍</div>
+            <h3 className="text-lg font-semibold text-white mb-2">No skills found</h3>
+            <p className="text-sm text-white/60 mb-4">Try adjusting your search or filters</p>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory(null);
+              }}
+              className="px-3 py-1.5 bg-blue-500/20 text-blue-400 rounded-lg text-sm"
+            >
+              Reset filters
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Skill Detail Modal */}
       <AnimatePresence>
-        {selectedCategory && (
-          <SkillDetailsView
-            skill={selectedCategory.skills[skillIndex]}
-            index={skillIndex}
-            total={selectedCategory.skills.length}
-            onClose={() => setSelectedCategory(null)}
-            onNext={() => skillIndex < selectedCategory.skills.length - 1 && setSkillIndex(i => i + 1)}
-            onPrev={() => skillIndex > 0 && setSkillIndex(i => i - 1)}
-          />
+        {selectedSkill && (
+          <motion.div
+            initial={{ translateY: '100%' }}
+            animate={{ translateY: 0 }}
+            exit={{ translateY: '100%' }}
+            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+            className="fixed inset-0 z-50 bg-gray-900 overflow-y-auto"
+          >
+            {/* Modal Header */}
+            <div className="sticky top-0 z-10 bg-gray-900/80 backdrop-blur-md">
+              <div className="flex items-center justify-between p-4 border-b border-white/10">
+                <button
+                  onClick={() => setSelectedSkill(null)}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5"
+                >
+                  <ArrowLeft className="w-5 h-5 text-white/60" />
+                </button>
+                <h2 className="text-lg font-semibold text-white">{selectedSkill.name}</h2>
+                <div className="w-8 h-8" /> {/* Empty div for flex spacing */}
+              </div>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-4 space-y-6">
+              {/* Overview */}
+              <div className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  <span className="px-2 py-1 bg-blue-500/10 text-blue-400 rounded-lg text-xs">
+                    Since {selectedSkill.yearStarted}
+                  </span>
+                  {selectedSkill.tags.slice(0, 2).map((tag, i) => (
+                    <span key={i} className="px-2 py-1 bg-white/5 rounded-lg text-xs text-white/60">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="text-white/80 text-base">{selectedSkill.description}</p>
+              </div>
+
+              {/* Metrics */}
+              <div className="space-y-3">
+                <h3 className="text-base font-medium text-white">Skill Metrics</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <Code className="w-5 h-5 text-blue-400 mb-1" />
+                    <div className="text-xl font-bold text-white mb-0.5">
+                      {selectedSkill.metrics.linesOfCode?.toLocaleString()}+
+                    </div>
+                    <div className="text-xs text-white/60">Lines of Code</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <GitBranch className="w-5 h-5 text-green-400 mb-1" />
+                    <div className="text-xl font-bold text-white mb-0.5">
+                      {selectedSkill.metrics.projectsCompleted}
+                    </div>
+                    <div className="text-xs text-white/60">Projects</div>
+                  </div>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3">
+                    <Zap className="w-5 h-5 text-yellow-400 mb-1" />
+                    <div className="text-xl font-bold text-white mb-0.5">
+                      {selectedSkill.metrics.contributions}
+                    </div>
+                    <div className="text-xs text-white/60">Contributions</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recent Projects */}
+              {selectedSkill.recentProjects && selectedSkill.recentProjects.length > 0 && (
+                <div className="space-y-3">
+                  <h3 className="text-base font-medium text-white">Recent Projects</h3>
+                  <div className="space-y-2">
+                    {selectedSkill.recentProjects.map((project, idx) => (
+                      <div key={idx} className="bg-white/5 border border-white/10 rounded-xl p-3">
+                        <div className="flex justify-between items-center">
+                          <h4 className="text-sm font-medium text-white">{project.name}</h4>
+                          <span className="px-2 py-0.5 bg-white/10 rounded-lg text-xs text-white/60">
+                            {project.metric}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* All Technologies/Tags */}
+              <div className="space-y-3">
+                <h3 className="text-base font-medium text-white">Technologies</h3>
+                <div className="flex flex-wrap gap-2">
+                  {selectedSkill.tags.map((tag, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-white/5 rounded-lg text-sm text-white/80">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>
   );
 };
 
-export default MobileSkills;
+export default SkillsMobile;
