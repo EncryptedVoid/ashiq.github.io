@@ -62,8 +62,8 @@ import {
       label: 'Experience',
       icon: Briefcase,
       category: 'work',
-      title: "Professional Experience",
-      subtitle: "My journey and contributions in the tech industry",
+      title: "",
+      subtitle: "",
     },
     projects: {
       id: 'projects',
