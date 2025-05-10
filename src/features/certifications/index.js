@@ -1,9 +1,11 @@
+// index.js
 import { useMedia } from '@/context/MediaContext';
 import CertificationsDesktop from './Certifications.desktop';
 import CertificationsMobile from './Certifications.mobile';
 
-export const Certifications = () => {
-  const isMobile = useMedia('(max-width: 768px)');
-console.log('Hero isMobile:', isMobile);
+const Certifications = () => {
+  const isMobile = useMedia();
   return isMobile ? <CertificationsMobile /> : <CertificationsDesktop />;
 };
+
+export { Certifications };
