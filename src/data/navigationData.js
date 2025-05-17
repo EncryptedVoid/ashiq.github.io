@@ -102,8 +102,8 @@ import {
       label: 'Goals',
       icon: Target,
       category: null, // Standalone item
-      title: "Future Goals",
-      subtitle: "Upcoming ventures and aspirations",
+      title: "",
+      subtitle: "",
     },
     contact: {
       id: 'contact',
