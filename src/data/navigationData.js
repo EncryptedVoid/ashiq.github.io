@@ -94,8 +94,8 @@ import {
       label: 'Certifications',
       icon: Award,
       category: 'education',
-      title: "Certifications",
-      subtitle: "Professional qualifications and ongoing learning",
+      title: "",
+      subtitle: "",
     },
     goals: {
       id: 'goals',
