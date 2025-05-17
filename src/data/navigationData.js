@@ -49,14 +49,14 @@ import {
       category: null, // Standalone item
       showHeader: false, // Don't show section header for hero
     },
-    testimonials: {
-      id: 'testimonials',
-      label: 'Testimonials',
-      icon: Users,
-      category: 'work',
-      title: "What People Say",
-      subtitle: "Feedback and testimonials from colleagues and clients",
-    },
+    // testimonials: {
+    //   id: 'testimonials',
+    //   label: 'Testimonials',
+    //   icon: Users,
+    //   category: 'work',
+    //   title: "What People Say",
+    //   subtitle: "Feedback and testimonials from colleagues and clients",
+    // },
     experience: {
       id: 'experience',
       label: 'Experience',
@@ -119,7 +119,7 @@ import {
   // This array controls both the rendering order and navigation priority
   export const SECTION_ORDER = [
     'hero',
-    'testimonials',
+    // 'testimonials',
     'experience',
     'projects',
     'skills',

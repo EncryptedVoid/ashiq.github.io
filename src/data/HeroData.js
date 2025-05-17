@@ -43,12 +43,12 @@ export const HeroData = {
     },
     {
       icon: Terminal,
-      label: "Technologies",
-      value: "10+"
+      label: "Experience",
+      value: "12+ mon"
     },
     {
       icon: FileCode,
-      label: "GitHub Repos",
+      label: "Projects",
       value: "20+"
     }
   ],
