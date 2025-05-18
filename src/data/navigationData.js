@@ -110,8 +110,8 @@ import {
       label: 'Contact',
       icon: Mail,
       category: null, // Standalone item
-      title: "Get In Touch",
-      subtitle: "Connect with me professionally",
+      title: "",
+      subtitle: "",
     }
   };
 

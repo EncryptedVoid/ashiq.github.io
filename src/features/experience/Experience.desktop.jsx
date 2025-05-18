@@ -68,7 +68,7 @@ const ExperienceDesktop = () => {
               }`}
             >
               <CalendarDays  className="w-4 h-4" />
-              CalendarDays
+              Timeline
             </button>
             <button
               onClick={() => setViewMode('grid')}
