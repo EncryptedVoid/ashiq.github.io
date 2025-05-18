@@ -1,273 +1,250 @@
-// src/features/certifications/Certifications.mobile.jsx
-import React, { useState, useEffect, useRef } from 'react';
+// Certifications.mobile.jsx
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Filter, X, Trophy, ChevronDown, ChevronUp } from 'lucide-react';
 import { Certifications as CertificationsData } from '@data/CertificationsData';
-import {
-  ChevronRight, ChevronLeft, ChevronDown, Filter,
-  Award, X
-} from 'lucide-react';
-import { CertCardMobile as CertCard, CertModalMobile as CertModal } from './components';
+import { CertCardMobile, CertModalMobile } from './components';
 import { useScrollAnimation } from '@hooks';
 
-const MobileCertifications = () => {
+const CertificationsMobile = () => {
   const [selectedCert, setSelectedCert] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
-  const [showAllCerts, setShowAllCerts] = useState(false);
-  const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
-  const carouselRef = useRef(null);
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [expandedSections, setExpandedSections] = useState({});
   const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
 
-  // Extract unique certificate types for filters
-  const certTypes = ['all', ...new Set(CertificationsData.map(cert => cert.type))];
+  // Process certifications into categories
+  const categorizedCerts = useMemo(() => {
+    let filtered = CertificationsData;
 
-  // Top featured certificates to always show
-  const featuredCertsCount = 3;
-  const featuredCerts = CertificationsData.slice(0, featuredCertsCount);
+    // Apply search
+    if (searchQuery) {
+      filtered = filtered.filter(cert =>
+        cert.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        cert.skills.some(skill => skill.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
 
-  // Remaining certificates that will be in the carousel
-  const remainingCerts = CertificationsData.slice(featuredCertsCount);
+    // Group by category
+    const grouped = filtered.reduce((acc, cert) => {
+      const category = cert.category || 'Other';
+      if (!acc[category]) acc[category] = [];
+      acc[category].push(cert);
+      return acc;
+    }, {});
 
-  // Filtered certificates for carousel
-  const [filteredCarouselCerts, setFilteredCarouselCerts] = useState(remainingCerts);
+    // Sort each category by date
+    Object.keys(grouped).forEach(category => {
+      grouped[category].sort((a, b) => new Date(b.date) - new Date(a.date));
+    });
 
-  // Apply filters when active filter changes
-  useEffect(() => {
-    if (activeFilter === 'all') {
-      setFilteredCarouselCerts(remainingCerts);
+    return grouped;
+  }, [searchQuery]);
+
+  // Get visible certifications based on active category
+  const visibleCertifications = useMemo(() => {
+    if (activeCategory === 'all') {
+      // Show featured from each category
+      const featured = {};
+      Object.entries(categorizedCerts).forEach(([category, certs]) => {
+        featured[category] = certs.slice(0, 3);
+      });
+      return featured;
     } else {
-      setFilteredCarouselCerts(remainingCerts.filter(cert => cert.type === activeFilter));
+      // Show all from selected category
+      return { [activeCategory]: categorizedCerts[activeCategory] || [] };
     }
-    setCurrentCarouselIndex(0);
-  }, [activeFilter]);
+  }, [categorizedCerts, activeCategory]);
 
-  const handleCertClick = (cert) => {
-    setSelectedCert(cert);
-    document.body.style.overflow = 'hidden';
-  };
-
-  const closeModal = () => {
-    setSelectedCert(null);
-    document.body.style.overflow = 'auto';
-  };
-
-  // Carousel navigation
-  const nextSlide = () => {
-    if (currentCarouselIndex < filteredCarouselCerts.length - 1) {
-      setCurrentCarouselIndex(prevIndex => prevIndex + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentCarouselIndex > 0) {
-      setCurrentCarouselIndex(prevIndex => prevIndex - 1);
-    }
+  const toggleSection = (section) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [section]: !prev[section]
+    }));
   };
 
   return (
-    <section
-      ref={ref}
-      className="px-4 overflow-hidden"
-    >
-      {/* Header */}
-      <motion.div
-        className="mb-6"
-        initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-        transition={{ duration: 0.5 }}
-      >
-        <button
-          onClick={() => setShowFilters(!showFilters)}
-          className="p-2 rounded-lg bg-white/5 border border-white/10"
-        >
-          <Filter className={`w-5 h-5 ${showFilters ? 'text-blue-400' : 'text-white/70'}`} />
-        </button>
-      </motion.div>
-
-      {/* Filter chips - collapsible */}
-      <AnimatePresence>
-        {showFilters && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            className="overflow-hidden mb-6"
-          >
-            <div className="pb-2 flex flex-wrap gap-2">
-              {certTypes.map((type) => (
-                <button
-                  key={type}
-                  onClick={() => {
-                    setActiveFilter(type);
-                    setShowAllCerts(false);
-                  }}
-                  className={`
-                    px-3 py-1.5 rounded-full text-sm transition-all duration-300
-                    ${activeFilter === type
-                      ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                      : 'bg-white/5 text-white/60 border-white/10'}
-                    border capitalize
-                  `}
-                >
-                  {type === 'all' ? 'All' : type}
-                </button>
-              ))}
+    <section ref={ref} className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+      {/* Mobile Header */}
+      <div className="sticky top-0 z-20 bg-gray-900/95 backdrop-blur-sm border-b border-gray-800">
+        <div className="px-4 py-4">
+          {/* Title Row */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-blue-500/20 border border-purple-500/30">
+                <Trophy className="w-5 h-5 text-purple-400" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-white">Certifications</h2>
+                <p className="text-xs text-gray-400">{CertificationsData.length} certificates</p>
+              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Featured Certifications */}
-      <div className="mb-8">
-        <div className="flex justify-between items-center mb-3">
-          <h3 className="text-white font-medium text-sm uppercase tracking-wider">
-            Featured Certifications
-          </h3>
-          <span className="text-xs text-white/40">{featuredCerts.length} certificates</span>
-        </div>
-
-        <div className="space-y-3">
-          {featuredCerts.map((cert, index) => (
-            <motion.div
-              key={cert.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="p-2 rounded-lg bg-gray-800 border border-gray-700"
             >
-              <CertCard
-                cert={cert}
-                onClick={() => handleCertClick(cert)}
-                featured={true}
-              />
-            </motion.div>
-          ))}
+              <Filter className="w-5 h-5 text-gray-400" />
+            </button>
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search certificates..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-10 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 text-sm focus:outline-none focus:border-purple-500/50"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 -translate-y-1/2"
+              >
+                <X className="w-4 h-4 text-gray-400" />
+              </button>
+            )}
+          </div>
+
+          {/* Filter Pills */}
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="flex gap-2 pt-3 overflow-x-auto pb-1 scrollbar-hide">
+                  <button
+                    onClick={() => setActiveCategory('all')}
+                    className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                      activeCategory === 'all'
+                        ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                        : 'bg-gray-800 text-gray-400 border border-gray-700'
+                    }`}
+                  >
+                    All
+                  </button>
+                  {Object.keys(categorizedCerts).map(category => (
+                    <button
+                      key={category}
+                      onClick={() => setActiveCategory(category)}
+                      className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
+                        activeCategory === category
+                          ? 'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                          : 'bg-gray-800 text-gray-400 border border-gray-700'
+                      }`}
+                    >
+                      {category} ({categorizedCerts[category].length})
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
 
-      {/* Show More Button */}
-      {!showAllCerts && filteredCarouselCerts.length > 0 && (
-        <motion.button
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="w-full py-3 px-4 rounded-xl
-            bg-white/5 border border-white/10
-            text-white/70 font-medium flex items-center justify-center gap-2"
-          onClick={() => setShowAllCerts(true)}
-        >
-          <span>Show More Certificates ({remainingCerts.length})</span>
-          <ChevronDown className="w-5 h-5" />
-        </motion.button>
-      )}
-
-      {/* Carousel of Additional Certificates */}
-      <AnimatePresence>
-        {showAllCerts && filteredCarouselCerts.length > 0 && (
+      {/* Content */}
+      <div className="px-4 py-6 pb-24">
+        {Object.entries(visibleCertifications).map(([category, certs]) => (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="mt-8 overflow-hidden"
+            key={category}
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.4 }}
+            className="mb-8"
           >
-            {/* Carousel Header */}
-            <div className="flex justify-between items-center mb-4">
-              <h3 className="text-white font-medium text-sm uppercase tracking-wider">
-                {activeFilter === 'all' ? 'All Other Certificates' : `${activeFilter} Certificates`}
-              </h3>
-              <button
-                onClick={() => setShowAllCerts(false)}
-                className="p-1.5 rounded-full bg-white/5 hover:bg-white/10"
-              >
-                <X className="w-4 h-4 text-white/60" />
-              </button>
+            {/* Category Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-white font-medium">{category}</h3>
+              {activeCategory === 'all' && categorizedCerts[category]?.length > 3 && (
+                <button
+                  onClick={() => setActiveCategory(category)}
+                  className="text-sm text-purple-400 flex items-center gap-1"
+                >
+                  View All
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              )}
             </div>
 
-            {/* Carousel */}
-            <div className="relative">
-              <div ref={carouselRef} className="mb-4 relative">
+            {/* Certificate Cards */}
+            <div className="space-y-3">
+              {certs.map((cert, index) => (
                 <motion.div
-                  key={currentCarouselIndex}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
+                  key={cert.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                  <CertCard
-                    cert={filteredCarouselCerts[currentCarouselIndex]}
-                    onClick={() => handleCertClick(filteredCarouselCerts[currentCarouselIndex])}
-                    featured={false}
+                  <CertCardMobile
+                    certificate={cert}
+                    onClick={() => setSelectedCert(cert)}
                   />
                 </motion.div>
-              </div>
-
-              {/* Carousel Navigation */}
-              <div className="flex items-center justify-between">
-                <button
-                  onClick={prevSlide}
-                  disabled={currentCarouselIndex === 0}
-                  className={`
-                    p-2 rounded-full
-                    ${currentCarouselIndex === 0
-                      ? 'text-white/20 bg-white/5'
-                      : 'text-white/60 bg-white/10'}
-                  `}
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-
-                <div className="text-sm text-white/60">
-                  {currentCarouselIndex + 1} of {filteredCarouselCerts.length}
-                </div>
-
-                <button
-                  onClick={nextSlide}
-                  disabled={currentCarouselIndex === filteredCarouselCerts.length - 1}
-                  className={`
-                    p-2 rounded-full
-                    ${currentCarouselIndex === filteredCarouselCerts.length - 1
-                      ? 'text-white/20 bg-white/5'
-                      : 'text-white/60 bg-white/10'}
-                  `}
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-
-              {/* Progress Dots */}
-              <div className="flex justify-center gap-1 mt-4">
-                {filteredCarouselCerts.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrentCarouselIndex(index)}
-                    className={`
-                      w-2 h-2 rounded-full
-                      ${index === currentCarouselIndex
-                        ? 'bg-blue-400'
-                        : 'bg-white/20'}
-                      transition-all duration-200
-                    `}
-                    aria-label={`Go to certificate ${index + 1}`}
-                  />
-                ))}
-              </div>
+              ))}
             </div>
+
+            {/* Show More for Category */}
+            {activeCategory === category && categorizedCerts[category]?.length > certs.length && (
+              <motion.button
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                onClick={() => toggleSection(category)}
+                className="w-full mt-4 py-2 text-sm text-purple-400 flex items-center justify-center gap-2"
+              >
+                {expandedSections[category] ? (
+                  <>
+                    Show Less
+                    <ChevronUp className="w-4 h-4" />
+                  </>
+                ) : (
+                  <>
+                    Show {categorizedCerts[category].length - certs.length} More
+                    <ChevronDown className="w-4 h-4" />
+                  </>
+                )}
+              </motion.button>
+            )}
+          </motion.div>
+        ))}
+
+        {/* Empty State */}
+        {Object.keys(visibleCertifications).length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-20"
+          >
+            <div className="text-gray-400 mb-4">
+              <Search className="w-12 h-12 mx-auto mb-3 opacity-50" />
+              <h3 className="text-lg font-medium text-white mb-1">No certificates found</h3>
+              <p className="text-sm">Try a different search term</p>
+            </div>
+            <button
+              onClick={() => {
+                setSearchQuery('');
+                setActiveCategory('all');
+              }}
+              className="mt-4 px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-gray-300 text-sm"
+            >
+              Clear Search
+            </button>
           </motion.div>
         )}
-      </AnimatePresence>
-
-      {/* Empty state */}
-      {showAllCerts && filteredCarouselCerts.length === 0 && (
-        <div className="py-8 text-center text-white/40 bg-white/5 rounded-lg">
-          No additional certificates found for this category
-        </div>
-      )}
+      </div>
 
       {/* Modal */}
-      <CertModal
-        cert={selectedCert}
-        onClose={closeModal}
+      <CertModalMobile
+        certificate={selectedCert}
+        onClose={() => setSelectedCert(null)}
       />
     </section>
   );
 };
 
-export default MobileCertifications;
+export default CertificationsMobile;

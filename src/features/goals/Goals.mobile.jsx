@@ -1,45 +1,48 @@
-// src/features/goals/components/GoalsMobile.jsx
-import React, { useState } from 'react';
-import { GoalCardMobile } from '@/features/goals/components';
-import { GoalsData } from '@/data';
+// src/features/goals/Goals.mobile.jsx
+import React from 'react';
+import { motion } from 'framer-motion';
+import GoalCard from './components/GoalCard.mobile';
 
-export const GoalsMobile = () => {
-  const [activeTab, setActiveTab] = useState('all');
-  const categories = ['all', 'learning', 'frontend', 'academic', 'career', 'technical'];
-
-  const filteredGoals = activeTab === 'all'
-    ? GoalsData
-    : GoalsData.filter(goal => goal.type === activeTab);
-
+const GoalsMobile = ({ goals = [] }) => {
   return (
-    <section className="w-full px-4 py-6">
-      {/* Category Pills */}
-      <div className="mb-6 overflow-x-auto pb-2 -mx-4 px-4 flex items-center space-x-2 scrollbar-hide">
-        {categories.map(category => (
-          <button
-            key={category}
-            onClick={() => setActiveTab(category)}
-            className={`
-              whitespace-nowrap px-4 py-2 rounded-full text-sm font-medium
-              transition-all duration-300
-              ${activeTab === category
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md shadow-purple-500/20'
-                : 'bg-white/[0.06] text-white/70 hover:bg-white/[0.1]'
-              }
-            `}
-          >
-            {category.charAt(0).toUpperCase() + category.slice(1)}
-          </button>
-        ))}
-      </div>
+    <div className="relative overflow-hidden py-12">
+      {/* Background pattern - simplified for mobile */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          backgroundImage: `radial-gradient(circle at 15px 15px, rgba(250, 140, 140, 0.15) 1.5px, transparent 0)`,
+          backgroundSize: '50px 50px'
+        }}
+      />
 
-      {/* Goals List */}
-      <div className="grid grid-cols-1 gap-4">
-        {filteredGoals.map(goal => (
-          <GoalCardMobile key={goal.id} goal={goal} />
-        ))}
+      <div className="px-5">
+        {/* Section header */}
+        <motion.div
+          className="mb-10 text-center"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h2 className="text-3xl font-bold mb-3 bg-gradient-to-r from-rose-400 via-purple-500 to-indigo-500 bg-clip-text text-transparent">
+            Future Aspirations
+          </h2>
+          <p className="text-sm text-white/60 max-w-xs mx-auto">
+            A roadmap of goals and milestones
+          </p>
+        </motion.div>
+
+        {/* Goals stack */}
+        <div className="space-y-6">
+          {goals.map((goal, index) => (
+            <GoalCard
+              key={index}
+              goal={goal}
+              index={index}
+            />
+          ))}
+        </div>
       </div>
-    </section>
+    </div>
   );
 };
 

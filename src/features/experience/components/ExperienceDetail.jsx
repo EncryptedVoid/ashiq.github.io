@@ -1,455 +1,378 @@
-// ExperienceDetail.jsx - Updated with better data handling
-import React, { useState, useRef } from 'react';
+// src/features/experience/components/ExperienceDetail.jsx
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Briefcase, Code, Target, Trophy, ExternalLink,
-  ChevronLeft, ChevronRight
+  MapPin, Calendar, ExternalLink, Download, Code, Target,
+  Trophy, Star, ChevronRight, ChevronDown, CheckCircle
 } from 'lucide-react';
-import { TypewriterText } from '@/components';
-import { getTechnologyNames } from '@/data/ExperienceData';
+import { getTechnologiesByCategory, getTechnologyNames } from '@data/ExperienceData';
 
-// Tab button component
-const TabButton = ({ label, icon, id, activeTab, onClick }) => (
-  <motion.button
-    whileHover={{ y: -2 }}
-    whileTap={{ scale: 0.95 }}
-    onClick={() => onClick(id)}
-    className={`
-      px-5 py-3 rounded-lg flex items-center gap-2 transition-all
-      ${activeTab === id
-        ? 'bg-rose-500/20 text-white border border-rose-500/30'
-        : 'bg-gray-800/50 text-gray-300 hover:bg-gray-800 border border-gray-700'}
-    `}
+const TabButton = ({ label, icon, isActive, onClick }) => (
+  <button
+    onClick={onClick}
+    className={`px-4 py-2 rounded-lg flex items-center gap-2 transition-all ${
+      isActive
+        ? 'bg-red-500/20 text-red-400 border border-red-500/30'
+        : 'bg-gray-800/50 text-gray-400 hover:bg-gray-800 hover:text-white'
+    }`}
   >
     {icon}
     <span>{label}</span>
-  </motion.button>
+  </button>
 );
-
-// Horizontal carousel for displaying items
-const HorizontalCarousel = ({ items, renderItem }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const carouselRef = useRef(null);
-
-  // Ensure items is an array
-  const safeItems = Array.isArray(items) ? items : [];
-
-  const nextItem = () => {
-    if (safeItems.length <= 1) return;
-    setActiveIndex((prevIndex) => (prevIndex + 1) % safeItems.length);
-  };
-
-  const prevItem = () => {
-    if (safeItems.length <= 1) return;
-    setActiveIndex((prevIndex) => (prevIndex - 1 + safeItems.length) % safeItems.length);
-  };
-
-  if (safeItems.length === 0) {
-    return <p className="text-gray-400 italic">No items available</p>;
-  }
-
-  return (
-    <div className="relative">
-      {/* Navigation arrows - only show if multiple items */}
-      {safeItems.length > 1 && (
-        <>
-          <motion.button
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gray-800/80 flex items-center justify-center text-white/70 hover:text-white hover:bg-gray-700/80 border border-gray-700"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={prevItem}
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </motion.button>
-
-          <motion.button
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-10 h-10 rounded-full bg-gray-800/80 flex items-center justify-center text-white/70 hover:text-white hover:bg-gray-700/80 border border-gray-700"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={nextItem}
-          >
-            <ChevronRight className="w-5 h-5" />
-          </motion.button>
-        </>
-      )}
-
-      {/* Items display */}
-      <div className="overflow-hidden">
-        <motion.div
-          ref={carouselRef}
-          className="flex transition-all duration-500 ease-in-out"
-          animate={{ x: `-${activeIndex * 100}%` }}
-        >
-          {safeItems.map((item, index) => (
-            <div key={index} className="w-full flex-shrink-0">
-              {renderItem(item, index)}
-            </div>
-          ))}
-        </motion.div>
-      </div>
-
-      {/* Pagination dots - only show if multiple items */}
-      {safeItems.length > 1 && (
-        <div className="flex justify-center mt-4 gap-2">
-          {safeItems.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === activeIndex ? 'w-6 bg-rose-500' : 'bg-gray-600'
-              }`}
-            />
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};
 
 const ExperienceDetail = ({ experience }) => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [expandedProject, setExpandedProject] = useState(null);
 
-  // Add safety checks for undefined data
-  if (!experience) {
-    return (
-      <div className="flex-1 flex items-center justify-center">
-        <p className="text-gray-400">No experience data selected</p>
-      </div>
-    );
-  }
+  const technologyCategories = getTechnologiesByCategory(experience);
 
-  // Safely access technologies data with error handling
-  let technologies = [];
-  try {
-    // First try to get categorized technologies
-    const technologyCategories = getTechnologiesByCategory(experience);
-    if (technologyCategories) {
-      technologies = Object.values(technologyCategories).flat();
-    }
-  } catch (error) {
-    console.error("Error accessing technologies:", error);
-    // Fallback to direct array if available
-    if (Array.isArray(experience.technologies)) {
-      technologies = experience.technologies;
-    }
-  }
-
-  // Console log for debugging
-  console.log("Experience data:", {
-    id: experience.id,
-    technologies: technologies.length,
-    projects: experience.projects?.length || 0,
-    achievements: experience.achievements?.length || 0
-  });
-
-  // Render functions for carousel items
-  const renderTechnology = (tech, index) => {
-    // Check if tech is an object or a string
-    const isObject = typeof tech === 'object' && tech !== null;
-
-    return (
-      <div className="px-4 py-6">
-        <div className="bg-gray-800/80 border border-gray-700 rounded-lg p-4 flex gap-4 h-full">
-          <div className="w-14 h-14 rounded-full bg-rose-500/20 flex items-center justify-center text-2xl text-rose-400 flex-shrink-0">
-            {isObject && tech.icon ? tech.icon : '💻'}
-          </div>
-          <div>
-            <h4 className="text-white font-medium text-lg">
-              {isObject ? tech.name : tech}
-            </h4>
-            {isObject && tech.description && (
-              <p className="text-gray-400 mt-2">{tech.description}</p>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const renderProject = (project, index) => {
-    return (
-      <div className="px-4 py-6">
-        <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-          <h3 className="text-xl font-semibold text-white mb-3">{project.name}</h3>
-          <p className="text-white/70 mb-6">{project.description}</p>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            {project.challenge && (
-              <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <h4 className="text-rose-400 font-medium mb-2">Challenge</h4>
-                <p className="text-white/70 text-sm">{project.challenge}</p>
-              </div>
-            )}
-
-            {project.solution && (
-              <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <h4 className="text-rose-400 font-medium mb-2">Solution</h4>
-                <p className="text-white/70 text-sm">{project.solution}</p>
-              </div>
-            )}
-
-            {project.outcomes && (
-              <div className="bg-gray-800 border border-gray-700 rounded-lg p-4">
-                <h4 className="text-rose-400 font-medium mb-2">Outcomes</h4>
-                <p className="text-white/70 text-sm">{project.outcomes}</p>
-              </div>
-            )}
-          </div>
-
-          {project.technologies && Array.isArray(project.technologies) && project.technologies.length > 0 && (
-            <div className="border-t border-gray-700 pt-4">
-              <h4 className="text-sm text-gray-400 mb-3">Technologies</h4>
-              <div className="flex flex-wrap gap-2">
-                {project.technologies.map((tech, idx) => (
-                  <span
-                    key={idx}
-                    className="px-3 py-1 text-sm bg-rose-500/10 text-rose-400 rounded-full border border-rose-500/20"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  const renderAchievement = (achievement, index) => {
-    return (
-      <motion.div
-        className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 text-center"
-        whileHover={{ y: -4, backgroundColor: 'rgba(31, 41, 55, 0.4)' }}
-      >
-        <div className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-rose-400 to-purple-400">
-          {achievement.stat}
-        </div>
-        <div className="text-white font-medium mt-2">{achievement.label}</div>
-        {achievement.description && (
-          <div className="text-gray-400 text-sm mt-2">{achievement.description}</div>
-        )}
-      </motion.div>
-    );
-  };
-
-  // Animation variants
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
+      y: 0,
       transition: {
-        duration: 0.5,
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.2
       }
     }
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0 }
   };
 
   return (
     <motion.div
-      className="flex-1 h-full overflow-y-auto py-12 px-8"
       variants={containerVariants}
       initial="hidden"
       animate="visible"
-      exit="hidden"
       key={experience.id}
+      className="flex-1 h-full overflow-y-auto p-8 bg-gradient-to-br from-gray-900/95 to-black/95 backdrop-blur-sm"
     >
       {/* Header */}
-      <motion.div
-        className="mb-12 max-w-4xl mx-auto"
-        variants={itemVariants}
-      >
-        <div className="flex items-start gap-6 mb-6">
-          {/* Company logo */}
-          <div className="w-24 h-24 rounded-xl flex-shrink-0 bg-gray-800/80 border border-gray-700 p-3 flex items-center justify-center">
+      <motion.div variants={itemVariants} className="mb-8">
+        <div className="flex items-start gap-6">
+          {/* Company Logo */}
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            className="w-24 h-24 rounded-xl overflow-hidden flex-shrink-0 border-2 border-red-500/20"
+          >
             {experience.companyLogo ? (
               <img
                 src={experience.companyLogo}
                 alt={experience.company}
-                className="w-full h-full object-contain"
+                className="w-full h-full object-contain bg-gray-800/50"
               />
             ) : (
-              <Briefcase className="w-12 h-12 text-gray-400" />
+              <div className="w-full h-full bg-gray-800 flex items-center justify-center text-3xl">
+                {experience.company.charAt(0)}
+              </div>
+            )}
+          </motion.div>
+
+          <div className="flex-1">
+            <h2 className="text-3xl font-bold text-white mb-2">
+              {experience.company}
+            </h2>
+            <p className="text-xl text-red-400 mb-3">{experience.title}</p>
+
+            <div className="flex flex-wrap gap-4 text-gray-400">
+              <div className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                <span>{experience.period.display}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4" />
+                <span>{experience.location}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Code className="w-4 h-4" />
+                <span>{experience.type}</span>
+              </div>
+            </div>
+
+            {/* Current role badge */}
+            {experience.period.end === null && (
+              <div className="mt-3 inline-flex items-center gap-1 bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-sm">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                Current Position
+              </div>
             )}
           </div>
-
-          <div>
-            {/* Company and title */}
-            <h1 className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-purple-400">
-              {experience.company}
-            </h1>
-
-            <h2 className="text-2xl text-white/80 mt-2">
-              {experience.title}
-            </h2>
-
-            <div className="flex items-center gap-4 mt-3 text-gray-400">
-              <span>{experience.period.display}</span>
-              <span>•</span>
-              <span>{experience.location}</span>
-            </div>
-          </div>
         </div>
 
-        {/* Description */}
-        <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6 max-w-4xl">
-          <p className="text-lg text-white/70 leading-relaxed">
-            {experience.fullDescription || experience.shortDescription}
-          </p>
-        </div>
+        {/* Quick description */}
+        <p className="mt-6 text-gray-300 leading-relaxed">
+          {experience.fullDescription}
+        </p>
       </motion.div>
 
-      {/* Tabs */}
-      <motion.div
-        className="flex flex-wrap gap-3 mb-8 max-w-4xl mx-auto overflow-x-auto pb-2"
-        variants={itemVariants}
-      >
+      {/* Navigation tabs */}
+      <motion.div variants={itemVariants} className="flex flex-wrap gap-3 mb-8 border-b border-gray-700/50 pb-4">
         <TabButton
           label="Overview"
-          icon={<Briefcase className="w-5 h-5" />}
-          id="overview"
-          activeTab={activeTab}
-          onClick={setActiveTab}
-        />
-        <TabButton
-          label="Technologies"
-          icon={<Code className="w-5 h-5" />}
-          id="technologies"
-          activeTab={activeTab}
-          onClick={setActiveTab}
+          icon={<Star className="w-4 h-4" />}
+          isActive={activeTab === 'overview'}
+          onClick={() => setActiveTab('overview')}
         />
         <TabButton
           label="Projects"
-          icon={<Target className="w-5 h-5" />}
-          id="projects"
-          activeTab={activeTab}
-          onClick={setActiveTab}
+          icon={<Target className="w-4 h-4" />}
+          isActive={activeTab === 'projects'}
+          onClick={() => setActiveTab('projects')}
+        />
+        <TabButton
+          label="Technologies"
+          icon={<Code className="w-4 h-4" />}
+          isActive={activeTab === 'technologies'}
+          onClick={() => setActiveTab('technologies')}
         />
         <TabButton
           label="Achievements"
-          icon={<Trophy className="w-5 h-5" />}
-          id="achievements"
-          activeTab={activeTab}
-          onClick={setActiveTab}
+          icon={<Trophy className="w-4 h-4" />}
+          isActive={activeTab === 'achievements'}
+          onClick={() => setActiveTab('achievements')}
         />
       </motion.div>
 
       {/* Tab content */}
-      <motion.div
-        className="max-w-4xl mx-auto"
-        layout
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Overview Tab */}
-            {activeTab === 'overview' && (
-              <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-4">Key Responsibilities</h3>
-                {Array.isArray(experience.responsibilities) && experience.responsibilities.length > 0 ? (
-                  <ul className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3">
-                    {experience.responsibilities.map((responsibility, index) => (
-                      <li key={index} className="flex items-start gap-2">
-                        <span className="text-rose-500 mt-1">•</span>
-                        <span className="text-white/80">{responsibility}</span>
-                      </li>
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.3 }}
+        >
+          {activeTab === 'overview' && (
+            <div className="space-y-6">
+              {/* Responsibilities */}
+              <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-red-500/10">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  Key Responsibilities
+                </h3>
+                <ul className="space-y-3">
+                  {experience.responsibilities?.map((responsibility, index) => (
+                    <motion.li
+                      key={index}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="flex items-start gap-3 text-gray-300"
+                    >
+                      <ChevronRight className="w-4 h-4 text-red-400 mt-1 flex-shrink-0" />
+                      <span>{responsibility}</span>
+                    </motion.li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Action buttons */}
+              <div className="flex gap-4">
+                {experience.links?.company && (
+                  <motion.a
+                    href={experience.links.company}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-2 px-4 py-2 bg-red-500/20 text-red-400 rounded-lg border border-red-500/30 hover:bg-red-500/30 transition-all"
+                  >
+                    <ExternalLink className="w-4 h-4" />
+                    Visit Company
+                  </motion.a>
+                )}
+
+                {experience.links?.caseStudy && (
+                  <motion.a
+                    href={experience.links.caseStudy}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 text-blue-400 rounded-lg border border-blue-500/30 hover:bg-blue-500/30 transition-all"
+                  >
+                    <Download className="w-4 h-4" />
+                    Case Study
+                  </motion.a>
+                )}
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'projects' && (
+            <div className="space-y-6">
+              {experience.projects?.map((project, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-gray-800/30 backdrop-blur-sm rounded-xl border border-red-500/10 overflow-hidden"
+                >
+                  {/* Project header */}
+                  <div
+                    onClick={() => setExpandedProject(expandedProject === index ? null : index)}
+                    className="p-6 cursor-pointer hover:bg-gray-800/50 transition-all"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">{project.name}</h3>
+                        <p className="text-gray-400 mt-1">{project.description}</p>
+                      </div>
+                      <ChevronDown
+                        className={`w-5 h-5 text-gray-400 transition-transform ${
+                          expandedProject === index ? 'rotate-180' : ''
+                        }`}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Expanded project details */}
+                  <AnimatePresence>
+                    {expandedProject === index && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-6 pt-0 space-y-4">
+                          {/* Challenge, Solution, Outcomes */}
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            {project.challenge && (
+                              <div className="p-4 bg-gray-900/50 rounded-lg">
+                                <h4 className="text-sm font-medium text-red-400 mb-2">Challenge</h4>
+                                <p className="text-gray-300 text-sm">{project.challenge}</p>
+                              </div>
+                            )}
+                            {project.solution && (
+                              <div className="p-4 bg-gray-900/50 rounded-lg">
+                                <h4 className="text-sm font-medium text-blue-400 mb-2">Solution</h4>
+                                <p className="text-gray-300 text-sm">{project.solution}</p>
+                              </div>
+                            )}
+                            {project.outcomes && (
+                              <div className="p-4 bg-gray-900/50 rounded-lg">
+                                <h4 className="text-sm font-medium text-green-400 mb-2">Outcomes</h4>
+                                <p className="text-gray-300 text-sm">{project.outcomes}</p>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Project technologies */}
+                          {project.technologies && (
+                            <div>
+                              <h4 className="text-sm font-medium text-gray-400 mb-2">Technologies Used</h4>
+                              <div className="flex flex-wrap gap-2">
+                                {project.technologies.map((tech, i) => (
+                                  <span
+                                    key={i}
+                                    className="px-3 py-1 text-xs bg-red-500/10 text-red-400 rounded-full border border-red-500/20"
+                                  >
+                                    {tech}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'technologies' && (
+            <div className="space-y-6">
+              {Object.entries(technologyCategories).map(([category, technologies]) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-red-500/10"
+                >
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Code className="w-5 h-5 text-red-400" />
+                    {category}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {technologies.map((tech, index) => (
+                      <motion.div
+                        key={index}
+                        whileHover={{ scale: 1.02 }}
+                        className="flex items-start gap-3 p-4 bg-gray-900/50 rounded-lg"
+                      >
+                        <div className="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-xl text-red-400 flex-shrink-0">
+                          {tech.icon || <Code className="w-5 h-5" />}
+                        </div>
+                        <div>
+                          <h4 className="text-white font-medium">{tech.name}</h4>
+                          <p className="text-gray-400 text-sm mt-1">{tech.description}</p>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+
+          {activeTab === 'achievements' && (
+            <div className="space-y-6">
+              {/* Achievement metrics */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {experience.achievements?.map((achievement, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="p-6 bg-gray-800/30 backdrop-blur-sm rounded-xl border border-red-500/10 text-center"
+                  >
+                    <div className="text-3xl font-bold bg-gradient-to-r from-red-400 to-purple-400 bg-clip-text text-transparent">
+                      {achievement.stat}
+                    </div>
+                    <div className="text-white font-medium mt-2">{achievement.label}</div>
+                    <div className="text-gray-400 text-sm mt-1">{achievement.description}</div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Recognition */}
+              {experience.recognition && experience.recognition.length > 0 && (
+                <div className="bg-gray-800/30 backdrop-blur-sm rounded-xl p-6 border border-red-500/10">
+                  <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                    <Trophy className="w-5 h-5 text-yellow-400" />
+                    Recognition
+                  </h3>
+                  <ul className="space-y-2">
+                    {experience.recognition.map((item, index) => (
+                      <motion.li
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        className="flex items-center gap-3 text-gray-300"
+                      >
+                        <Star className="w-4 h-4 text-yellow-400" />
+                        <span>{item}</span>
+                      </motion.li>
                     ))}
                   </ul>
-                ) : (
-                  <p className="text-gray-400 italic">No responsibilities listed for this role</p>
-                )}
-
-                {/* External links */}
-                {experience.links && (
-                  <div className="flex flex-wrap gap-4 mt-6">
-                    {experience.links.company && (
-                      <motion.a
-                        href={experience.links.company}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-2.5 bg-gray-800 hover:bg-gray-700 rounded-lg text-white border border-gray-700 transition-all"
-                        whileHover={{ y: -2, x: 2 }}
-                      >
-                        <ExternalLink className="w-5 h-5" />
-                        <span>Visit Company</span>
-                      </motion.a>
-                    )}
-
-                    {experience.links.caseStudy && (
-                      <motion.a
-                        href={experience.links.caseStudy}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-5 py-2.5 bg-rose-500/20 hover:bg-rose-500/30 rounded-lg text-white border border-rose-500/30 transition-all"
-                        whileHover={{ y: -2, x: 2 }}
-                      >
-                        <Trophy className="w-5 h-5" />
-                        <span>View Case Study</span>
-                      </motion.a>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Technologies Tab */}
-            {activeTab === 'technologies' && (
-              <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-6">Technologies & Skills</h3>
-                {technologies.length > 0 ? (
-                  <HorizontalCarousel
-                    items={technologies}
-                    renderItem={renderTechnology}
-                  />
-                ) : (
-                  <p className="text-gray-400 italic">No technologies listed for this role</p>
-                )}
-              </div>
-            )}
-
-            {/* Projects Tab */}
-            {activeTab === 'projects' && (
-              <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-6">Notable Projects</h3>
-                {Array.isArray(experience.projects) && experience.projects.length > 0 ? (
-                  <HorizontalCarousel
-                    items={experience.projects}
-                    renderItem={renderProject}
-                  />
-                ) : (
-                  <p className="text-gray-400 italic">No projects listed for this role</p>
-                )}
-              </div>
-            )}
-
-            {/* Achievements Tab */}
-            {activeTab === 'achievements' && (
-              <div className="bg-gray-800/30 backdrop-blur-sm border border-gray-700/50 rounded-xl p-6">
-                <h3 className="text-xl font-semibold text-white mb-6">Key Metrics & Achievements</h3>
-                {Array.isArray(experience.achievements) && experience.achievements.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {experience.achievements.map((achievement, index) => (
-                      renderAchievement(achievement, index)
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-400 italic">No achievements listed for this role</p>
-                )}
-              </div>
-            )}
-          </motion.div>
-        </AnimatePresence>
-      </motion.div>
+                </div>
+              )}
+            </div>
+          )}
+        </motion.div>
+      </AnimatePresence>
     </motion.div>
   );
 };

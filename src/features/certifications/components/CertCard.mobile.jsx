@@ -1,91 +1,72 @@
-// src/features/certifications/components/CertCard.mobile.jsx
+// components/CertCard.mobile.jsx
 import React from 'react';
-import { Calendar, Clock, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Calendar, ChevronRight, Award } from 'lucide-react';
 import { certStyles } from '@data/CertificationsData';
 
-// Define skills mapping based on certificate type
-const certSkills = {
-  docker: ['Containerization', 'DevOps'],
-  jenkins: ['CI/CD', 'Automation'],
-  gitlab: ['Version Control', 'CI/CD'],
-  networking: ['Protocols', 'Security'],
-  performance: ['Optimization', 'Testing'],
-  os: ['System Architecture', 'Kernel'],
-  python: ['Programming', 'Automation'],
-  api: ['REST', 'Integration'],
-  bash: ['Shell Scripting', 'Linux']
-};
-
-const CertCardMobile = ({ cert, onClick, featured = false }) => {
-  const style = certStyles[cert.type];
-  // Get skills for this certificate type, or use defaults (but limit to 2 for mobile)
-  const skills = (certSkills[cert.type] || ['Development', 'Technology']).slice(0, 2);
+const CertCardMobile = ({ certificate, onClick }) => {
+  const style = certStyles[certificate.type];
 
   return (
-    <div
+    <motion.div
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
-      className={`
-        relative w-full rounded-xl overflow-hidden
-        ${featured
-          ? `bg-gradient-to-r ${style.gradient} bg-opacity-20`
-          : 'bg-white/[0.03]'}
-        border ${featured ? `border-${cert.type}-500/30` : 'border-white/10'}
-        active:scale-[0.98] transition-all duration-200
-        touch-manipulation
-      `}
+      className="relative overflow-hidden bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-lg"
     >
-      <div className="flex p-3">
-        {/* Logo */}
-        <div className={`
-          w-12 h-12 rounded-lg ${style.iconBg}
-          flex items-center justify-center p-2
-          flex-shrink-0 mr-3
-        `}>
-          <img
-            src={`${cert.icon}`}
-            alt=""
-            className="w-8 h-8 object-contain"
-          />
-        </div>
+      <div className="p-4">
+        <div className="flex items-center gap-3">
+          {/* Logo */}
+          <div className={`w-12 h-12 rounded-lg ${style.iconBg} flex items-center justify-center p-2 flex-shrink-0`}>
+            <img
+              src={certificate.icon}
+              alt=""
+              className="w-8 h-8 object-contain"
+            />
+          </div>
 
-        {/* Content */}
-        <div className="flex-1 min-w-0">
-          {/* Title with truncation */}
-          <h3 className="text-white font-medium text-base truncate mb-1">
-            {cert.title}
-          </h3>
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-medium text-white truncate">
+              {certificate.title}
+            </h3>
 
-          {/* Info row */}
-          <div className="flex items-center gap-3 text-xs text-white/60 mb-2">
-            <div className="flex items-center gap-1">
-              <Calendar className="w-3 h-3" />
-              <span>{cert.date}</span>
+            <div className="flex items-center gap-4 mt-1 text-xs text-gray-400">
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                <span>{certificate.date}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <Award className="w-3 h-3" />
+                <span>{certificate.level}</span>
+              </div>
             </div>
-            <div className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              <span>{cert.length}</span>
+
+            {/* Skills tags - mobile optimized */}
+            <div className="flex gap-1.5 mt-2 overflow-x-auto scrollbar-hide">
+              {certificate.skills.slice(0, 2).map((skill, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-0.5 text-xs rounded bg-gray-700/50 text-gray-300 whitespace-nowrap"
+                >
+                  {skill}
+                </span>
+              ))}
+              {certificate.skills.length > 2 && (
+                <span className="px-2 py-0.5 text-xs rounded bg-purple-500/10 text-purple-400 whitespace-nowrap">
+                  +{certificate.skills.length - 2}
+                </span>
+              )}
             </div>
           </div>
 
-          {/* Skills tags */}
-          <div className="flex gap-2">
-            {skills.map((skill, index) => (
-              <span
-                key={index}
-                className="px-2 py-0.5 text-xs rounded-full bg-white/10 text-white/70"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Arrow icon */}
-        <div className="flex items-center px-1">
-          <ChevronRight className="w-5 h-5 text-white/40" />
+          {/* Arrow */}
+          <ChevronRight className="w-5 h-5 text-gray-400 flex-shrink-0" />
         </div>
       </div>
-    </div>
+
+      {/* Subtle gradient line at bottom */}
+      <div className={`h-0.5 bg-gradient-to-r ${style.gradient} opacity-20`} />
+    </motion.div>
   );
 };
 

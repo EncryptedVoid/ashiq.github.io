@@ -1,10 +1,17 @@
+// src/features/goals/Goals.jsx
+import React from 'react';
+import GoalsDesktop from './Goals.desktop';
+import GoalsMobile from './Goals.mobile';
 import { useMedia } from '@/context/MediaContext';
-import { GoalsDesktop } from './Goals.desktop';
-import { GoalsMobile } from './Goals.mobile';
+import { GoalsData } from '@/data/GoalsData';
 
-export const Goals = () => {
-  const isMobile = useMedia('(max-width: 768px)');
-console.log('Hero isMobile:', isMobile);
-  return isMobile ? <GoalsMobile /> : <GoalsDesktop />;
+const Goals = () => {
+  const isMobile = useMedia();
+
+  // Pass data to the appropriate component based on screen size
+  return isMobile ?
+    <GoalsMobile goals={GoalsData} /> :
+    <GoalsDesktop goals={GoalsData} />;
 };
 
+export default Goals;

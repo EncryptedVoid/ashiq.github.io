@@ -1,96 +1,118 @@
-// src/features/certifications/components/CertCard.desktop.jsx
-import React from 'react';
+// components/CertCard.desktop.jsx
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, Clock, ExternalLink } from 'lucide-react';
+import { Calendar, Clock, Award, ExternalLink, ChevronRight, Tag } from 'lucide-react';
 import { certStyles } from '@data/CertificationsData';
 
-// Define skills mapping based on certificate type
-const certSkills = {
-  docker: ['Containerization', 'DevOps', 'Microservices'],
-  jenkins: ['CI/CD', 'Automation', 'DevOps'],
-  gitlab: ['Version Control', 'CI/CD', 'Collaboration'],
-  networking: ['Protocols', 'Infrastructure', 'Security'],
-  performance: ['Optimization', 'Testing', 'Metrics'],
-  os: ['System Architecture', 'Kernel', 'Process Management'],
-  python: ['Programming', 'Automation', 'Testing'],
-  api: ['REST', 'Integration', 'Web Services'],
-  bash: ['Shell Scripting', 'Automation', 'Linux']
-};
+const CertCardDesktop = ({ certificate, onClick }) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const style = certStyles[certificate.type];
 
-const CertCard = ({ cert, onClick }) => {
-  const style = certStyles[cert.type];
-  // Get skills for this certificate type, or use defaults
-  const skills = certSkills[cert.type] || ['Development', 'Technology', 'Professional'];
+  // Parse the date to determine if it's recent (within last 3 months)
+  const isRecent = (dateString) => {
+    const certDate = new Date(dateString);
+    const threeMonthsAgo = new Date();
+    threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3);
+    return certDate > threeMonthsAgo;
+  };
 
   return (
     <motion.div
+      onHoverStart={() => setIsHovered(true)}
+      onHoverEnd={() => setIsHovered(false)}
+      whileHover={{ y: -5 }}
       onClick={onClick}
-      whileHover={{ y: -5, boxShadow: '0 10px 30px -15px rgba(0, 0, 0, 0.3)' }}
-      className="group relative rounded-xl overflow-hidden bg-white/[0.03] border border-white/[0.06] hover:bg-white/[0.06] hover:border-white/[0.1] transition-all duration-300 h-full cursor-pointer"
+      className="group relative overflow-hidden rounded-xl bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 cursor-pointer transition-all duration-300 hover:border-purple-500/30"
     >
-      <div className="p-5">
-        {/* Header with logo */}
-        <div className="flex items-start gap-4 mb-3">
-          <div className={`
-            w-12 h-12 rounded-lg ${style.iconBg}
-            flex items-center justify-center
-            flex-shrink-0 p-2
-            transition-transform duration-300
-            group-hover:scale-110 group-hover:rotate-3
-          `}>
+      {/* Gradient Background Effect */}
+      <div className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-gradient-to-br ${style.gradient}`} />
+
+      {/* New Badge */}
+      {isRecent(certificate.date) && (
+        <div className="absolute top-4 right-4 z-10">
+          <div className="px-2 py-1 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full text-xs font-medium text-white">
+            New
+          </div>
+        </div>
+      )}
+
+      <div className="relative z-10 p-6">
+        {/* Header with Logo and Basic Info */}
+        <div className="flex items-start gap-4 mb-4">
+          <div className={`w-16 h-16 rounded-lg ${style.iconBg} flex items-center justify-center p-3 transition-transform duration-300 group-hover:scale-110`}>
             <img
-              src={`${cert.icon}`}
-              alt={cert.title}
+              src={certificate.icon}
+              alt={certificate.type}
               className="w-full h-full object-contain"
             />
           </div>
 
           <div className="flex-1 min-w-0">
-            {/* Truncate title if it's too long */}
-            <h3 className="text-white font-semibold text-lg mb-1 line-clamp-2">
-              {cert.title}
+            <h3 className="text-lg font-semibold text-white line-clamp-2 group-hover:text-purple-400 transition-colors">
+              {certificate.title}
             </h3>
-
-            {/* Date and length info */}
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-white/60">
-              <div className="flex items-center gap-1">
-                <Calendar className="w-3.5 h-3.5" />
-                <span>{cert.date}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5" />
-                <span>{cert.length}</span>
-              </div>
-            </div>
+            <p className="text-sm text-gray-400 mt-1">
+              {certificate.instructor} • {certificate.platform}
+            </p>
           </div>
         </div>
 
-        {/* Skills tags */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {skills.map((skill, index) => (
-            <span
-              key={index}
-              className={`
-                px-2 py-1 text-xs rounded-full
-                bg-${cert.type}-500/10 text-${cert.type}-400
-                border border-${cert.type}-500/20
-              `}
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-
-        {/* View details hint */}
-        <div className="mt-4 pt-3 border-t border-white/10 flex justify-end">
-          <div className="flex items-center gap-1 text-xs text-white/40 group-hover:text-white/70 transition-colors duration-300">
-            <span>View Certificate</span>
-            <ExternalLink className="w-3 h-3" />
+        {/* Certificate Details */}
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <Calendar className="w-4 h-4" />
+            <span>{certificate.date}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <Clock className="w-4 h-4" />
+            <span>{certificate.length}</span>
+          </div>
+          <div className="flex items-center gap-2 text-sm text-gray-400">
+            <Award className="w-4 h-4" />
+            <span>{certificate.level}</span>
           </div>
         </div>
+
+        {/* Skills Preview */}
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-2">
+            {certificate.skills.slice(0, 3).map((skill, index) => (
+              <span
+                key={index}
+                className="px-2 py-1 text-xs rounded-full bg-gray-700/50 text-gray-300 border border-gray-700"
+              >
+                {skill}
+              </span>
+            ))}
+            {certificate.skills.length > 3 && (
+              <span className="px-2 py-1 text-xs rounded-full bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                +{certificate.skills.length - 3} more
+              </span>
+            )}
+          </div>
+        </div>
+
+        {/* Category Tag */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Tag className="w-3.5 h-3.5 text-gray-400" />
+            <span className="text-xs text-gray-400 capitalize">{certificate.category}</span>
+          </div>
+
+          <motion.div
+            animate={{ x: isHovered ? 5 : 0 }}
+            transition={{ duration: 0.2 }}
+            className="text-purple-400"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </motion.div>
+        </div>
+
+        {/* Hover Effect Overlay */}
+        <div className="absolute inset-0 border-2 border-purple-500/0 rounded-xl transition-colors duration-300 group-hover:border-purple-500/20" />
       </div>
     </motion.div>
   );
 };
 
-export default CertCard;
+export default CertCardDesktop;

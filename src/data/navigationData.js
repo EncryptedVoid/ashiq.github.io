@@ -49,21 +49,21 @@ import {
       category: null, // Standalone item
       showHeader: false, // Don't show section header for hero
     },
-    testimonials: {
-      id: 'testimonials',
-      label: 'Testimonials',
-      icon: Users,
-      category: 'work',
-      title: "What People Say",
-      subtitle: "Feedback and testimonials from colleagues and clients",
-    },
+    // testimonials: {
+    //   id: 'testimonials',
+    //   label: 'Testimonials',
+    //   icon: Users,
+    //   category: 'work',
+    //   title: "What People Say",
+    //   subtitle: "Feedback and testimonials from colleagues and clients",
+    // },
     experience: {
       id: 'experience',
       label: 'Experience',
       icon: Briefcase,
       category: 'work',
-      title: "Professional Experience",
-      subtitle: "My journey and contributions in the tech industry",
+      title: "",
+      subtitle: "",
     },
     projects: {
       id: 'projects',
@@ -94,24 +94,24 @@ import {
       label: 'Certifications',
       icon: Award,
       category: 'education',
-      title: "Certifications",
-      subtitle: "Professional qualifications and ongoing learning",
+      title: "",
+      subtitle: "",
     },
     goals: {
       id: 'goals',
       label: 'Goals',
       icon: Target,
       category: null, // Standalone item
-      title: "Future Goals",
-      subtitle: "Upcoming ventures and aspirations",
+      title: "",
+      subtitle: "",
     },
     contact: {
       id: 'contact',
       label: 'Contact',
       icon: Mail,
       category: null, // Standalone item
-      title: "Get In Touch",
-      subtitle: "Connect with me professionally",
+      title: "",
+      subtitle: "",
     }
   };
 
@@ -119,7 +119,7 @@ import {
   // This array controls both the rendering order and navigation priority
   export const SECTION_ORDER = [
     'hero',
-    'testimonials',
+    // 'testimonials',
     'experience',
     'projects',
     'skills',
