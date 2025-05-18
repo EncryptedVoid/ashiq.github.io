@@ -1,7 +1,7 @@
 // Hero.desktop.jsx
 import React, { useEffect } from 'react';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
-import { ArrowRight, Briefcase, Building, MapPin, GraduationCap } from 'lucide-react';
+import { Download, Briefcase, Building, MapPin, GraduationCap } from 'lucide-react';
 import { useMousePosition } from '@/hooks';
 import { HeroData } from '@/data/HeroData';
 import { SocialsData } from '@/data/SocialsData';
@@ -141,23 +141,94 @@ const HeroDesktop = () => {
                     whileTap={{ scale: 0.98 }}
                   >
                     <Briefcase className="w-4 h-4 text-rose-400" />
-                    <span className="text-rose-400">{currentExperience.title}</span>
+                    <span className="text-rose-400 max-w-[150px] truncate" title={currentExperience.title}>
+                      {currentExperience.title}
+                    </span>
                     <div className="w-px h-4 bg-rose-500/20 mx-2" />
                     <div className="flex items-center gap-1">
                       <Building className="w-4 h-4 text-rose-400" />
-                      <span className="text-rose-400">{currentExperience.company}</span>
+                      <span className="text-rose-400 max-w-[150px] truncate" title={currentExperience.company}>
+                        {currentExperience.company}
+                      </span>
                     </div>
                   </motion.button>
                 )}
               </motion.div>
 
+              {/* Social Links */}
+              <motion.div
+                className="flex items-center gap-3"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
+              >
+                {Object.values(SocialsData).map((social, index) => {
+                  const Icon = social.icon;
+                  return (
+                    <motion.button
+                      key={index}
+                      onClick={social.onClick}
+                      className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-rose-400 transition-all duration-300"
+                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </motion.button>
+                  );
+                })}
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Right Column: Profile Image & Education */}
+          <div className="col-span-5">
+            <div className="flex flex-col items-center space-y-5">
+              {/* Profile image with 3D tilt effect */}
+              <motion.div
+                className="relative w-72 h-72"
+                style={{ perspective: '1000px' }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <motion.div
+                  className="w-full h-full rounded-3xl overflow-hidden bg-white/5 border border-white/10"
+                  style={{
+                    rotateX: useTransform(ySpring, [-100, 100], [10, -10]),
+                    rotateY: useTransform(xSpring, [-100, 100], [-10, 10]),
+                  }}
+                >
+                  {/* Subtle animated overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-black/10 z-10" />
+                  <img
+                    src={profileImage.src}
+                    alt={profileImage.alt}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+
+                {/* Red accent glow */}
+                <motion.div
+                  className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-rose-500/20 to-transparent -z-10 blur-xl opacity-50"
+                  animate={{
+                    opacity: [0.3, 0.6, 0.3],
+                  }}
+                  transition={{
+                    duration: 4,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </motion.div>
+
               {/* Education Status */}
               <motion.button
                 onClick={() => scrollToSection('education')}
-                className="flex flex-col w-full max-w-md p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/8 hover:border-white/15 transition-all"
+                className="w-full p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/8 hover:border-white/15 transition-all"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.6, delay: 0.7 }}
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -199,10 +270,10 @@ const HeroDesktop = () => {
               {/* Resume button */}
               <motion.a
                 href={HeroData.status.resumeLink}
-                className="flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 hover:border-rose-500/30 rounded-full text-rose-400 transition-all duration-300 w-fit"
+                className="flex items-center justify-center gap-2 w-full px-5 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 hover:border-rose-500/30 rounded-full text-rose-400 transition-all duration-300"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
+                transition={{ duration: 0.6, delay: 0.9 }}
                 whileHover={{
                   scale: 1.02,
                   transition: { duration: 0.2 }
@@ -210,75 +281,8 @@ const HeroDesktop = () => {
                 whileTap={{ scale: 0.98 }}
               >
                 Download Resume
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                <Download className="w-4 h-4" />
               </motion.a>
-
-              {/* Social Links */}
-              <motion.div
-                className="flex items-center gap-3"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.2 }}
-              >
-                {Object.values(SocialsData).map((social, index) => {
-                  const Icon = social.icon;
-                  return (
-                    <motion.button
-                      key={index}
-                      onClick={social.onClick}
-                      className="w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-rose-400 transition-all duration-300"
-                      whileHover={{ y: -3, transition: { duration: 0.2 } }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <Icon className="w-5 h-5" />
-                    </motion.button>
-                  );
-                })}
-              </motion.div>
-            </div>
-          </div>
-
-          {/* Right Column: Profile Image */}
-          <div className="col-span-5">
-            <div className="flex justify-center">
-              {/* Profile image with 3D tilt effect */}
-              <motion.div
-                className="relative max-w-md mx-auto aspect-square"
-                style={{ perspective: '1000px' }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                whileHover={{ scale: 1.02 }}
-              >
-                <motion.div
-                  className="w-full h-full rounded-3xl overflow-hidden bg-white/5 border border-white/10"
-                  style={{
-                    rotateX: useTransform(ySpring, [-100, 100], [10, -10]),
-                    rotateY: useTransform(xSpring, [-100, 100], [-10, 10]),
-                  }}
-                >
-                  {/* Subtle animated overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-rose-500/10 to-black/10 z-10" />
-                  <img
-                    src={profileImage.src}
-                    alt={profileImage.alt}
-                    className="w-full h-full object-cover"
-                  />
-                </motion.div>
-
-                {/* Red accent glow */}
-                <motion.div
-                  className="absolute -inset-1 rounded-3xl bg-gradient-to-br from-rose-500/20 to-transparent -z-10 blur-xl opacity-50"
-                  animate={{
-                    opacity: [0.3, 0.6, 0.3],
-                  }}
-                  transition={{
-                    duration: 4,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </motion.div>
             </div>
           </div>
         </div>

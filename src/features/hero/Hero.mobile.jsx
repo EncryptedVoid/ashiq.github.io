@@ -1,7 +1,7 @@
 // Hero.mobile.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Briefcase, MapPin, GraduationCap } from 'lucide-react';
+import { Download, Briefcase, MapPin, GraduationCap } from 'lucide-react';
 import { ParticleField, TypewriterText } from '@/components';
 import { HeroData } from '@/data/HeroData';
 import { SocialsData } from '@/data/SocialsData';
@@ -110,16 +110,6 @@ const HeroMobile = () => {
               {intro.title.line2}
             </h2>
           </motion.div>
-
-          {/* Description */}
-          <motion.p
-            className="text-sm text-white/70 mb-3 text-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            {intro.description[0]}
-          </motion.p>
         </motion.div>
 
         {/* Status Section */}
@@ -213,7 +203,7 @@ const HeroMobile = () => {
           whileTap={{ scale: 0.98 }}
         >
           Download Resume
-          <ArrowRight className="w-4 h-4" />
+          <Download className="w-4 h-4" />
         </motion.a>
 
         {/* Social Links */}
