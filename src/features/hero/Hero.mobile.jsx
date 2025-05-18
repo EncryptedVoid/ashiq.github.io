@@ -1,76 +1,32 @@
 // Hero.mobile.jsx
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, MapPin, ChevronLeft, ChevronRight } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowRight, Briefcase, MapPin, GraduationCap } from 'lucide-react';
 import { ParticleField, TypewriterText } from '@/components';
 import { HeroData } from '@/data/HeroData';
 import { SocialsData } from '@/data/SocialsData';
-import { TestimonialData } from '@/data/TestimonialsData';
-
-// Mobile testimonial carousel component
-const MobileTestimonialCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const testimonials = TestimonialData;
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
-
-  return (
-    <div className="relative w-full max-w-xs mx-auto">
-      <div className="bg-white/5 border border-white/10 rounded-xl p-4 min-h-[120px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="w-full"
-          >
-            <p className="text-white/80 text-xs italic mb-3">
-              "{testimonials[currentIndex].quote}"
-            </p>
-            <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400 text-xs font-semibold">
-                {testimonials[currentIndex].initials}
-              </div>
-              <div>
-                <p className="text-white text-xs font-medium">{testimonials[currentIndex].name}</p>
-                <p className="text-white/60 text-xs">{testimonials[currentIndex].role}</p>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-        <button
-          onClick={prevTestimonial}
-          className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60"
-        >
-          <ChevronLeft className="w-4 h-4" />
-        </button>
-
-        <button
-          onClick={nextTestimonial}
-          className="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60"
-        >
-          <ChevronRight className="w-4 h-4" />
-        </button>
-      </div>
-    </div>
-  );
-};
+import { ExperienceData } from '@/data/ExperienceData';
+import { EducationData } from '@/data/EducationData';
 
 const HeroMobile = () => {
-  const { intro, status, profileImage, quickStats } = HeroData;
+  const { intro, profileImage } = HeroData;
+
+  // Get current experience if any
+  const currentExperience = ExperienceData.find(exp => exp.period.end === null);
+  const isOpenToOpportunities = !currentExperience;
+
+  // Calculate education progress
+  const education = EducationData.university;
+  const currentYear = new Date().getFullYear();
+  const startYear = parseInt(education.duration.start);
+  const endYear = parseInt(education.duration.end);
+  const totalYears = endYear - startYear;
+  const currentYearOfStudy = currentYear - startYear;
+  const progress = Math.min(Math.max(currentYearOfStudy / totalYears, 0), 1);
+
+  // Are we currently on break/internship?
+  const currentlyOnInternship = currentExperience &&
+    currentExperience.type.toLowerCase().includes('intern');
 
   // Function to scroll to sections
   const scrollToSection = (sectionId) => {
@@ -81,11 +37,10 @@ const HeroMobile = () => {
   };
 
   return (
-    <div className="relative h-screen flex flex-col justify-center overflow-hidden">
+    <div className="relative min-h-screen flex flex-col justify-start pt-8 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
         <ParticleField />
-
         {/* Circuit pattern overlay */}
         <div
           className="absolute inset-0 opacity-5"
@@ -96,154 +51,177 @@ const HeroMobile = () => {
         />
       </div>
 
-      <div className="px-5 py-6 relative z-10 flex flex-col items-center text-center">
-        {/* Profile Image */}
+      <div className="px-5 relative z-10 flex flex-col items-center">
+        {/* Profile Card */}
         <motion.div
-          className="relative w-28 h-28 mb-4"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
+          className="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-5 mb-5 flex flex-col items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          {/* Red halo effect */}
+          {/* Profile Image */}
           <motion.div
-            className="absolute -inset-1 rounded-full bg-gradient-to-br from-rose-500/30 to-transparent blur-sm"
-            animate={{ opacity: [0.3, 0.6, 0.3] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          />
-
-          <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10">
-            <img
-              src={profileImage.src}
-              alt={profileImage.alt}
-              className="w-full h-full object-cover"
+            className="relative w-24 h-24 mb-4"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {/* Red halo effect */}
+            <motion.div
+              className="absolute -inset-1 rounded-full bg-gradient-to-br from-rose-500/30 to-transparent blur-sm"
+              animate={{ opacity: [0.3, 0.6, 0.3] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             />
-          </div>
+
+            <div className="relative w-full h-full rounded-full overflow-hidden border border-white/10">
+              <img
+                src={profileImage.src}
+                alt={profileImage.alt}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </motion.div>
+
+          {/* Terminal text */}
+          <motion.div
+            className="mb-1"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <TypewriterText
+              text={intro.terminalText}
+              size={0.9}
+              typingSpeed={100}
+              fromColor="#FA8072"
+              toColor="#FA8072"
+            />
+          </motion.div>
+
+          {/* Name & Title */}
+          <motion.div
+            className="mb-3 text-center"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+          >
+            <h1 className="text-2xl font-bold text-white">{intro.title.line1}</h1>
+            <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">
+              {intro.title.line2}
+            </h2>
+          </motion.div>
+
+          {/* Description */}
+          <motion.p
+            className="text-sm text-white/70 mb-3 text-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            {intro.description[0]}
+          </motion.p>
         </motion.div>
 
-        {/* Terminal text */}
-        <motion.div
-          className="mb-1"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          <TypewriterText
-            text={intro.terminalText}
-            size={0.9}
-            typingSpeed={100}
-            fromColor="#FA8072"
-            toColor="#FA8072"
-          />
-        </motion.div>
-
-        {/* Name & Title */}
-        <motion.div
-          className="mb-2"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <h1 className="text-2xl font-bold text-white">{intro.title.line1}</h1>
-          <h2 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-red-400">
-            {intro.title.line2}
-          </h2>
-        </motion.div>
-
-        {/* Description */}
-        <motion.p
-          className="text-sm text-white/70 mb-3 max-w-xs"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          {intro.description[0]}
-        </motion.p>
-
-        {/* Status & Availability */}
-        <motion.div
-          className="flex flex-col items-center gap-2 mb-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 rounded-full">
-            <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-green-400 text-xs">{status.availability}</span>
-          </div>
-
-          <div className="flex items-center gap-1 text-white/60 text-xs">
-            <MapPin className="w-3 h-3" />
-            <span>{status.location}</span>
-          </div>
-        </motion.div>
-
-        {/* Testimonial Carousel - Mobile */}
+        {/* Status Section */}
         <motion.div
           className="w-full mb-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-        >
-          <MobileTestimonialCarousel />
-        </motion.div>
-
-        {/* Quick Stats */}
-        <motion.div
-          className="grid grid-cols-2 gap-3 w-full max-w-xs mb-4"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.7 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
         >
-          {quickStats.map((stat, index) => {
-            const StatIcon = stat.icon;
-
-            // Map stat labels to section IDs
-            const sectionMap = {
-              'Skills': 'skills',
-              'Certifications': 'certifications',
-              'Technologies': 'experience',
-              'GitHub Repos': 'projects'
-            };
-
-            const sectionId = sectionMap[stat.label] || '';
-
-            return (
-              <motion.button
-                key={index}
-                className="bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center text-center"
-                whileTap={{ scale: 0.98 }}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.7 + (index * 0.1) }}
-                onClick={() => scrollToSection(sectionId)}
-              >
-                <StatIcon className="w-4 h-4 text-rose-400 mb-2" />
-                <div className="text-lg font-bold text-white">{stat.value}</div>
-                <div className="text-xs text-white/60">{stat.label}</div>
-              </motion.button>
-            );
-          })}
+          {isOpenToOpportunities ? (
+            <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 flex flex-col items-center">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                <span className="text-green-400 text-sm">Open to Opportunities</span>
+              </div>
+              <div className="flex items-center gap-1 text-white/60 text-xs">
+                <MapPin className="w-3 h-3" />
+                <span>{HeroData.status.location}</span>
+              </div>
+            </div>
+          ) : (
+            <motion.button
+              onClick={() => scrollToSection('experience')}
+              className="w-full bg-rose-500/10 border border-rose-500/20 rounded-xl p-4 flex flex-col items-center"
+              whileTap={{ scale: 0.98 }}
+            >
+              <div className="flex items-center gap-2 mb-1">
+                <Briefcase className="w-4 h-4 text-rose-400" />
+                <span className="text-rose-400 font-medium">{currentExperience.title}</span>
+              </div>
+              <span className="text-rose-400/80 text-sm">{currentExperience.company}</span>
+              <div className="flex items-center gap-1 text-rose-400/70 text-xs mt-1">
+                <MapPin className="w-3 h-3" />
+                <span>{currentExperience.location}</span>
+              </div>
+            </motion.button>
+          )}
         </motion.div>
+
+        {/* Education Section */}
+        <motion.button
+          onClick={() => scrollToSection('education')}
+          className="w-full bg-white/5 backdrop-blur-sm border border-white/10 rounded-xl p-4 mb-4 flex flex-col items-start"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          whileTap={{ scale: 0.98 }}
+        >
+          <div className="flex items-center gap-2 mb-2 w-full">
+            <GraduationCap className="w-4 h-4 text-blue-400" />
+            <h3 className="text-white font-medium text-sm">
+              {education.name}
+            </h3>
+          </div>
+
+          <p className="text-white/70 mb-2 text-xs w-full">
+            {education.degree}
+          </p>
+
+          {/* Progress bar */}
+          <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
+            <div
+              className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+              style={{ width: `${progress * 100}%` }}
+            />
+          </div>
+
+          <div className="flex justify-between text-xs w-full">
+            <span className="text-white/60">
+              Year {currentYearOfStudy} of {totalYears}
+            </span>
+            <span className="text-white/60">
+              {Math.round(progress * 100)}% Complete
+            </span>
+          </div>
+
+          {currentlyOnInternship && (
+            <div className="mt-2 py-1 px-2 bg-blue-500/20 text-blue-400 text-xs rounded-full self-start">
+              Currently on Internship
+            </div>
+          )}
+        </motion.button>
 
         {/* Resume Button */}
         <motion.a
-          href={status.resumeLink}
-          className="flex items-center justify-center gap-2 w-full max-w-xs py-2.5 px-4 bg-rose-500/10 border border-rose-500/20 rounded-full text-rose-400 mb-4"
+          href={HeroData.status.resumeLink}
+          className="w-full py-3 px-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 flex items-center justify-center gap-2 mb-4"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
+          transition={{ duration: 0.5, delay: 0.7 }}
           whileTap={{ scale: 0.98 }}
         >
-          Resume
+          Download Resume
           <ArrowRight className="w-4 h-4" />
         </motion.a>
 
         {/* Social Links */}
         <motion.div
-          className="flex justify-center gap-3"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.9 }}
+          className="flex justify-center gap-3 w-full"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.8 }}
         >
           {Object.values(SocialsData).map((social, index) => {
             const Icon = social.icon;
@@ -254,9 +232,6 @@ const HeroMobile = () => {
                 className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/60"
                 whileTap={{ scale: 0.95 }}
                 whileHover={{ y: -2 }}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3, delay: 0.9 + (index * 0.1) }}
               >
                 <Icon className="w-5 h-5" />
               </motion.button>

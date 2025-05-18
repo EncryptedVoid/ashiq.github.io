@@ -1,75 +1,33 @@
 // Hero.desktop.jsx
-import React, { useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, useSpring, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
+import { ArrowRight, Briefcase, Building, MapPin, GraduationCap } from 'lucide-react';
 import { useMousePosition } from '@/hooks';
 import { HeroData } from '@/data/HeroData';
 import { SocialsData } from '@/data/SocialsData';
 import { ParticleField, TypewriterText } from '@/components';
-import { TestimonialData } from '@/data/TestimonialsData';
-
-// Simple testimonial carousel component
-const TestimonialCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const testimonials = TestimonialData;
-
-  const nextTestimonial = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % testimonials.length);
-  };
-
-  const prevTestimonial = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
-    );
-  };
-
-  return (
-    <div className="relative w-full max-w-xl">
-      <div className="bg-white/5 border border-white/10 rounded-xl p-5 min-h-[120px] flex items-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentIndex}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.3 }}
-            className="w-full"
-          >
-            <p className="text-white/80 text-sm italic mb-3">
-              "{testimonials[currentIndex].quote}"
-            </p>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-rose-500/20 flex items-center justify-center text-rose-400 font-semibold">
-                {testimonials[currentIndex].initials}
-              </div>
-              <div>
-                <p className="text-white text-sm font-medium">{testimonials[currentIndex].name}</p>
-                <p className="text-white/60 text-xs">{testimonials[currentIndex].role}, {testimonials[currentIndex].company}</p>
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <button
-        onClick={prevTestimonial}
-        className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-rose-400 transition-colors"
-      >
-        <ChevronLeft className="w-4 h-4" />
-      </button>
-
-      <button
-        onClick={nextTestimonial}
-        className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-white/60 hover:text-rose-400 transition-colors"
-      >
-        <ChevronRight className="w-4 h-4" />
-      </button>
-    </div>
-  );
-};
+import { ExperienceData } from '@/data/ExperienceData';
+import { EducationData } from '@/data/EducationData';
 
 const HeroDesktop = () => {
-  const { intro, status, profileImage, quickStats } = HeroData;
+  const { intro, profileImage } = HeroData;
+
+  // Get current experience if any
+  const currentExperience = ExperienceData.find(exp => exp.period.end === null);
+  const isOpenToOpportunities = !currentExperience;
+
+  // Calculate education progress
+  const education = EducationData.university;
+  const currentYear = new Date().getFullYear();
+  const startYear = parseInt(education.duration.start);
+  const endYear = parseInt(education.duration.end);
+  const totalYears = endYear - startYear;
+  const currentYearOfStudy = currentYear - startYear;
+  const progress = Math.min(Math.max(currentYearOfStudy / totalYears, 0), 1);
+
+  // Are we currently on break/internship?
+  const currentlyOnInternship = currentExperience &&
+    currentExperience.type.toLowerCase().includes('intern');
 
   // For 3D tilt effect on profile image
   const mousePosition = useMousePosition();
@@ -112,10 +70,10 @@ const HeroDesktop = () => {
       </div>
 
       <div className="container mx-auto px-8 relative z-10">
-        <div className="grid grid-cols-12 gap-6 items-center">
+        <div className="grid grid-cols-12 gap-8 items-center">
           {/* Left Column: Text & Content */}
           <div className="col-span-7">
-            <div className="space-y-5">
+            <div className="space-y-6">
               {/* Terminal text animation */}
               <motion.div
                 initial={{ opacity: 0 }}
@@ -156,40 +114,111 @@ const HeroDesktop = () => {
                 {intro.description[0]}
               </motion.p>
 
-              {/* Status & Resume button */}
+              {/* Job Status / Availability */}
               <motion.div
-                className="flex items-center gap-5"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
               >
-                <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="text-green-400">{status.availability}</span>
-                  <div className="w-px h-4 bg-white/10 mx-2" />
-                  <span className="text-white/60">{status.location}</span>
+                {isOpenToOpportunities ? (
+                  <div className="flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full w-fit">
+                    <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                    <span className="text-green-400">Open to Opportunities</span>
+                    <div className="w-px h-4 bg-white/10 mx-2" />
+                    <div className="flex items-center gap-1">
+                      <MapPin className="w-4 h-4 text-white/60" />
+                      <span className="text-white/60">{HeroData.status.location}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <motion.button
+                    onClick={() => scrollToSection('experience')}
+                    className="flex items-center gap-2 px-4 py-2 bg-rose-500/10 border border-rose-500/20 rounded-full w-fit"
+                    whileHover={{
+                      backgroundColor: "rgba(244, 63, 94, 0.2)",
+                      borderColor: "rgba(244, 63, 94, 0.3)"
+                    }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Briefcase className="w-4 h-4 text-rose-400" />
+                    <span className="text-rose-400">{currentExperience.title}</span>
+                    <div className="w-px h-4 bg-rose-500/20 mx-2" />
+                    <div className="flex items-center gap-1">
+                      <Building className="w-4 h-4 text-rose-400" />
+                      <span className="text-rose-400">{currentExperience.company}</span>
+                    </div>
+                  </motion.button>
+                )}
+              </motion.div>
+
+              {/* Education Status */}
+              <motion.button
+                onClick={() => scrollToSection('education')}
+                className="flex flex-col w-full max-w-md p-4 bg-white/5 border border-white/10 rounded-xl hover:bg-white/8 hover:border-white/15 transition-all"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <div className="flex items-center gap-2 mb-2">
+                  <GraduationCap className="w-5 h-5 text-blue-400" />
+                  <h3 className="text-lg font-medium text-white">
+                    {education.name}
+                  </h3>
                 </div>
 
-                <motion.a
-                  href={status.resumeLink}
-                  className="flex items-center gap-2 px-5 py-2 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 hover:border-rose-500/30 rounded-full text-rose-400 transition-all duration-300"
-                  whileHover={{
-                    scale: 1.02,
-                    transition: { duration: 0.2 }
-                  }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Resume
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-                </motion.a>
-              </motion.div>
+                <p className="text-white/70 mb-3 text-sm">
+                  {education.degree}
+                </p>
+
+                {/* Progress bar */}
+                <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-2">
+                  <div
+                    className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"
+                    style={{ width: `${progress * 100}%` }}
+                  />
+                </div>
+
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/60">
+                    Year {currentYearOfStudy} of {totalYears}
+                  </span>
+                  <span className="text-white/60">
+                    {Math.round(progress * 100)}% Complete
+                  </span>
+                </div>
+
+                {currentlyOnInternship && (
+                  <div className="mt-2 py-1 px-3 bg-blue-500/20 text-blue-400 text-xs rounded-full w-fit">
+                    Currently on Internship
+                  </div>
+                )}
+              </motion.button>
+
+              {/* Resume button */}
+              <motion.a
+                href={HeroData.status.resumeLink}
+                className="flex items-center gap-2 px-5 py-2.5 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/20 hover:border-rose-500/30 rounded-full text-rose-400 transition-all duration-300 w-fit"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, delay: 1.0 }}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ scale: 0.98 }}
+              >
+                Download Resume
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+              </motion.a>
 
               {/* Social Links */}
               <motion.div
                 className="flex items-center gap-3"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.6, delay: 1.2 }}
               >
                 {Object.values(SocialsData).map((social, index) => {
                   const Icon = social.icon;
@@ -206,22 +235,12 @@ const HeroDesktop = () => {
                   );
                 })}
               </motion.div>
-
-              {/* Testimonial Carousel */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.6, delay: 1.0 }}
-                className="mt-5"
-              >
-                <TestimonialCarousel />
-              </motion.div>
             </div>
           </div>
 
-          {/* Right Column: Profile & Stats */}
+          {/* Right Column: Profile Image */}
           <div className="col-span-5">
-            <div className="space-y-5">
+            <div className="flex justify-center">
               {/* Profile image with 3D tilt effect */}
               <motion.div
                 className="relative max-w-md mx-auto aspect-square"
@@ -260,49 +279,6 @@ const HeroDesktop = () => {
                   }}
                 />
               </motion.div>
-
-              {/* Stats grid */}
-              <div className="grid grid-cols-2 gap-4">
-                {quickStats.map((stat, index) => {
-                  const StatIcon = stat.icon;
-
-                  // Map stat labels to section IDs
-                  const sectionMap = {
-                    'Skills': 'skills',
-                    'Certifications': 'certifications',
-                    'Technologies': 'experience',
-                    'GitHub Repos': 'projects'
-                  };
-
-                  const sectionId = sectionMap[stat.label] || '';
-
-                  return (
-                    <motion.button
-                      key={index}
-                      className="bg-white/5 hover:bg-white/8 border border-white/10 rounded-2xl p-4 flex items-center gap-4 text-left cursor-pointer"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.5 + (index * 0.1) }}
-                      whileHover={{
-                        y: -5,
-                        backgroundColor: "rgba(255,255,255,0.08)",
-                        borderColor: "rgba(250,128,114,0.2)",
-                        transition: { duration: 0.2 }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => scrollToSection(sectionId)}
-                    >
-                      <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
-                        <StatIcon className="w-5 h-5 text-rose-400" />
-                      </div>
-                      <div>
-                        <div className="text-xl font-bold text-white">{stat.value}</div>
-                        <div className="text-sm text-white/60">{stat.label}</div>
-                      </div>
-                    </motion.button>
-                  );
-                })}
-              </div>
             </div>
           </div>
         </div>
