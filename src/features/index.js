@@ -1,4 +1,4 @@
-export { Skills } from './skills';
+export { default as Skills } from './skills';
 export { Projects } from './projects';
 export { Experience } from './experience';
 export { Education } from './education';
