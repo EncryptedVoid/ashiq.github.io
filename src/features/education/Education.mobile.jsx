@@ -1,390 +1,498 @@
 // src/features/education/Education.mobile.jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  GraduationCap,
-  Book,
   Award,
   Calendar,
-  Filter,
   ChevronLeft,
   ChevronRight,
-  Star,
-  Briefcase
+  Briefcase,
+  Target,
+  BookOpen
 } from 'lucide-react';
 import { EducationData } from '@data/EducationData';
 import { useScrollAnimation } from '@hooks/useAnimation';
 
-const EducationMobile = () => {
-  // State management
-  const [activeSection, setActiveSection] = useState('overview');
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [yearFilter, setYearFilter] = useState('All');
-  const [topicFilter, setTopicFilter] = useState('All');
-  const [filteredCourses, setFilteredCourses] = useState(EducationData.courses);
-  const carouselRef = useRef(null);
-  const touchStartX = useRef(null);
-  const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
+// Mobile University Hero Card
+const UniversityHeroMobile = ({ university }) => {
+  const { ref, isInView } = useScrollAnimation({ threshold: 0.2 });
 
-  // Extract unique years and topics for filters
-  const years = ['All', ...new Set(EducationData.courses.map(course =>
-    course.term.split(' ')[1]))].sort();
-
-  const topics = ['All', ...new Set(EducationData.courses.flatMap(course =>
-    course.skills.map(skill => skill.split(' ')[0])))].sort();
-
-  // Filter courses based on selected filters
-  useEffect(() => {
-    let filtered = EducationData.courses;
-
-    if (yearFilter !== 'All') {
-      filtered = filtered.filter(course => course.term.includes(yearFilter));
-    }
-
-    if (topicFilter !== 'All') {
-      filtered = filtered.filter(course =>
-        course.skills.some(skill => skill.startsWith(topicFilter)));
-    }
-
-    setFilteredCourses(filtered);
-    setCurrentIndex(0); // Reset to first course when filters change
-  }, [yearFilter, topicFilter]);
-
-  // Touch handlers for swiping
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    if (!touchStartX.current) return;
-
-    const touchEndX = e.changedTouches[0].clientX;
-    const diff = touchStartX.current - touchEndX;
-
-    // Swipe threshold of 50px
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        // Swipe left, go to next course
-        if (currentIndex < filteredCourses.length - 1) {
-          setCurrentIndex(prev => prev + 1);
-        }
-      } else {
-        // Swipe right, go to previous course
-        if (currentIndex > 0) {
-          setCurrentIndex(prev => prev - 1);
-        }
-      }
-    }
-
-    touchStartX.current = null;
-  };
-
-  // Component for University Overview
-  const UniversityCard = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="rounded-xl p-5 border border-white/20 bg-gradient-to-b from-black/40 to-black/10 backdrop-blur-sm"
-    >
-      {/* School logo and name side by side */}
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-12 h-12 rounded-xl overflow-hidden bg-white/10 border border-white/20 flex-shrink-0">
-          <img
-            src={`${EducationData.university.logo}`}
-            alt={EducationData.university.name}
-            className="w-full h-full object-cover"
-          />
-        </div>
-        <h3 className="text-lg font-bold text-white">
-          {EducationData.university.name}
-        </h3>
-      </div>
-
-      {/* Degree and timeline with full horizontal space */}
-      <div className="mb-5">
-        <p className="text-blue-300 text-sm mb-1">
-          {EducationData.university.degree}
-        </p>
-        <div className="flex items-center gap-2 text-white/60 text-xs">
-          <Calendar className="w-3 h-3" />
-          <span>{`${EducationData.university.duration.start} - ${EducationData.university.duration.end}`}</span>
-        </div>
-      </div>
-
-      {/* Highlight GPA and courses */}
-      <div className="mt-3 grid grid-cols-2 gap-3">
-        <div className="p-4 rounded-xl bg-white/10 border border-white/20 flex flex-col items-center justify-center">
-          <div className="text-xl font-bold text-blue-300">3.6</div>
-          <div className="text-xs text-white/60 mt-1">Current GPA</div>
-        </div>
-        <div className="p-4 rounded-xl bg-white/10 border border-white/20 flex flex-col items-center justify-center">
-          <div className="text-xl font-bold text-blue-300">10</div>
-          <div className="text-xs text-white/60 mt-1">Total Courses</div>
-        </div>
-      </div>
-
-      {/* Current Internship Status */}
-      <div className="mt-5">
-        <h4 className="text-sm font-medium text-white/80 mb-3">Current Status</h4>
-        <div className="p-3 rounded-xl bg-black/30 border border-white/10">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="p-2 rounded-lg bg-blue-500/20">
-              <Briefcase className="w-4 h-4 text-blue-400" />
-            </div>
-            <div>
-              <div className="text-white text-sm font-medium">Currently on Internship</div>
-              <div className="text-white/60 text-xs">Software Testing Specialist at QNX - Embedded Solutions</div>
-            </div>
-          </div>
-          <button
-            className="mt-3 pt-2 w-full text-center text-xs text-blue-300 border-t border-white/10 cursor-pointer"
-            onClick={() => setActiveSection('courses')}
-          >
-            See Previous Courses
-          </button>
-        </div>
-      </div>
-
-      {/* Show only 1-2 achievements */}
-      {EducationData.achievements && EducationData.achievements.length > 0 && (
-        <div className="mt-5">
-          <h4 className="text-sm font-medium text-white/80 mb-2">Recent Achievement</h4>
-          <div
-            key={EducationData.achievements[0].id}
-            className="p-3 rounded-xl bg-black/30 border border-white/10 flex items-start gap-3"
-          >
-            <Award className="w-4 h-4 text-blue-300 mt-0.5" />
-            <div>
-              <div className="text-sm font-medium text-white">{EducationData.achievements[0].title}</div>
-              <div className="text-xs text-white/60 mt-1">{EducationData.achievements[0].year}</div>
-            </div>
-          </div>
-          {EducationData.achievements.length > 1 && (
-            <div
-              className="mt-2 py-2 text-center text-xs text-blue-300 cursor-pointer"
-              onClick={() => setActiveSection('achievements')}
-            >
-              View all {EducationData.achievements.length} achievements
-            </div>
-          )}
-        </div>
-      )}
-    </motion.div>
-  );
-
-  // Component for displaying course details in carousel
-  const CourseCard = ({ course }) => (
-    <motion.div
-      initial={{ opacity: 0, x: 50 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -50 }}
-      className="rounded-xl overflow-hidden border border-white/20 bg-gradient-to-b from-black/40 to-black/10 backdrop-blur-sm"
-    >
-      <div className="relative h-40">
-        <img
-          src={`${course.image}`}
-          alt={course.name}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
-
-        <div className="absolute bottom-3 left-3 right-3">
-          <div className="flex items-center justify-between">
-            <span className="bg-green-500/10 text-green-300 border border-green-500/20 px-2 py-0.5 rounded-full text-xs">
-              {course.status}
-            </span>
-            <div className="flex items-center gap-1">
-              <Star className="w-3 h-3 text-blue-300" />
-              <span className="text-white text-xs font-medium">{course.grade}</span>
-            </div>
-          </div>
-          <h3 className="text-lg font-bold text-white mt-1">{course.name}</h3>
-          <div className="flex items-center gap-2 text-blue-300 text-xs mt-1">
-            <span>{course.code}</span>
-            <span className="text-white/40">•</span>
-            <span>{course.term}</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="p-4">
-        <p className="text-white/70 text-sm mb-4">{course.description}</p>
-
-        <div className="flex flex-wrap gap-2 mb-2">
-          {course.skills.map((skill, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 rounded-full text-xs
-                bg-white/10 text-blue-300 border border-white/20"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-
-        <div className="text-xs text-white/50 mt-3">
-          {course.professor}
-        </div>
-      </div>
-    </motion.div>
-  );
-
-  // Component for Achievements section
-  const AchievementsSection = () => (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      className="space-y-4"
-    >
-      {EducationData.achievements && EducationData.achievements.map(achievement => (
-        <div
-          key={achievement.id}
-          className="p-4 rounded-xl bg-gradient-to-b from-black/40 to-black/10 backdrop-blur-sm border border-white/20"
-        >
-          <div className="flex items-start gap-3">
-            <Award className="w-5 h-5 text-blue-300 mt-0.5" />
-            <div>
-              <div className="text-base font-bold text-white">{achievement.title}</div>
-              <div className="text-sm text-blue-300 mt-0.5">{achievement.year}</div>
-              <div className="text-sm text-white/70 mt-2">{achievement.description}</div>
-            </div>
-          </div>
-        </div>
-      ))}
-    </motion.div>
-  );
-
-  // Tabs for navigation
-  const tabs = [
-    { id: 'overview', label: 'Overview', icon: GraduationCap },
-    { id: 'courses', label: 'Courses', icon: Book },
-    ...(EducationData.achievements && EducationData.achievements.length > 0 ?
-      [{ id: 'achievements', label: 'Awards', icon: Award }] : [])
+  const quickStats = [
+    { label: 'GPA', value: university.GPA, color: 'text-emerald-400' },
+    { label: 'Year', value: '2nd', color: 'text-blue-400' },
+    { label: 'Dean\'s List', value: '2x', color: 'text-yellow-400' }
   ];
 
   return (
-    <section ref={ref} className="pb-5">
-      {/* Section Tabs */}
-      <div className="px-4 mb-5">
-        <div className="flex bg-black/20 backdrop-blur-sm rounded-lg p-1 border border-white/10">
-          {tabs.map(tab => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveSection(tab.id)}
-              className={`
-                flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg text-sm font-medium transition-all duration-300
-                ${activeSection === tab.id
-                  ? 'bg-white/10 text-blue-300'
-                  : 'text-white/60 hover:text-white/80'}
-              `}
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 20, scale: 0.95 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="relative mb-8 overflow-hidden"
+    >
+      {/* Background Gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/5 to-teal-500/10 rounded-2xl" />
+
+      <div className="relative bg-white/[0.03] border border-white/[0.1] rounded-2xl p-6 backdrop-blur-xl">
+
+        {/* Header with Logo and Basic Info */}
+        <div className="flex items-start gap-4 mb-6">
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={isInView ? { scale: 1, opacity: 1 } : { scale: 0.8, opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="relative group"
+          >
+            <div className="w-16 h-16 bg-white/[0.05] border border-white/[0.15] rounded-xl overflow-hidden">
+              <img
+                src={university.logo}
+                alt={university.name}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+          </motion.div>
+
+          <div className="flex-1 min-w-0">
+            <motion.h1
+              initial={{ opacity: 0, x: 20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+              className="text-lg font-bold text-white mb-1 truncate"
             >
-              <tab.icon className="w-4 h-4" />
-              <span className="hidden sm:inline">{tab.label}</span>
-            </button>
+              {university.name}
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0, x: 20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+              className="text-sm text-blue-300 mb-2 line-clamp-2"
+            >
+              {university.degree}
+            </motion.p>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center gap-3 text-xs text-white/60"
+            >
+              <div className="flex items-center gap-1">
+                <Calendar className="w-3 h-3" />
+                <span>{university.duration.start} - {university.duration.end}</span>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* Quick Stats */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="grid grid-cols-3 gap-3 mb-6"
+        >
+          {quickStats.map((stat, index) => (
+            <motion.div
+              key={stat.label}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.4, delay: 0.7 + index * 0.1 }}
+              className="bg-white/[0.05] border border-white/[0.1] rounded-xl p-3 text-center"
+            >
+              <div className={`text-lg font-bold ${stat.color}`}>{stat.value}</div>
+              <div className="text-xs text-white/60 mt-1">{stat.label}</div>
+            </motion.div>
           ))}
+        </motion.div>
+
+        {/* Current Status */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.5, delay: 0.9 }}
+          className="bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-xl p-4"
+        >
+          <div className="flex items-center gap-3">
+            <div className="p-2 bg-blue-500/20 rounded-lg">
+              <Briefcase className="w-4 h-4 text-blue-400" />
+            </div>
+            <div>
+              <div className="text-sm font-medium text-white">Currently on Internship</div>
+              <div className="text-xs text-blue-300">Software Testing Specialist at QNX</div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
+// Mobile Course Card with Swipe Carousel
+const MobileCourseCarousel = ({ courses }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
+  const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
+
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentIndex < courses.length - 1) {
+      setCurrentIndex(prev => prev + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      setCurrentIndex(prev => prev - 1);
+    }
+  };
+
+  const gradeColors = {
+    'A+': 'from-emerald-400 to-green-400',
+    'A': 'from-blue-400 to-cyan-400',
+    'A-': 'from-purple-400 to-blue-400',
+    'B+': 'from-yellow-400 to-orange-400',
+    'B': 'from-orange-400 to-red-400'
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6 }}
+      className="mb-8"
+    >
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-500/20 rounded-lg">
+            <BookOpen className="w-5 h-5 text-blue-400" />
+          </div>
+          <h2 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            Course History
+          </h2>
+        </div>
+
+        <div className="text-xs text-white/60">
+          {currentIndex + 1} / {courses.length}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="px-4">
+      {/* Swipe Hint */}
+      <div className="text-center mb-4">
+        <div className="text-xs text-white/40 italic">Swipe to browse courses</div>
+      </div>
+
+      {/* Course Cards Container */}
+      <div
+        className="relative overflow-hidden rounded-2xl"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <AnimatePresence mode="wait">
-          {activeSection === 'overview' && <UniversityCard />}
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="bg-white/[0.03] border border-white/[0.08] rounded-2xl overflow-hidden backdrop-blur-sm"
+          >
+            {/* Course Image */}
+            <div className="relative h-40">
+              <img
+                src={courses[currentIndex].image}
+                alt={courses[currentIndex].name}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
 
-          {activeSection === 'courses' && (
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-            >
-              {/* Filters */}
-              <div className="mb-4 p-3 bg-black/20 backdrop-blur-sm rounded-lg border border-white/10">
-                <div className="flex items-center justify-between mb-3">
-                  <h4 className="text-sm font-medium text-white/80">Filter Courses</h4>
-                  <Filter className="w-4 h-4 text-blue-300" />
-                </div>
-
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-xs text-white/60 mb-1 block">Year</label>
-                    <select
-                      value={yearFilter}
-                      onChange={(e) => setYearFilter(e.target.value)}
-                      className="w-full text-sm bg-black/30 border border-white/20 rounded-lg p-2 text-white"
-                    >
-                      {years.map(year => (
-                        <option key={year} value={year}>{year}</option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>
-                    <label className="text-xs text-white/60 mb-1 block">Topic</label>
-                    <select
-                      value={topicFilter}
-                      onChange={(e) => setTopicFilter(e.target.value)}
-                      className="w-full text-sm bg-black/30 border border-white/20 rounded-lg p-2 text-white"
-                    >
-                      {topics.map(topic => (
-                        <option key={topic} value={topic}>{topic}</option>
-                      ))}
-                    </select>
-                  </div>
+              {/* Grade Badge */}
+              <div className="absolute top-3 right-3">
+                <div className={`px-3 py-1 rounded-full bg-gradient-to-r ${gradeColors[courses[currentIndex].grade] || 'from-gray-400 to-gray-500'} text-white font-bold text-sm`}>
+                  {courses[currentIndex].grade}
                 </div>
               </div>
 
-              {/* Swipeable Carousel */}
-              <div
-                ref={carouselRef}
-                className="relative"
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-              >
-                {filteredCourses.length > 0 ? (
-                  <>
-                    <div className="text-center mt-3">
-                      <div className="text-xs text-blue-300/60 italic">
-                        Swipe to navigate
-                      </div>
-                    </div>
-                    <CourseCard course={filteredCourses[currentIndex]} />
+              {/* Course Code */}
+              <div className="absolute bottom-3 left-3">
+                <div className="bg-black/70 backdrop-blur-sm px-3 py-1 rounded-lg text-white text-sm font-medium">
+                  {courses[currentIndex].code}
+                </div>
+              </div>
+            </div>
 
-                    {/* Progress indicator */}
-                    <div className="flex justify-center gap-1.5 mt-4">
-                      {filteredCourses.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentIndex(idx)}
-                          className={`
-                            transition-all duration-300 rounded-full
-                            ${idx === currentIndex
-                              ? 'w-6 h-1.5 bg-gradient-to-r from-blue-500 to-purple-500'
-                              : 'w-1.5 h-1.5 bg-white/20'}
-                          `}
-                          aria-label={`Go to slide ${idx + 1}`}
-                        />
-                      ))}
-                    </div>
+            {/* Course Content */}
+            <div className="p-5">
+              <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
+                {courses[currentIndex].name}
+              </h3>
 
-                    {/* Counter and swipe hint */}
-                    <div className="text-center mt-3">
-                      <div className="text-xs text-white/60 mb-1">
-                        {currentIndex + 1} of {filteredCourses.length}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="py-8 text-center text-white/60 bg-black/20 backdrop-blur-sm rounded-xl border border-white/10">
-                    No courses match your filter criteria
-                  </div>
+              <p className="text-white/70 text-sm mb-4 leading-relaxed line-clamp-3">
+                {courses[currentIndex].description}
+              </p>
+
+              {/* Skills */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {courses[currentIndex].skills.slice(0, 4).map((skill, idx) => (
+                  <span
+                    key={idx}
+                    className="px-2 py-1 text-xs bg-white/[0.1] border border-white/[0.2] rounded-full text-white/80"
+                  >
+                    {skill}
+                  </span>
+                ))}
+                {courses[currentIndex].skills.length > 4 && (
+                  <span className="px-2 py-1 text-xs bg-white/[0.05] border border-white/[0.1] rounded-full text-white/60">
+                    +{courses[currentIndex].skills.length - 4}
+                  </span>
                 )}
               </div>
-            </motion.div>
-          )}
 
-          {activeSection === 'achievements' && <AchievementsSection />}
+              {/* Course Meta */}
+              <div className="flex items-center justify-between text-xs text-white/60 pt-3 border-t border-white/[0.1]">
+                <span>{courses[currentIndex].term}</span>
+                <span>{courses[currentIndex].year}</span>
+              </div>
+            </div>
+          </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Navigation Dots */}
+      <div className="flex justify-center gap-2 mt-4">
+        {courses.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`transition-all duration-300 rounded-full ${
+              idx === currentIndex
+                ? 'w-6 h-2 bg-gradient-to-r from-blue-400 to-cyan-400'
+                : 'w-2 h-2 bg-white/20'
+            }`}
+          />
+        ))}
+      </div>
+
+      {/* Navigation Arrows */}
+      <div className="flex justify-center gap-4 mt-4">
+        <button
+          onClick={() => setCurrentIndex(prev => Math.max(0, prev - 1))}
+          disabled={currentIndex === 0}
+          className={`p-2 rounded-lg transition-all duration-300 ${
+            currentIndex === 0
+              ? 'bg-white/[0.02] text-white/30 cursor-not-allowed'
+              : 'bg-white/[0.05] hover:bg-white/[0.1] text-white hover:-translate-x-1'
+          }`}
+        >
+          <ChevronLeft className="w-5 h-5" />
+        </button>
+
+        <button
+          onClick={() => setCurrentIndex(prev => Math.min(courses.length - 1, prev + 1))}
+          disabled={currentIndex === courses.length - 1}
+          className={`p-2 rounded-lg transition-all duration-300 ${
+            currentIndex === courses.length - 1
+              ? 'bg-white/[0.02] text-white/30 cursor-not-allowed'
+              : 'bg-white/[0.05] hover:bg-white/[0.1] text-white hover:translate-x-1'
+          }`}
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
+      </div>
+    </motion.div>
+  );
+};
+
+// Mobile Achievements Carousel
+const MobileAchievementsCarousel = ({ achievements }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6 }}
+      className="mb-8"
+    >
+      {/* Section Header */}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-yellow-500/20 rounded-lg">
+            <Award className="w-5 h-5 text-yellow-400" />
+          </div>
+          <h2 className="text-xl font-bold bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent">
+            Achievements
+          </h2>
+        </div>
+
+        <div className="text-xs text-white/60">
+          {currentIndex + 1} / {achievements.length}
+        </div>
+      </div>
+
+      {/* Achievement Cards */}
+      <div className="space-y-4">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentIndex}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.4 }}
+            className="bg-gradient-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20 rounded-2xl p-5 backdrop-blur-sm"
+          >
+            <div className="flex items-start gap-4">
+              <div className="p-3 bg-gradient-to-br from-yellow-400 to-orange-400 rounded-xl">
+                <Award className="w-6 h-6 text-white" />
+              </div>
+
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-white mb-2">
+                  {achievements[currentIndex].title}
+                </h3>
+
+                <div className="inline-block px-3 py-1 bg-yellow-500/20 border border-yellow-500/30 rounded-full text-sm text-yellow-300 font-medium mb-3">
+                  {achievements[currentIndex].year}
+                </div>
+
+                <p className="text-white/70 leading-relaxed text-sm">
+                  {achievements[currentIndex].description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      {/* Navigation */}
+      <div className="flex justify-center gap-2 mt-4">
+        {achievements.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setCurrentIndex(idx)}
+            className={`transition-all duration-300 rounded-full ${
+              idx === currentIndex
+                ? 'w-6 h-2 bg-gradient-to-r from-yellow-400 to-orange-400'
+                : 'w-2 h-2 bg-white/20'
+            }`}
+          />
+        ))}
+      </div>
+    </motion.div>
+  );
+};
+
+// Mobile Research Section
+const MobileResearchSection = ({ research }) => {
+  const { ref, isInView } = useScrollAnimation({ threshold: 0.1 });
+
+  if (!research) return null;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+      transition={{ duration: 0.6 }}
+      className="mb-8"
+    >
+      {/* Section Header */}
+      <div className="flex items-center gap-3 mb-4">
+        <div className="p-2 bg-purple-500/20 rounded-lg">
+          <Target className="w-5 h-5 text-purple-400" />
+        </div>
+        <h2 className="text-xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+          Current Research
+        </h2>
+      </div>
+
+      <div className="bg-gradient-to-br from-purple-500/10 to-blue-500/10 border border-purple-500/20 rounded-2xl p-5 backdrop-blur-sm">
+        <h3 className="text-base font-bold text-white mb-2">
+          {research.title}
+        </h3>
+
+        {research.advisor && (
+          <p className="text-purple-300 text-sm mb-3">
+            <span className="text-white/60">Advisor:</span> {research.advisor}
+          </p>
+        )}
+
+        <p className="text-white/80 leading-relaxed text-sm mb-4">
+          {research.description}
+        </p>
+
+        <div className="grid grid-cols-3 gap-2">
+          <div className="bg-purple-500/20 border border-purple-500/30 rounded-lg p-2 text-center">
+            <div className="text-sm font-bold text-purple-300">{research.publications || 0}</div>
+            <div className="text-xs text-white/60">Publications</div>
+          </div>
+
+          <div className="bg-blue-500/20 border border-blue-500/30 rounded-lg p-2 text-center">
+            <div className="text-sm font-bold text-blue-300">{research.citations || 0}</div>
+            <div className="text-xs text-white/60">Citations</div>
+          </div>
+
+          <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-2 text-center">
+            <div className="text-sm font-bold text-green-300">{research.status}</div>
+            <div className="text-xs text-white/60">Status</div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
+const EducationMobile = () => {
+  const { university, courses = [], achievements = [], researchWork } = EducationData || {};
+
+  if (!EducationData || !university) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-4">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-white/60 text-sm">Loading education data...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <section className="py-8 px-4">
+      {/* University Hero */}
+      <UniversityHeroMobile university={university} />
+
+      {/* Course History Carousel */}
+      {courses.length > 0 && (
+        <MobileCourseCarousel courses={courses} />
+      )}
+
+      {/* Achievements Carousel */}
+      {achievements.length > 0 && (
+        <MobileAchievementsCarousel achievements={achievements} />
+      )}
+
+      {/* Research Section */}
+      {researchWork && <MobileResearchSection research={researchWork} />}
     </section>
   );
 };

@@ -1,9 +1,12 @@
+// src/features/education/index.js
 import { useMedia } from '@/context/MediaContext';
 import EducationDesktop from './Education.desktop';
 import EducationMobile from './Education.mobile';
 
 export const Education = () => {
-  const isMobile = useMedia('(max-width: 768px)');
-console.log('Hero isMobile:', isMobile);
+  const isMobile = useMedia();
   return isMobile ? <EducationMobile /> : <EducationDesktop />;
 };
+
+// Default export for compatibility
+export default Education;
